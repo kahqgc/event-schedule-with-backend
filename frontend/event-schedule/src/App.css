@@ -1,0 +1,50 @@
+html,
+body{
+  margin: 0;
+  padding: 0;
+  font-family: "Quicksand", sans-serif;
+}
+
+/* set transparent cover over the background image with linear gradient */
+body {
+  background-color: beige;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
+    url('https://png.pngtree.com/background/20250104/original/pngtree-a-rustic-wooden-table-placed-in-front-of-serene-forest-setting-picture-image_16139649.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* flex box to stack children vertically*/
+#root, #app {
+  display: flex; /*footer sits at bottom*/
+  flex-direction: column;
+}
+
+/*ensures root takes up whole page for pages that have little content*/
+#root{
+  min-height: 100vh;
+}
+
+/*makes #app fill #root and .content to fill remaining space between header and footer*/
+#app, .content {
+  flex: 1;
+} 
+
+/*tablet and phone responsiveness*/
+@media screen and (max-width: 768px) {
+  nav h1 {
+    display: none;
+  }
+
+  a {
+    font-size: 0.7rem;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  a {
+    font-size: 0.5rem;
+  }
+}
+

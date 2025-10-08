@@ -1,0 +1,29 @@
+button.save, button.signup, button.submit, button.confirm, button.back {
+  background-color: #81b29a;
+  border: none;
+  color: white;
+  padding: 1rem;
+  font-size: 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+button.save:hover, button.edit:hover {
+  background-color: black;
+}
+
+.delete, .edit {
+  background-color: #d86c4e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.3rem 0.6rem;
+  margin: 0rem 0.2rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.delete:hover, .edit:hover {
+  background-color: #b65a3d;
+}

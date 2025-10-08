@@ -1,0 +1,23 @@
+.sign-up-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sign-up-form form input {
+  padding: 0.5rem;
+  border: 1px solid #e07a5f;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+}

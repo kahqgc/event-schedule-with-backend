@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
+
+#footer-container, #footer-social{
+  display: flex;
+  gap: 2rem
+}
+
+#footer-container {
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /*Align items vertically */
+  flex-wrap: wrap;  /*Wrap on smaller screens */
+  padding: 1rem;
+  background-color: #f4f1de;
+  font-size: 1.1rem;
+  border-top: 2px solid #e07a5f;
+  color: #3d405b;
+}
+
+#footer-container p {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+#footer-social a:hover {
+  color: #e07a5f;
+}
