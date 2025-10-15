@@ -1,9 +1,9 @@
 package com.example.event_schedule.repositories;
 
-import com.example.event_schedule.models.EventInfo;
+import com.example.event_schedule.models.Instructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EventInfoRepository extends JpaRepository<EventInfo, Long> {
+public interface InstructorRepository extends JpaRepository<Instructor, Long> {
 }
