@@ -27,7 +27,7 @@ export default function SideMenu({ signedUpSessions, setSignedUpSessions, handle
           sessionTitle: session.title || ""
         };
 
-      const response = await fetch("http://localhost:8080/api/users", {
+      const response = await fetch("http://localhost:8080/api/users/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(backend),
