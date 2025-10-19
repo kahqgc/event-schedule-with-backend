@@ -1,12 +1,52 @@
 import ScheduleRow from "../components/ScheduleRow";
 import PopUp from "../components/PopUp";
-import { masterSchedule } from "../data/scheduleData";
-import { useState } from "react";
+// import { masterSchedule } from "../data/scheduleData";
+import { useState, useEffect } from "react";
 import "./Schedule.css";
 
 export default function Schedule() {
+  const [masterSchedule, setMasterSchedule] = useState([]);
   const [scheduledEvent, setScheduledEvent] = useState(null); /*indicates no scheduled event selected */
   const [signedUpSessions, setSignedUpSessions] = useState([]);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/events");
+        if (!response.ok) throw new Error("Failed to fetch events");
+        const data = await response.json();
+
+        const groupedByTime = {};
+
+        data.forEach(event => {
+          //convert time
+          // const timeLabel = new Date(event.dateTime).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true });
+          const time = event.dateTime;
+          const session = {
+            stage: event.stage,
+            title: event.title,
+            description: event.description,
+            host: event.instructor,
+            time: time
+          };
+
+          if (!groupedByTime[time]) {
+            groupedByTime[time] ={
+              time: time,
+              sessions: [session]
+            };
+          } else {
+            groupedByTime[time].sessions.push(session);
+          }
+        });
+        const scheduleArray = Object.values(groupedByTime);
+        setMasterSchedule(scheduleArray);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    };
+    fetchEvents();
+  }, []);
 
   //dynamically build an array of stage names from scheduleData.jsx
   const stages = masterSchedule.reduce((acc, slot) => {
