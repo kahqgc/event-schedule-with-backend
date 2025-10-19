@@ -1,6 +1,7 @@
 import SubmitButton from "../buttons/SubmitButton";
 import BackButton from "../buttons/BackButton";
 import "./SignUpForm.css";
+import validateSignUpForm from "./utils/validateSignUpForm";
 
 export default function SignUpForm({
   onClose,
@@ -16,30 +17,12 @@ export default function SignUpForm({
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
-    const {name, email, phone, tickets} = formData;
 
-    /*Validation checks*/
-    if (!name.trim() || !email.trim() || !phone.trim()) {
-      setError("Please fill out all fields!");
+    const validationError = validateSignUpForm(formData);
+    if (validationError) {
+      setError(validationError);
       return;
     }
-
-    if (!email.includes("@") || !email.includes(".")) {
-      setError("Please enter a valid email.");
-      return;
-    }
-
-    const digits = phone.replace(/\D/g, "");
-    if (digits.length !== 10) {
-      setError("Please enter a valid 10-digit phone number");
-      return;
-    }
-
-    if (tickets <1 || tickets>10){
-        setError("Please select between 1 and 10.");
-        return;
-    }
-
     handleSignUp({...scheduledEvent, ...formData})
 };
 

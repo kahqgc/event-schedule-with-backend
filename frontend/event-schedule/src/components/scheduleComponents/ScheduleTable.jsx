@@ -1,6 +1,7 @@
 import ScheduleRow from "./ScheduleRow";
 
-export default function ScheduleTable({ masterSchedule, stages, setScheduledEvent }) {
+export default function ScheduleTable({ masterSchedule = [], stages = [], setScheduledEvent }) {
+    return(
     <table className="schedule-table">
               <thead>
                 <tr>
@@ -26,4 +27,5 @@ export default function ScheduleTable({ masterSchedule, stages, setScheduledEven
                 })}
               </tbody>
             </table>
+    )
 }

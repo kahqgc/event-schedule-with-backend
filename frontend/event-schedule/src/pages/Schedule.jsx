@@ -1,10 +1,10 @@
-import ScheduleRow from "../components/ScheduleRow";
+import ScheduleRow from "../components/scheduleComponents/ScheduleRow";
 import PopUp from "../components/PopUp";
 // import { masterSchedule } from "../data/scheduleData";
 import { useState } from "react";
 import "./Schedule.css";
 import useScheduleData from "../hooks/useScheduleData";
-import ScheduleTable from "../components/ScheduleTable";
+import ScheduleTable from "../components/scheduleComponents/ScheduleTable";
 
 export default function Schedule() {
   const [scheduledEvent, setScheduledEvent] = useState(null); /*indicates no scheduled event selected */
@@ -14,7 +14,7 @@ export default function Schedule() {
   const masterSchedule = useScheduleData();
 
   //dynamically build an array of stage names from scheduleData.jsx
-  const stages = masterSchedule.reduce((acc, slot) => {
+  const stages = (masterSchedule || []).reduce((acc, slot) => {
     slot.sessions.forEach((session) => {
       if (!acc.includes(session.stage)) {
         acc.push(session.stage);
