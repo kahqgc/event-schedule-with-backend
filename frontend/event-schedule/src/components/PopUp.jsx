@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./PopUp.css";
-import AddANote from "./AddANote";
+import AddANote from "./AddANote/AddANote";
 import SignUpButton from "../buttons/SignUpButton";
 import SignUpForm from "./SignUpForm";
 import SideMenu from "./SideMenu";

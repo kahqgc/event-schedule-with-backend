@@ -1,4 +1,4 @@
-import SaveButton from "../buttons/SaveButton";
+import SaveButton from "../../buttons/SaveButton";
 
 export default function Form({
   handleSave,

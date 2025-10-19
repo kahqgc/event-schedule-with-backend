@@ -1,7 +1,8 @@
 package com.example.event_schedule.models;
 
 import jakarta.persistence.*;
-
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "signups")
@@ -9,39 +10,42 @@ public class Signup {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private int id;
+        private Long id;
 
-        @Column(name = "user_id")
-        private int userId;
+        @ManyToOne
+        @JoinColumn(name = "user_id")
+        @OnDelete(action = OnDeleteAction.CASCADE)
+        private User user;
 
         @ManyToOne
         @JoinColumn(name="event_id")
+        @OnDelete(action = OnDeleteAction.CASCADE)
         private EventInfo eventInfo;
 
         public Signup() {}
 
-        public Signup (int userId, EventInfo eventInfo) {
-            this.userId = userId;
+        public Signup (User user, EventInfo eventInfo) {
+            this.user= user;
             this.eventInfo = eventInfo;
         }
 
-        public int getId() {
+        public Long getId() {
             return id;
         }
 
-        public int getUserId() {
-            return userId;
+        public User getUserId() {
+            return user;
         }
 
-        public void setUserId(int userId) {
-            this.userId = userId;
+        public void setUserId(User user) {
+            this.user= user;
         }
 
-        public EventInfo getEventInfo() {
+        public EventInfo getEventInfoId() {
             return eventInfo;
         }
 
-        public void setEventInfo(EventInfo eventInfo) {
+        public void setEventInfoId(EventInfo eventInfo) {
             this.eventInfo = eventInfo;
         }
     }

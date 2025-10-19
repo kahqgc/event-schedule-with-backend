@@ -1,4 +1,4 @@
-import EditButton from "../buttons/EditButton"
+import EditButton from "../../buttons/EditButton"
 
 export default function SavedNote({ savedNote, category, handleEdit }){
 
