@@ -4,6 +4,7 @@ import DeleteButton from "../buttons/DeleteButton";
 import EditButton from "../buttons/EditButton";
 import useSideMenuActions from "../hooks/useSideMenuActions";
 import "./SideMenu.css";
+import CloseButton from "../buttons/CloseButton";
 
 export default function SideMenu({
   signedUpSessions,
@@ -20,11 +21,9 @@ export default function SideMenu({
     <div className={`side-menu ${minimized ? "minimized" : ""}`}>
       {/*buttons at top*/}
       <div className="side-menu-header">
-        <button onClick={() => setMinimized(true)}>-</button>
-        <button onClick={() => setMinimized(false)}>+</button>
-        <button className="close" onClick={onClose}>
-          X
-        </button>
+        <button className="minimize" onClick={() => setMinimized(true)}>-</button>
+        <button className="maximize" onClick={() => setMinimized(false)}>+</button>
+        <CloseButton onClick={onClose} />
       </div>
 
       {!minimized && (

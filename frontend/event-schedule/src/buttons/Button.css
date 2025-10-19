@@ -27,3 +27,11 @@ button.save:hover, button.edit:hover {
 .delete:hover, .edit:hover {
   background-color: #b65a3d;
 }
+
+.close {
+  border: none;
+  background: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #d86c4e;
+}

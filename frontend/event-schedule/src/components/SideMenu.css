@@ -41,7 +41,7 @@
   align-items: center;
 }
 
-.side-menu .side-menu-header button {
+.side-menu .side-menu-header .minimize, .maximize {
   border: none;
   background: none;
   font-size: 1.4rem;

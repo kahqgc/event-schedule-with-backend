@@ -1,8 +1,7 @@
-import ScheduleRow from "../components/scheduleComponents/ScheduleRow";
-import PopUp from "../components/PopUp";
 // import { masterSchedule } from "../data/scheduleData";
 import { useState } from "react";
 import "./Schedule.css";
+import PopUp from "../components/PopUp";
 import useScheduleData from "../hooks/useScheduleData";
 import ScheduleTable from "../components/scheduleComponents/ScheduleTable";
 

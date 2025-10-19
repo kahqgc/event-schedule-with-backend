@@ -5,6 +5,7 @@ import SignUpButton from "../buttons/SignUpButton";
 import SignUpForm from "./SignUpForm";
 import SideMenu from "./SideMenu";
 import useSignUpForm from "../hooks/useSignUpForm";
+import CloseButton from "../buttons/CloseButton";
 
 export default function PopUp({
   scheduledEvent,
@@ -23,9 +24,7 @@ export default function PopUp({
     <>
       {/*only show popUp when sideMenu is not visible*/}
       <div className={"pop-up-box"}>
-        <button className="X" onClick={onClose}>
-          X
-        </button>
+        <CloseButton  onClick={onClose} />
         {/*switch between event info and sign up form*/}
         {!showSignUp ? (
           <>
@@ -41,16 +40,16 @@ export default function PopUp({
         ) : (
           <SignUpForm
             scheduledEvent={scheduledEvent}
-            handleSignUp={(data) => {
-              handleSignUp(data);
-              setShowSignUp(false);
-            }}
             formData={formData}
             setFormData={setFormData}
             error={error}
             setError={setError}
             onBack={() => setShowSignUp(false)}
             onClose={onClose}
+            handleSignUp={(data) => {
+              handleSignUp(data);
+              setShowSignUp(false);
+            }}
           />
         )}
       </div>

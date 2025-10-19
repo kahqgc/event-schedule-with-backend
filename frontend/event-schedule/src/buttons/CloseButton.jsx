@@ -1,6 +1,8 @@
+import "./Button.css";
+
 export default function CloseButton({ onClick }) {
   return (
-    <button className="close-button" onClick={onClick}>
+    <button className="close" onClick={onClick}>
       X
     </button>
   );
