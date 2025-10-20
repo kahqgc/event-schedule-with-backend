@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.event_schedule.models.User;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
-
 import java.util.List;
 
 @RestController

@@ -6,6 +6,7 @@ public class UserRequestDTO {
     private String phone;
     private int tickets;
     private String sessionTitle;
+
     public UserRequestDTO() {
     }
     public String getName() {

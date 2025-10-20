@@ -20,7 +20,7 @@ public class User {
     public User() {
     }
 
-    public User(String name, String email, String phoneNumber, int tickets, String sessionTitle) {
+    public User(String name, String email, String phone, int tickets, String sessionTitle) {
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -70,5 +70,17 @@ public class User {
 
     public void setSessionTitle(String sessionTitle) {
         this.sessionTitle = sessionTitle;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", tickets=" + tickets +
+                ", sessionTitle='" + sessionTitle + '\'' +
+                '}';
     }
 }

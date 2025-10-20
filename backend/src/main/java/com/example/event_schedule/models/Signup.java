@@ -14,7 +14,7 @@ public class Signup {
 
         @ManyToOne
         @JoinColumn(name = "user_id")
-        @OnDelete(action = OnDeleteAction.CASCADE)
+        @OnDelete(action = OnDeleteAction.CASCADE) //if one thing is deleted, the other connected things are automatically deleted too
         private User user;
 
         @ManyToOne
@@ -48,4 +48,13 @@ public class Signup {
         public void setEventInfoId(EventInfo eventInfo) {
             this.eventInfo = eventInfo;
         }
+
+    @Override
+    public String toString() {
+        return "Signup{" +
+                "id=" + id +
+                ", user=" + user +
+                ", eventInfo=" + eventInfo +
+                '}';
     }
+}
