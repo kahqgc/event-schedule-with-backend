@@ -59,7 +59,7 @@ public class EventInfoController {
             event.setDescription(eventData.getDescription());
             event.setDateTime(eventData.getDateTime());
             event.setInstructor(eventData.getInstructor());
-            
+
             eventInfoRepository.save(event);//save updated event to DB
             return new ResponseEntity<>(event, HttpStatus.OK); //200 ok
         }
