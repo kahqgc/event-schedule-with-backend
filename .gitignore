@@ -9,3 +9,5 @@ backend/build/
 # Ignore misnamed build dir
 backend/${project.build.directory}/
 
+.env
+
