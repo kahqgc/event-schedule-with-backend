@@ -2,13 +2,11 @@ package com.example.event_schedule.controllers;
 
 import com.example.event_schedule.models.EventInfo;
 import com.example.event_schedule.repositories.EventInfoRepository;
+import com.example.event_schedule.DTOs.EventInfoRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
@@ -24,7 +22,7 @@ public class EventInfoController {
     /*CRUD operations for event data using RESTful endpoints*/
     //GET (READ)
     @GetMapping(value="", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAllEvents() {
+    public ResponseEntity<List<EventInfo>> getAllEvents() {
         List<EventInfo> allEvents = eventInfoRepository.findAll(); //list of eventInfo objects defined by EventInfo model called from DB
         // what allEvents looks like
         //        [EventInfo{id=1, stage='Main Stage', title='Opening Ceremony', description='Welcome to the event!', dateTime='9:00 AM', instructor='John Doe'},
@@ -34,15 +32,22 @@ public class EventInfoController {
 
     //POST (CREATE)
     @PostMapping(value="/add", consumes="application/json", produces="application/json")
-    public ResponseEntity<?> addEvent(@Valid @RequestBody EventInfo eventData) {
+    public ResponseEntity<?> addEvent(@Valid @RequestBody EventInfoRequestDTO eventData) {
         //@RequestBody takes the JSON from the request body (in postman) and converts it into a Java EventInfo object
-        eventInfoRepository.save(eventData); //save new event to DB
-        return new ResponseEntity<>(eventData, HttpStatus.CREATED); //201 created
+        EventInfo event = new EventInfo();
+        event.setStage(eventData.getStage());
+        event.setTitle(eventData.getTitle());
+        event.setDescription(eventData.getDescription());
+        event.setDateTime(eventData.getDateTime());
+        event.setInstructor(eventData.getInstructor());
+
+        eventInfoRepository.save(event); //save new event to DB
+        return new ResponseEntity<>(event, HttpStatus.CREATED); //201 created
     }
 
     //PUT (UPDATE)
     @PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateEvent(@PathVariable Long id, @Valid @RequestBody EventInfo eventData) throws NoResourceFoundException {
+    public ResponseEntity<EventInfo> updateEvent(@PathVariable Long id, @Valid @RequestBody EventInfo eventData) throws NoResourceFoundException {
         EventInfo event = eventInfoRepository.findById(id).orElse(null);
         if (event == null){
             String path = "/api/events/update/" + id;
@@ -54,6 +59,7 @@ public class EventInfoController {
             event.setDescription(eventData.getDescription());
             event.setDateTime(eventData.getDateTime());
             event.setInstructor(eventData.getInstructor());
+            
             eventInfoRepository.save(event);//save updated event to DB
             return new ResponseEntity<>(event, HttpStatus.OK); //200 ok
         }
@@ -61,7 +67,7 @@ public class EventInfoController {
 
     //DELETE (DELETE)
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteEvent(@PathVariable Long id) throws NoResourceFoundException {
+    public ResponseEntity<EventInfo> deleteEvent(@PathVariable Long id) throws NoResourceFoundException {
         EventInfo event = eventInfoRepository.findById(id).orElseThrow(null);
         if (event == null){
             String path = "/api/events/delete/" + id;
