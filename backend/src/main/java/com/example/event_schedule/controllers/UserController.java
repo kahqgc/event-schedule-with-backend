@@ -29,7 +29,7 @@ public class UserController {
     // PUT
     @PutMapping("/{id}")
     public User updateUser(@PathVariable Long id, @RequestBody User userDetails) {
-        User user = userRepository.findById(id).orElseThrow();
+        User user = userRepository.findById(id).orElse(null);
         user.setName(userDetails.getName());
         user.setEmail(userDetails.getEmail());
         user.setPhone(userDetails.getPhone());
