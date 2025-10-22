@@ -60,7 +60,6 @@ public class UserController {
         }
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);//201 created
     }
-
     // PUT (UPDATE)
     @PutMapping(value = "/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateUser(@PathVariable Long id, @Valid @RequestBody UserRequestDTO userDTO)  throws NoResourceFoundException {

@@ -1,1 +1,11 @@
+# IntelliJ IDEA
 .idea/
+
+# Build output
+backend/target/
+backend/build/
+**/*.class
+
+# Ignore misnamed build dir
+backend/${project.build.directory}/
+
