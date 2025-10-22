@@ -22,6 +22,7 @@ public class EventInfoController {
     private EventInfoRepository eventInfoRepository; //injects an instance of EventInfoRepository so that this controller can access DB
 
     /*CRUD operations for event data using RESTful endpoints*/
+    //GET (READ)
     @GetMapping(value="", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllEvents() {
         List<EventInfo> allEvents = eventInfoRepository.findAll(); //list of eventInfo objects defined by EventInfo model called from DB
@@ -31,6 +32,7 @@ public class EventInfoController {
         return new ResponseEntity<>(allEvents, HttpStatus.OK); //wraps up data + response code and controls what API sends to frontend/postman (JSON format) 200 ok
     }
 
+    //POST (CREATE)
     @PostMapping(value="/add", consumes="application/json", produces="application/json")
     public ResponseEntity<?> addEvent(@Valid @RequestBody EventInfo eventData) {
         //@RequestBody takes the JSON from the request body (in postman) and converts it into a Java EventInfo object
@@ -38,6 +40,7 @@ public class EventInfoController {
         return new ResponseEntity<>(eventData, HttpStatus.CREATED); //201 created
     }
 
+    //PUT (UPDATE)
     @PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateEvent(@PathVariable Long id, @Valid @RequestBody EventInfo eventData) throws NoResourceFoundException {
         EventInfo event = eventInfoRepository.findById(id).orElse(null);
@@ -56,6 +59,7 @@ public class EventInfoController {
         }
     }
 
+    //DELETE (DELETE)
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteEvent(@PathVariable Long id) throws NoResourceFoundException {
         EventInfo event = eventInfoRepository.findById(id).orElseThrow(null);

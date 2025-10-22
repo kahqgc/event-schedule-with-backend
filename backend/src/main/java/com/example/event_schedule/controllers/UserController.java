@@ -10,9 +10,7 @@ import jakarta.validation.Valid;
 import com.example.event_schedule.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.example.event_schedule.models.User;
 import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 import java.util.List;
 
@@ -24,10 +22,13 @@ public class UserController {
     /*injects instances of repos so that this controller can access DB*/
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private EventInfoRepository eventInfoRepository;
+    @Autowired
+    private SignupRepository signupRepository;
 
     // CRUD operations for user data using RESTful endpoints
-    //GET
-
+    //GET (READ)
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllUsers() {
         List<User> allUsers = userRepository.findAll(); //list of user objects defined by User model called from DB and maps them to a List<User>
@@ -37,7 +38,7 @@ public class UserController {
         return new ResponseEntity<>(allUsers, HttpStatus.OK);// wraps up data + response code and controls what API sends to frontend/postman (JSON format) 200 ok
     }
 
-    // POST
+    // POST (CREATE)
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addUser(@Valid @RequestBody UserRequestDTO userDTO) {
         //@RequestBody takes the JSON from the request body (in postman) and converts it into a Java User object
@@ -56,13 +57,11 @@ public class UserController {
         if (eventInfo != null) {
             Signup signup = new Signup(savedUser, eventInfo);
             signupRepository.save(signup);// saves record to join table
-            } else {
-            System.out.println("Event with title " + savedUser.getSessionTitle() + " not found.");
         }
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);//201 created
     }
 
-    // PUT
+    // PUT (UPDATE)
     @PutMapping(value = "/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateUser(@PathVariable Long id, @Valid @RequestBody UserRequestDTO userDTO)  throws NoResourceFoundException {
         User user = userRepository.findById(id).orElse(null);
@@ -81,7 +80,7 @@ public class UserController {
         }
     }
 
-    // DELETE
+    // DELETE  (DELETE)
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) throws NoResourceFoundException {
         User user = userRepository.findById(id).orElse(null);

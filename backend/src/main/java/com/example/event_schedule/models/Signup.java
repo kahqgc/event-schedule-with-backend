@@ -9,10 +9,11 @@ public class Signup {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private int id;
+        private Long id;
 
-        @Column(name = "user_id")
-        private int userId;
+        @ManyToOne
+        @JoinColumn(name = "user_id")
+        private User user;
 
         @ManyToOne
         @JoinColumn(name="event_id")
@@ -20,21 +21,21 @@ public class Signup {
 
         public Signup() {}
 
-        public Signup (int userId, EventInfo eventInfo) {
-            this.userId = userId;
+        public Signup (User user, EventInfo eventInfo) {
+            this.user = user;
             this.eventInfo = eventInfo;
         }
 
-        public int getId() {
+        public Long getId() {
             return id;
         }
 
-        public int getUserId() {
-            return userId;
+        public User getUser() {
+            return user;
         }
 
-        public void setUserId(int userId) {
-            this.userId = userId;
+        public void setUser(User user) {
+            this.user = user;
         }
 
         public EventInfo getEventInfo() {
