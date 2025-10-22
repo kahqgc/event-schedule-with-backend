@@ -11,9 +11,9 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
 
-@RestController
+@RestController //web controller that sends data
 @RequestMapping("/api/events")
-@CrossOrigin(origins = "http://localhost:5173")
+//@CrossOrigin(origins = "http://localhost:5173")
 public class EventInfoController {
 
     @Autowired
@@ -47,7 +47,8 @@ public class EventInfoController {
 
     //PUT (UPDATE)
     @PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<EventInfo> updateEvent(@PathVariable Long id, @Valid @RequestBody EventInfo eventData) throws NoResourceFoundException {
+    public ResponseEntity<?> updateEvent(@PathVariable Long id, @Valid @RequestBody EventInfo eventData) throws NoResourceFoundException {
+        //@RequestBody takes the JSON from the request body (in postman) and converts it into a Java object
         EventInfo event = eventInfoRepository.findById(id).orElse(null);
         if (event == null){
             String path = "/api/events/update/" + id;
@@ -67,14 +68,16 @@ public class EventInfoController {
 
     //DELETE (DELETE)
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<EventInfo> deleteEvent(@PathVariable Long id) throws NoResourceFoundException {
-        EventInfo event = eventInfoRepository.findById(id).orElseThrow(null);
+    public ResponseEntity<?> deleteEvent(@PathVariable Long id) throws NoResourceFoundException {
+        EventInfo event = eventInfoRepository.findById(id).orElse(null);
         if (event == null){
             String path = "/api/events/delete/" + id;
-            throw new NoResourceFoundException(HttpMethod.DELETE, path);
+            throw new NoResourceFoundException(HttpMethod.DELETE, path); //404 not found
         } else {
         eventInfoRepository.deleteById(id);//deletes record from DB
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);//204 no content
         }
     }
 }
+
+//response entity: method that returns an HTTP response

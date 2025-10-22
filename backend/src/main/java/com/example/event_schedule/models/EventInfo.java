@@ -2,6 +2,8 @@ package com.example.event_schedule.models;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 
 @Entity
 @Table(name="event_info")
@@ -15,9 +17,11 @@ public class EventInfo {
 
     @Lob
     private String description;
+    // should I be using LocalDateTime here?
+    // private LocalDateTime localDateTime;
     private String dateTime;
 
-
+    //filter instructor thru Instructor table?
     private String instructor;
 
     public EventInfo() {}
@@ -60,5 +64,17 @@ public class EventInfo {
         return instructor;}
     public void setInstructor(String instructor) {
         this.instructor = instructor;
+    }
+
+    @Override
+    public String toString() {
+        return "EventInfo{" +
+                "id=" + id +
+                ", stage='" + stage + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", dateTime='" + dateTime + '\'' +
+                ", instructor='" + instructor + '\'' +
+                '}';
     }
 }

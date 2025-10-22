@@ -22,7 +22,8 @@ import java.util.List;
 @RequestMapping("/api/signups")
 public class SignupController {
     //injects instances of repos so that this controller can access DB
-    @Autowired SignupRepository signupRepository;
+    @Autowired
+    SignupRepository signupRepository;
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -48,6 +49,7 @@ public class SignupController {
             return new ResponseEntity<>("User or EventInfo not found", HttpStatus.BAD_REQUEST);
         }
         Signup signup = new Signup(user,eventInfo);
+
         signupRepository.save(signup);//saves record to join table
         return new ResponseEntity<>(signup, HttpStatus.CREATED);
     }
