@@ -1,7 +1,6 @@
 package com.example.event_schedule.models;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 
@@ -18,15 +17,15 @@ public class EventInfo {
     @Lob
     private String description;
     // should I be using LocalDateTime here?
-    // private LocalDateTime localDateTime;
-    private String dateTime;
-
-    //filter instructor thru Instructor table?
+    @Column(name="date_time")
+    private LocalDateTime dateTime;
+//    private String dateTime;
+    
     private String instructor;
 
     public EventInfo() {}
 
-    public EventInfo(String stage, String title, String description, String dateTime, String instructor) {
+    public EventInfo(String stage, String title, String description, LocalDateTime dateTime, String instructor) {
         this.stage = stage;
         this.title = title;
         this.description = description;
@@ -54,14 +53,15 @@ public class EventInfo {
     public void setDescription(String description) {
         this.description = description;
     }
-    public String getDateTime() {
+    public LocalDateTime getDateTime() {
         return dateTime;
     }
-    public void setDateTime(String dateTime) {
+    public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
     public String getInstructor() {
-        return instructor;}
+        return instructor;
+    }
     public void setInstructor(String instructor) {
         this.instructor = instructor;
     }

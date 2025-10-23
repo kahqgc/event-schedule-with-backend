@@ -1,6 +1,9 @@
 package com.example.event_schedule.DTOs;
 
-import jakarta.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.*;
+
+import java.time.LocalDateTime;
 
 public class EventInfoRequestDTO {
 
@@ -12,8 +15,9 @@ public class EventInfoRequestDTO {
 
     private String description;
 
-    @NotBlank(message="Time is required")
-    private String dateTime;
+    @NotNull(message="Date and Time is required")
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime dateTime;
 
     private String instructor;
 
@@ -43,11 +47,11 @@ public class EventInfoRequestDTO {
         this.description = description;
     }
 
-    public String getDateTime() {
+    public LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(String dateTime) {
+    public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
 

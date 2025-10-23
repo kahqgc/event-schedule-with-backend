@@ -15,6 +15,7 @@ public class User {
     private String phone;
     private int tickets;
 
+    @Column(name = "session_title")
     private String sessionTitle;
 
     public User() {

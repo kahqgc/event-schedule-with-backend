@@ -12,15 +12,18 @@ public class Signup {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
+        //many signups to one user
         @ManyToOne
-        @JoinColumn(name = "user_id")
+        @JoinColumn(name = "user_id", nullable=false)
         @OnDelete(action = OnDeleteAction.CASCADE) //if one thing is deleted, the other connected things are automatically deleted too
         private User user;
 
+        //many signups to one event
         @ManyToOne
-        @JoinColumn(name="event_id")
+        @JoinColumn(name="event_id", nullable=false)
         @OnDelete(action = OnDeleteAction.CASCADE)
         private EventInfo eventInfo;
+        //one event to many signups
 
         public Signup() {}
 
@@ -40,11 +43,11 @@ public class Signup {
             this.user = user;
         }
 
-        public EventInfo getEventInfoId() {
+        public EventInfo getEventInfo() {
             return eventInfo;
         }
 
-        public void setEventInfoId(EventInfo eventInfo) {
+        public void setEventInfo(EventInfo eventInfo) {
             this.eventInfo = eventInfo;
         }
 
