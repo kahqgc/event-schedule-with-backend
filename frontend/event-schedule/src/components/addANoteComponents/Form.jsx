@@ -9,7 +9,7 @@ export default function Form({
   handleCategoryChange,
 }) {
   return (
-    <form>
+    <form id="note-form">
       <label htmlFor="note">Note: </label>
       <textarea
         id="note" //connect label to text area

@@ -2,21 +2,17 @@ import { useState } from "react";
 import ConfirmButton from "../buttons/ConfirmButton";
 import DeleteButton from "../buttons/DeleteButton";
 import EditButton from "../buttons/EditButton";
-import useSideMenuActions from "../hooks/useSideMenuActions";
 import "./SideMenu.css";
 import CloseButton from "../buttons/CloseButton";
 
 export default function SideMenu({
-  signedUpSessions,
-  setSignedUpSessions,
-  handleEditSessionIndex,
   onClose,
+  users,
+  onEditUser,
+  onDeleteUser
 }) {
   const [minimized, setMinimized] = useState(false);
-  const { loading, error, handleConfirm } = useSideMenuActions(
-    signedUpSessions,
-    setSignedUpSessions
-  );
+
   return (
     <div className={`side-menu ${minimized ? "minimized" : ""}`}>
       {/*buttons at top*/}
@@ -31,36 +27,30 @@ export default function SideMenu({
           <div className="side-menu-content">
             <h2>Added Events</h2>
             <ul>
-              {signedUpSessions.map((session, index) => (
-                <li key={index}>
-                  <strong>{session.title}</strong> - {session.time} <br />
-                  {session.name && (
+              {users.map((user) => (
+                <li key={user.id}>
+                  <strong>{user.sessionTitle}</strong> - {user.time} <br />
+                  {user.name && (
                     <>
-                      Name: {session.name}
+                      Name: {user.name}
                       <br />
-                      Email: {session.email}
+                      Email: {user.email}
                       <br />
-                      Phone: {session.phone}
+                      Phone: {user.phone}
                       <br />
-                      Tickets: {session.tickets}
+                      Tickets: {user.tickets}
                     </>
                   )}
                   <br />
                   <DeleteButton
                     onClick={() => {
-                      const updated = [...signedUpSessions]; //make copy of array
-                      updated.splice(index, 1);
-                      setSignedUpSessions(updated);
+                      onDeleteUser(user.id);
                     }}
                   />
-                  <EditButton onClick={() => handleEditSessionIndex(index)} />
+                  <EditButton onClick={() => onEditUser(user)} />
                 </li>
               ))}
             </ul>
-          </div>
-          {error && <p className="error-message">{error}</p>}
-          <div className="side-menu-footer">
-            <ConfirmButton onClick={handleConfirm} loading={loading} />
           </div>
         </>
       )}

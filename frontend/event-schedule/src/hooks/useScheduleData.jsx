@@ -4,6 +4,7 @@ export default function useScheduleData(){
     const [masterSchedule, setMasterSchedule] = useState([]);
     
       useEffect(() => {
+        //CRUD - get/read events from backend
         const fetchEvents = async () => {
           try {
             const response = await fetch("http://localhost:8080/api/events");
@@ -14,21 +15,23 @@ export default function useScheduleData(){
     
             data.forEach(event => {
               const time = event.dateTime;
+              const date = new Date(time);
+              const formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
               const session = {
                 stage: event.stage,
                 title: event.title,
                 description: event.description,
                 host: event.instructor,
-                time: time
+                time: formattedTime,
               };
-    
-              if (!groupedByTime[time]) {
-                groupedByTime[time] ={
-                  time: time,
+
+              if (!groupedByTime[formattedTime]) {
+                groupedByTime[formattedTime] = {
+                  time: formattedTime,
                   sessions: [session]
                 };
               } else {
-                groupedByTime[time].sessions.push(session);
+                groupedByTime[formattedTime].sessions.push(session);
               }
             });
             const scheduleArray = Object.values(groupedByTime);
