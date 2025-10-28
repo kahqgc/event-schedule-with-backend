@@ -35,3 +35,18 @@ button.save:hover, button.edit:hover {
   cursor: pointer;
   color: #d86c4e;
 }
+
+.cancel {
+  background-color: #c4c4c4;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  padding: 0.3rem 0.6rem;
+  margin: 0rem 0.2rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.cancel:hover {
+  background-color: #a9a9a9;
+}

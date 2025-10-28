@@ -1,24 +1,41 @@
 import { useState } from "react";
-import ConfirmButton from "../buttons/ConfirmButton";
 import DeleteButton from "../buttons/DeleteButton";
 import EditButton from "../buttons/EditButton";
 import "./SideMenu.css";
 import CloseButton from "../buttons/CloseButton";
+import ConfirmModal from "./ConfirmModal";
 
-export default function SideMenu({
-  onClose,
-  users,
-  onEditUser,
-  onDeleteUser
-}) {
+export default function SideMenu({ onClose, users, onEditUser, onDeleteUser }) {
   const [minimized, setMinimized] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+
+  const handleDeleteClick = (id) => {
+    setSelectedUserId(id);
+    setShowConfirm(true);
+  };
+
+  const confirmDelete = () => {
+    onDeleteUser(selectedUserId);
+    setShowConfirm(false);
+    setSelectedUserId(null);
+  };
+
+  const cancelDelete = () => {
+    setShowConfirm(false);
+    setSelectedUserId(null);
+  };
 
   return (
     <div className={`side-menu ${minimized ? "minimized" : ""}`}>
       {/*buttons at top*/}
       <div className="side-menu-header">
-        <button className="minimize" onClick={() => setMinimized(true)}>-</button>
-        <button className="maximize" onClick={() => setMinimized(false)}>+</button>
+        <button className="minimize" onClick={() => setMinimized(true)}>
+          -
+        </button>
+        <button className="maximize" onClick={() => setMinimized(false)}>
+          +
+        </button>
         <CloseButton onClick={onClose} />
       </div>
 
@@ -42,17 +59,20 @@ export default function SideMenu({
                     </>
                   )}
                   <br />
-                  <DeleteButton
-                    onClick={() => {
-                      onDeleteUser(user.id);
-                    }}
-                  />
+                  <DeleteButton onClick={() => handleDeleteClick(user.id)} />
                   <EditButton onClick={() => onEditUser(user)} />
                 </li>
               ))}
             </ul>
           </div>
         </>
+      )}
+      {showConfirm && (
+        <ConfirmModal
+          message="Are you sure you want to delete this registration?"
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+        />
       )}
     </div>
   );

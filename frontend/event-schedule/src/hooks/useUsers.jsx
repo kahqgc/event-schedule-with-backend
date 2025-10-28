@@ -55,7 +55,6 @@ const updateUser = async (user) => {
 
 //delete (CRUD - delete user information)
 const deleteUser = async (userId) => {
-  if (!window.confirm("Are you sure you want to delete this registration?")) return;
   setLoading(true);
   setError("");
   try {
@@ -66,7 +65,6 @@ const deleteUser = async (userId) => {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
-    alert("Registration deleted successfully!");
   } catch (error) {
     console.error("Error deleting registration:", error);
     setError("Error deleting registration");
