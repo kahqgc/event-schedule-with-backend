@@ -5,10 +5,10 @@ import EditButton from "../buttons/EditButton";
 import ControlButton from "../buttons/ControlButton";
 import ConfirmModal from "./ConfirmModal";
 
-export default function EventSideMenu({ 
-  onClose, 
-  signedUpUsers=[], 
-  onEditUser, 
+export default function EventSideMenu({
+  onClose,
+  signedUpUsers = [],
+  onEditUser,
   onDeleteUser,
 }) {
   const [minimized, setMinimized] = useState(false);
@@ -44,8 +44,9 @@ export default function EventSideMenu({
         <>
           <div className="side-menu-content">
             <h2>Your Current Events</h2>
+            {signedUpUsers.length === 0 && <p>No events selected</p>}
             <ul>
-              {(signedUpUsers).map((user) => (
+              {signedUpUsers.map((user) => (
                 <li key={user.id}>
                   <strong>{user.sessionTitle}</strong> - {user.time} <br />
                   {user.name && (
