@@ -24,16 +24,16 @@ export default function SignUpForm({
     }
     try {
       await submitSignUpForm({ ...signUpFormData, eventTitle: activeEvent.title });
-      onSuccess?.();
-    } catch (err) {
-      console.error("error saving user: ", err);
-      setError("error saving user");
+      onSuccess?.(); //closes form on success
+    } catch (err){
+      setError(err.message || "Error saving user, please try again.");
     }
   };
 
   return (
     <div className="sign-up-form">
       <h2>Sign Up</h2>
+      {error && <p className="error-message">{error}</p>}
       <form id="sign-up-form" onSubmit={handleSubmit}>
         <label>
           Name:
@@ -88,7 +88,6 @@ export default function SignUpForm({
             required
           />
         </label>
-        {error && <p className="error-message">{error}</p>}
         <div className="form-buttons">
           <SubmitButton label="Submit" type="submit"/>
           <BackButton onClick={onBack} />

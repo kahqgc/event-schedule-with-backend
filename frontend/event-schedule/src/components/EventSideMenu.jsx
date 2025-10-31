@@ -5,7 +5,12 @@ import EditButton from "../buttons/EditButton";
 import ControlButton from "../buttons/ControlButton";
 import ConfirmModal from "./ConfirmModal";
 
-export default function SideMenu({ onClose, signedUpUsers=[], onEditUser, onDeleteUser }) {
+export default function EventSideMenu({ 
+  onClose, 
+  signedUpUsers=[], 
+  onEditUser, 
+  onDeleteUser,
+}) {
   const [minimized, setMinimized] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);

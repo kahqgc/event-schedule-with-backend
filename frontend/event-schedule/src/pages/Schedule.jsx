@@ -11,11 +11,12 @@ export default function Schedule() {
   const [activeEvent, setActiveEvent] = useState(null); /*indicates no scheduled event selected */
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const [signUpFormData, setSignUpFormData] = useState(null);
+  const [error, setError] = useState("");
 
   const { signedUpUsers, createUser, updateUser, deleteUser } = useUsers();
   //hook to fetch and structure schedule data
   const scheduleData = useScheduleData();
-  console.log("SIgned Up users: ", signedUpUsers);
+
 
   //dynamically build an array of stage names from scheduleData.jsx
   const stages = scheduleData.reduce((acc, slot) => {
@@ -38,7 +39,6 @@ export default function Schedule() {
     try {
       if (data.id) {
         await updateUser(data); //PUT handled by useUsers
-        alert("user updated successfully");
       } else {
         await createUser(data); //POST handled by useUsers
       }
@@ -50,8 +50,8 @@ export default function Schedule() {
         sessionTitle: activeEvent.title,
       });
       setIsSideMenuOpen(true);
-    } catch (err) {
-      console.error(err);
+    } catch (err){
+      setError(err.message || "Error submitting registration. Please try again.")
     }
   };
 
@@ -70,6 +70,7 @@ export default function Schedule() {
   return (
     <>
       <h2 className="schedule-heading">Event Times</h2>
+      {error && <p className="error-message">{error}</p>}
       <section className="schedule-container">
         <EventScheduleTable
           scheduleData={scheduleData}
@@ -86,6 +87,7 @@ export default function Schedule() {
             signUpFormData={signUpFormData}
             setSignUpFormData={setSignUpFormData}
             submitSignUpForm={submitSignUpForm}
+            setError={setError}
           />
         )}
         {isSideMenuOpen && (
@@ -94,6 +96,7 @@ export default function Schedule() {
             signedUpUsers={signedUpUsers}
             onDeleteUser={deleteUser}
             onEditUser={editUser}
+            setError={setError}
           />
         )}
       </section>

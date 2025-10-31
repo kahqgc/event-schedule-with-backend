@@ -9,7 +9,7 @@
   }
 }
 
-.pop-up-box {
+.event-details-modal {
   position: fixed;
   top: 5%;
   left: 30%;
@@ -24,7 +24,7 @@
   animation: fadeIn 0.7s ease-out;
 }
 
-.pop-up-box .control {
+.event-details-modal .control {
   position: absolute;
   top: 12px;
   right: 12px;
@@ -43,18 +43,18 @@
   transition: all 0.2s ease;
 }
 
-.pop-up-box .control:hover {
+.event-details-modal .control:hover {
   background: rgba(216, 108, 78, 0.25);
   transform: scale(1.12);
 }
 
-.pop-up-box h1 {
+.event-details-modal h1 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
 }
 
-.pop-up-box p,
-.pop-up-box span {
+.event-details-modal p,
+.event-details-modal span {
   margin-bottom: 1rem;
   display: flex;
   justify-content: center;
@@ -66,7 +66,7 @@ ul {
 }
 
 @media (max-width: 768px) {
-  .pop-up-box {
+  .event-details-modal {
     position: relative;
     left: auto;
     top: auto;

@@ -11,9 +11,10 @@ export default function EventDetailsModal({
   signUpFormData,
   setSignUpFormData,
   submitSignUpForm,
+  error,
+  setError,
 }) {
   const [showSignUp, setShowSignUp] = useState(false);
-  const [error, setError] = useState("");
 
   // const eventId =
   //   scheduledEvent.title.toLowerCase(); /*Added to make each saved note unique calling the ID the title of the event*/
@@ -21,7 +22,7 @@ export default function EventDetailsModal({
   return (
     <>
       {/*only show popUp when sideMenu is not visible*/}
-      <div className={"pop-up-box"}>
+      <div className={"event-details-modal"}>
         <ControlButton onClick={onClose}>×</ControlButton>
         {/*switch between event info and sign up form*/}
         {!showSignUp ? (
@@ -36,7 +37,10 @@ export default function EventDetailsModal({
             <SubmitButton
               label="Sign Up"
               type="button"
-              onClick={() => setShowSignUp(true)}
+              onClick={() => {
+                setError("");
+                setShowSignUp(true)
+              }}
             />
           </>
         ) : (
@@ -50,6 +54,7 @@ export default function EventDetailsModal({
             onClose={onClose}
             submitSignUpForm={submitSignUpForm}
             onSuccess={() => setShowSignUp(false)}
+          
           />
         )}
       </div>
