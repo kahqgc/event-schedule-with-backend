@@ -1,8 +1,8 @@
 import ScheduleCell from "./ScheduleCell";
 
-export default function ScheduleRow({ slot, stages, setScheduledEvent }) {
+export default function ScheduleRow({ slot, stages, selectEvent }) {
   /*Helper function to find specific session that matches the given stage within the current time slot*/
-  function getSession(stage) {
+  function getEvent(stage) {
     return slot.sessions.find((session) => session.stage === stage); /*find the session that matches the current stage name in this time slot similar to react weather data example*/
   }
 
@@ -13,8 +13,8 @@ export default function ScheduleRow({ slot, stages, setScheduledEvent }) {
         <td key={stage}>
           <ScheduleCell
             stage={stage} /*pass current stage as a prop*/
-            getSession={getSession} /*function to get the matching session for this stage*/
-            setScheduledEvent={setScheduledEvent} /*setter to update selected session*/
+            getEvent={getEvent} /*function to get the matching session for this stage*/
+            selectEvent={selectEvent} /*setter to update selected session*/
           />
         </td>
       ))}

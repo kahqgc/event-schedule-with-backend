@@ -1,11 +1,11 @@
 import { useState } from "react";
+import "./EventSideMenu.css";
 import DeleteButton from "../buttons/DeleteButton";
 import EditButton from "../buttons/EditButton";
-import "./SideMenu.css";
 import ControlButton from "../buttons/ControlButton";
 import ConfirmModal from "./ConfirmModal";
 
-export default function SideMenu({ onClose, users, onEditUser, onDeleteUser }) {
+export default function SideMenu({ onClose, signedUpUsers=[], onEditUser, onDeleteUser }) {
   const [minimized, setMinimized] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
@@ -38,9 +38,9 @@ export default function SideMenu({ onClose, users, onEditUser, onDeleteUser }) {
       {!minimized && (
         <>
           <div className="side-menu-content">
-            <h2>Added Events</h2>
+            <h2>Your Current Events</h2>
             <ul>
-              {users.map((user) => (
+              {(signedUpUsers).map((user) => (
                 <li key={user.id}>
                   <strong>{user.sessionTitle}</strong> - {user.time} <br />
                   {user.name && (

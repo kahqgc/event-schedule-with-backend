@@ -94,6 +94,9 @@
 @media (max-width: 768px) {
   .side-menu {
     position: relative;
+    top: 0;
+    right: 0;
+    left: 0;
     width: 90%;
     margin: 1rem auto 0; /* now sits below PopUp */
     height: auto;

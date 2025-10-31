@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function useUsers() {
  const [loading, setLoading] = useState(false);
  const [error, setError] = useState("");
-  const [users, setUsers] = useState([]);
+  const [signedUpUsers, setSignedUpUsers] = useState([]);
 
 // create a new user (POST)
 const createUser = async (user) => {
@@ -18,7 +18,7 @@ const createUser = async (user) => {
       });
       if (!response.ok) throw new Error(`HTTP Error! Status: ${response.status}` );
       const savedUser = await response.json();
-      setUsers((prev)=> [...prev, savedUser]);
+      setSignedUpUsers((prev)=> [...prev, savedUser]);
       return savedUser;
   } catch (err){
     setError("Error adding user");
@@ -41,7 +41,7 @@ const updateUser = async (user) => {
     if (!response.ok) throw new Error (`HTTP error! Status: ${response.status}`)
     const updatedUser = await response.json();
   
-    setUsers((prev)=> prev.map((user) => (user.id === updatedUser.id ? updatedUser: user))); //if user.id matches updatedUser.id, replace it, if not keep the original
+    setSignedUpUsers((prev)=> prev.map((user) => (user.id === updatedUser.id ? updatedUser: user))); //if user.id matches updatedUser.id, replace it, if not keep the original
     return updatedUser;
   } catch (err){
     setError("Error updating user");
@@ -62,7 +62,7 @@ const deleteUser = async (userId) => {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+    setSignedUpUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
   } catch (err) {
     setError("Error deleting registration");
     throw err;
@@ -71,6 +71,6 @@ const deleteUser = async (userId) => {
   }
 };
   return {
-    users, createUser, updateUser, deleteUser, loading, error,
+    signedUpUsers, createUser, updateUser, deleteUser, loading, error,
 };
 }

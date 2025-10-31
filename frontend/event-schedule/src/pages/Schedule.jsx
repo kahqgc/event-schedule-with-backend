@@ -1,23 +1,24 @@
 // import { masterSchedule } from "../data/scheduleData";
 import { useState } from "react";
 import "./Schedule.css";
-import PopUp from "../components/PopUp";
-import useScheduleData from "../hooks/useScheduleData";
-import ScheduleTable from "../components/scheduleComponents/ScheduleTable";
+import EventDetailsModal from "../components/EventDetailsModal";
+import EventScheduleTable from "../components/scheduleComponents/EventScheduleTable";
+import EventSideMenu from "../components/EventSideMenu";
 import useUsers from "../hooks/useUsers";
-import SideMenu from "../components/SideMenu";
+import useScheduleData from "../hooks/useScheduleData";
 
 export default function Schedule() {
-  const [scheduledEvent, setScheduledEvent] = useState(null); /*indicates no scheduled event selected */
-  const [sideMenuOpen, setSideMenuOpen] = useState(false);
-  const [formData, setFormData] = useState(null);
+  const [activeEvent, setActiveEvent] = useState(null); /*indicates no scheduled event selected */
+  const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
+  const [signUpFormData, setSignUpFormData] = useState(null);
 
-  const { users, createUser, updateUser, deleteUser } = useUsers();
+  const { signedUpUsers, createUser, updateUser, deleteUser } = useUsers();
   //hook to fetch and structure schedule data
-  const masterSchedule = useScheduleData();
+  const scheduleData = useScheduleData();
+  console.log("SIgned Up users: ", signedUpUsers);
 
   //dynamically build an array of stage names from scheduleData.jsx
-  const stages = (masterSchedule || []).reduce((acc, slot) => {
+  const stages = scheduleData.reduce((acc, slot) => {
     slot.sessions.forEach((session) => {
       if (!acc.includes(session.stage)) {
         acc.push(session.stage);
@@ -27,13 +28,13 @@ export default function Schedule() {
   }, []);
 
   //open popUp for EDITING user
-  const startEditUser = (user) => {
-    setScheduledEvent({ title: user.sessionTitle });
-    setFormData({ ...user });
-    setSideMenuOpen(true);
+  const editUser = (user) => {
+    setActiveEvent({ title: user.sessionTitle });
+    setSignUpFormData({ ...user });
+    setIsSideMenuOpen(true);
   };
 
-  const submitForm = async (data) => {
+  const submitSignUpForm = async (data) => {
     try {
       if (data.id) {
         await updateUser(data); //PUT handled by useUsers
@@ -41,54 +42,58 @@ export default function Schedule() {
       } else {
         await createUser(data); //POST handled by useUsers
       }
-        setFormData({
+      setSignUpFormData({
         name: "",
         email: "",
         phone: "",
         tickets: 1,
-        sessionTitle: scheduledEvent.title,
+        sessionTitle: activeEvent.title,
       });
-      setSideMenuOpen(true);
-    } catch (err){
+      setIsSideMenuOpen(true);
+    } catch (err) {
       console.error(err);
     }
+  };
+
+  const handleSelectEvent = (event) => {
+    setActiveEvent(event);
+    setSignUpFormData({
+      id: null,
+      name: "",
+      email: "",
+      phone: "",
+      tickets: 1,
+      sessionTitle: event.title,
+    });
   };
 
   return (
     <>
       <h2 className="schedule-heading">Event Times</h2>
       <section className="schedule-container">
-        <ScheduleTable
-          masterSchedule={masterSchedule}
+        <EventScheduleTable
+          scheduleData={scheduleData}
           stages={stages}
-          setScheduledEvent={(event) => {
-            setScheduledEvent(event);
-            setFormData({
-              id: null,
-              name: "",
-              email: "",
-              phone: "",
-              tickets: 1,
-              sessionTitle: event.title,
-            });
-          }}
+          //resets signUpFormData when new event is selected
+          selectEvent={handleSelectEvent}
         />
-        {scheduledEvent /*render pop up only if event is selected*/ && (
-          <PopUp
-            scheduledEvent={scheduledEvent} /*pass selected event ot pop up modal*/
-            onClose={() => setScheduledEvent(null)}
-            formData={formData}
-            setFormData={setFormData}
-            submitForm={submitForm}
-            handleSignUp={submitForm}
+        {activeEvent /*render pop up only if event is selected*/ && (
+          <EventDetailsModal
+            activeEvent={
+              activeEvent
+            } /*pass selected event to event details modal*/
+            onClose={() => setActiveEvent(null)}
+            signUpFormData={signUpFormData}
+            setSignUpFormData={setSignUpFormData}
+            submitSignUpForm={submitSignUpForm}
           />
         )}
-        {sideMenuOpen && (
-          <SideMenu
-            onClose={() => setSideMenuOpen(false)}
-            users={users}
+        {isSideMenuOpen && (
+          <EventSideMenu
+            onClose={() => setIsSideMenuOpen(false)}
+            signedUpUsers={signedUpUsers}
             onDeleteUser={deleteUser}
-            onEditUser={startEditUser}
+            onEditUser={editUser}
           />
         )}
       </section>

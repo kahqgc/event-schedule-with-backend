@@ -1,17 +1,16 @@
-import React, { useState} from "react";
-import "./PopUp.css";
+import React, { useState } from "react";
+import "./EventDetailsModal.css";
 import AddANote from "./addANoteComponents/AddANote";
-import SignUpButton from "../buttons/SignUpButton";
 import SignUpForm from "./SignUpForm";
 import ControlButton from "../buttons/ControlButton";
 import SubmitButton from "../buttons/SubmitButton";
 
-export default function PopUp({
-  scheduledEvent,
+export default function EventDetailsModal({
+  activeEvent,
   onClose,
-  formData,
-  setFormData,
-  handleSignUp
+  signUpFormData,
+  setSignUpFormData,
+  submitSignUpForm,
 }) {
   const [showSignUp, setShowSignUp] = useState(false);
   const [error, setError] = useState("");
@@ -27,25 +26,29 @@ export default function PopUp({
         {/*switch between event info and sign up form*/}
         {!showSignUp ? (
           <>
-            <h1>{scheduledEvent.title}</h1>
-            <p>{scheduledEvent.description}</p>
+            <h1>{activeEvent.title}</h1>
+            <p>{activeEvent.description}</p>
             <ul>
-              <li>{scheduledEvent.host}</li>
-              <li>{scheduledEvent.time}</li>
+              <li>{activeEvent.host}</li>
+              <li>{activeEvent.time}</li>
             </ul>
             {/* <AddANote eventId={eventId} /> */}
-            <SubmitButton label="Sign Up" type="button" onClick={() => setShowSignUp(true)} />
+            <SubmitButton
+              label="Sign Up"
+              type="button"
+              onClick={() => setShowSignUp(true)}
+            />
           </>
         ) : (
           <SignUpForm
-            scheduledEvent={scheduledEvent}
-            formData={formData}
-            setFormData={setFormData}
+            activeEvent={activeEvent}
+            signUpFormData={signUpFormData}
+            setSignUpFormData={setSignUpFormData}
             error={error}
             setError={setError}
             onBack={() => setShowSignUp(false)}
             onClose={onClose}
-            handleSignUp={handleSignUp}
+            submitSignUpForm={submitSignUpForm}
             onSuccess={() => setShowSignUp(false)}
           />
         )}

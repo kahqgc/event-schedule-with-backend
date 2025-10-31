@@ -1,17 +1,17 @@
-export default function ScheduleCell({ setScheduledEvent, getSession, stage }) {
-  const session =
-    getSession(
+export default function ScheduleCell({ selectEvent, getEvent, stage }) {
+  const event =
+    getEvent(
       stage
     ); /*find the session that corresponds with particular stage and timeslot */
   return (
     <button
       onClick={() => {
-        setScheduledEvent(
-          session
+        selectEvent(
+          event
         ); /*update parent with selected session */
       }}
     >
-      {session ? session.title : ""}
+      {event ? event.title : ""}
     </button>
   );
 }

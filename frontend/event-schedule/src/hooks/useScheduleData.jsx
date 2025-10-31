@@ -12,7 +12,7 @@ function groupEventsByTime(events) {
     const formattedTime = formatEventTime(event.dateTime);
 
     //create a session object
-    const session = {
+    const eventObj = {
       stage: event.stage,
       title: event.title,
       description: event.description,
@@ -24,11 +24,11 @@ function groupEventsByTime(events) {
     if (!acc[formattedTime]) {
       acc[formattedTime] = {
         time: formattedTime,
-        sessions: [session],
+        sessions: [eventObj],
       };
     } else {
       //if time exists, push new session to timeslot
-      acc[formattedTime].sessions.push(session);
+      acc[formattedTime].sessions.push(eventObj);
     }
 
     return acc;
@@ -36,7 +36,7 @@ function groupEventsByTime(events) {
 }
 
 export default function useScheduleData() {
-  const [masterSchedule, setMasterSchedule] = useState([]);
+  const [scheduleData, setScheduleData] = useState([]);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -48,7 +48,7 @@ export default function useScheduleData() {
         const grouped = groupEventsByTime(data);
 
         //converts the grouped object into an array to map over in scheduleTable.jsx
-        setMasterSchedule(Object.values(grouped));
+        setScheduleData(Object.values(grouped));
       } catch (error) {
         console.error("Error fetching events:", error);
       }
@@ -57,5 +57,5 @@ export default function useScheduleData() {
     fetchEvents();
   }, []);
 
-  return masterSchedule;
+  return scheduleData;
 }

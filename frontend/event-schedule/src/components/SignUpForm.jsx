@@ -5,25 +5,25 @@ import validateSignUpForm from "./utils/validateSignUpForm";
 
 export default function SignUpForm({
   onBack,
-  scheduledEvent,
-  formData,
-  setFormData,
+  activeEvent,
+  signUpFormData,
+  setSignUpFormData,
   error,
   setError,
-  handleSignUp,
+  submitSignUpForm,
   onSuccess
 }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
-    const validationError = validateSignUpForm(formData);
+    const validationError = validateSignUpForm(signUpFormData);
     if (validationError) {
       setError(validationError);
       return;
     }
     try {
-      await handleSignUp({ ...formData, sessionTitle: scheduledEvent.title });
+      await submitSignUpForm({ ...signUpFormData, eventTitle: activeEvent.title });
       onSuccess?.();
     } catch (err) {
       console.error("error saving user: ", err);
@@ -41,8 +41,8 @@ export default function SignUpForm({
             id="name"
             autoComplete="name"
             type="text"
-            value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            value={signUpFormData.name}
+            onChange={(e) => setSignUpFormData({ ...signUpFormData, name: e.target.value })}
             required
           />
         </label>
@@ -52,9 +52,9 @@ export default function SignUpForm({
             id="email"
             autoComplete="email"
             type="email"
-            value={formData.email}
+            value={signUpFormData.email}
             onChange={(e) =>
-              setFormData({ ...formData, email: e.target.value })
+              setSignUpFormData({ ...signUpFormData, email: e.target.value })
             }
             required
           />
@@ -65,9 +65,9 @@ export default function SignUpForm({
             id="phone"
             autoComplete="tel"
             type="tel"
-            value={formData.phone}
+            value={signUpFormData.phone}
             onChange={(e) =>
-              setFormData({ ...formData, phone: e.target.value })
+              setSignUpFormData({ ...signUpFormData, phone: e.target.value })
             }
             placeholder="e.g. 000-000-0000"
             required
@@ -79,9 +79,9 @@ export default function SignUpForm({
             id="tickets"
             autoComplete="tickets"
             type="number"
-            value={formData.tickets}
+            value={signUpFormData.tickets}
             onChange={(e) =>
-              setFormData({ ...formData, tickets: Number(e.target.value) })
+              setSignUpFormData({ ...signUpFormData, tickets: Number(e.target.value) })
             }
             min="1"
             max="10"
