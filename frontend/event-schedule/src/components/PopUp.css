@@ -10,7 +10,7 @@
 }
 
 .pop-up-box {
-  position:fixed;
+  position: fixed;
   top: 5%;
   left: 30%;
   background-color: white;
@@ -19,50 +19,58 @@
   padding: 3rem;
   width: 30%;
   max-height: 80vh; 
-  overflow-y: auto; /*allows for scrolling*/
+  overflow-y: auto;
   color: #343755;
   animation: fadeIn 0.7s ease-out;
 }
 
-.pop-up-box button.X {
+.pop-up-box .control {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 12px;
+  right: 12px;
   width: 30px;
   height: 30px;
   border: none;
-  color: #d86c4e;
-  font-size: 1.2rem;
-  font-weight: bold;
   border-radius: 50%;
+  background: rgba(216, 108, 78, 0.12);
+  color: #d86c4e;
+  font-size: 1.1rem;
+  font-weight: 600;
   cursor: pointer;
-
-  /*center X in button*/
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s ease;
 }
 
-.pop-up-box button.X:hover {
-  background-color: black;
-  color: white
+.pop-up-box .control:hover {
+  background: rgba(216, 108, 78, 0.25);
+  transform: scale(1.12);
 }
 
 .pop-up-box h1 {
   font-size: 1.5rem;
+  margin-bottom: 1rem;
 }
 
-.pop-up-box p, 
+.pop-up-box p,
 .pop-up-box span {
   margin-bottom: 1rem;
   display: flex;
   justify-content: center;
 }
 
-.pop-up-box button.X:hover {
-  background-color: black;
+ul {
+  list-style-type: none;
+  padding: 0;
 }
 
-ul{
-    list-style-type: none;
+@media (max-width: 768px) {
+  .pop-up-box {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 90%;
+    margin: 1rem auto;
+  }
 }

@@ -28,12 +28,25 @@ button.save:hover, button.edit:hover {
   background-color: #b65a3d;
 }
 
-.close {
+.control {
+  width: 30px;
+  height: 30px;
   border: none;
-  background: none;
-  font-size: 1rem;
-  cursor: pointer;
+  border-radius: 50%;
+  background: rgba(216, 108, 78, 0.12);
   color: #d86c4e;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.control:hover {
+  background: rgba(216, 108, 78, 0.25);
+  transform: scale(1.12);
 }
 
 .cancel {

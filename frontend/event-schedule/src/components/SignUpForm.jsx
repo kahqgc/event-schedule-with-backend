@@ -4,14 +4,14 @@ import "./SignUpForm.css";
 import validateSignUpForm from "./utils/validateSignUpForm";
 
 export default function SignUpForm({
-  onClose,
   onBack,
   scheduledEvent,
   formData,
   setFormData,
   error,
   setError,
-  handleSignUp
+  handleSignUp,
+  onSuccess
 }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,6 +24,7 @@ export default function SignUpForm({
     }
     try {
       await handleSignUp({ ...formData, sessionTitle: scheduledEvent.title });
+      onSuccess?.();
     } catch (err) {
       console.error("error saving user: ", err);
       setError("error saving user");
@@ -92,9 +93,6 @@ export default function SignUpForm({
           <SubmitButton />
           <BackButton onClick={onBack} />
         </div>
-        <button type="button" className="X" onClick={onClose}>
-          X
-        </button>
       </form>
     </div>
   );

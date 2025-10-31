@@ -3,7 +3,7 @@ import "./PopUp.css";
 import AddANote from "./addANoteComponents/AddANote";
 import SignUpButton from "../buttons/SignUpButton";
 import SignUpForm from "./SignUpForm";
-import CloseButton from "../buttons/CloseButton";
+import ControlButton from "../buttons/ControlButton";
 
 export default function PopUp({
   scheduledEvent,
@@ -22,7 +22,7 @@ export default function PopUp({
     <>
       {/*only show popUp when sideMenu is not visible*/}
       <div className={"pop-up-box"}>
-        <CloseButton onClick={onClose} />
+        <ControlButton onClick={onClose}>×</ControlButton>
         {/*switch between event info and sign up form*/}
         {!showSignUp ? (
           <>
@@ -45,6 +45,7 @@ export default function PopUp({
             onBack={() => setShowSignUp(false)}
             onClose={onClose}
             handleSignUp={handleSignUp}
+            onSuccess={onClose}
           />
         )}
       </div>

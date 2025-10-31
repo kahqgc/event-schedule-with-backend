@@ -2,7 +2,7 @@ import { useState } from "react";
 import DeleteButton from "../buttons/DeleteButton";
 import EditButton from "../buttons/EditButton";
 import "./SideMenu.css";
-import CloseButton from "../buttons/CloseButton";
+import ControlButton from "../buttons/ControlButton";
 import ConfirmModal from "./ConfirmModal";
 
 export default function SideMenu({ onClose, users, onEditUser, onDeleteUser }) {
@@ -30,13 +30,9 @@ export default function SideMenu({ onClose, users, onEditUser, onDeleteUser }) {
     <div className={`side-menu ${minimized ? "minimized" : ""}`}>
       {/*buttons at top*/}
       <div className="side-menu-header">
-        <button className="minimize" onClick={() => setMinimized(true)}>
-          -
-        </button>
-        <button className="maximize" onClick={() => setMinimized(false)}>
-          +
-        </button>
-        <CloseButton onClick={onClose} />
+        <ControlButton onClick={() => setMinimized(true)}>-</ControlButton>
+        <ControlButton onClick={() => setMinimized(false)}>+</ControlButton>
+        <ControlButton onClick={onClose}>×</ControlButton>
       </div>
 
       {!minimized && (

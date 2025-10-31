@@ -21,7 +21,6 @@ const createUser = async (user) => {
       setUsers((prev)=> [...prev, savedUser]);
       return savedUser;
   } catch (err){
-    console.error("Error adding user", err);
     setError("Error adding user");
     throw err;
   } finally {
@@ -42,10 +41,9 @@ const updateUser = async (user) => {
     if (!response.ok) throw new Error (`HTTP error! Status: ${response.status}`)
     const updatedUser = await response.json();
   
-    setUsers((prev)=> prev.map((u) => (u.id === updatedUser.id ? updatedUser: u)));
+    setUsers((prev)=> prev.map((user) => (user.id === updatedUser.id ? updatedUser: user))); //if user.id matches updatedUser.id, replace it, if not keep the original
     return updatedUser;
   } catch (err){
-    console.error("Error updating user: ", err);
     setError("Error updating user");
     throw err;
   } finally {
@@ -53,7 +51,7 @@ const updateUser = async (user) => {
   }
 }
 
-//delete (CRUD - delete user information)
+//delete a user
 const deleteUser = async (userId) => {
   setLoading(true);
   setError("");
@@ -65,9 +63,9 @@ const deleteUser = async (userId) => {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
-  } catch (error) {
-    console.error("Error deleting registration:", error);
+  } catch (err) {
     setError("Error deleting registration");
+    throw err;
   } finally {
     setLoading(false)
   }

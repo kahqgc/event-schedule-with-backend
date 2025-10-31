@@ -8,25 +8,24 @@
     transform: scale(1);
   }
 }
-
+/* desktop */
 .side-menu {
   position: fixed;
-  top: 20px; /* leave a gap so it looks like a floating box */
+  top: 20px;
   right: 20px;
   width: 320px;
   height: calc(100% - 60px);
   background: rgba(255, 255, 255, 0.95);
-  border-radius: 12px 12px 12px 12px;
+  border-radius: 12px;
   padding: 1.5rem;
   box-shadow: -6px 0 20px rgba(0, 0, 0, 0.15);
   color: #343755;
   z-index: 1000;
-  animation: slideIn 0.3s ease-out forwards;
   display: flex;
-  flex-direction: column; /* so confirm button can stay at bottom */
+  flex-direction: column;
   justify-content: space-between;
+  animation: fadeIn 0.7s ease-out;
   transition: all 0.3s ease;
-   animation: fadeIn 0.7s ease-out;
 }
 
 .side-menu.minimized {
@@ -37,16 +36,32 @@
 
 .side-menu-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem;
 }
 
-.side-menu .side-menu-header .minimize, .maximize {
+/* Unified button styling for X, +, – */
+.side-menu-header button,
+.control {
+  width: 30px;
+  height: 30px;
   border: none;
-  background: none;
-  font-size: 1.4rem;
-  cursor: pointer;
+  border-radius: 50%;
+  background: rgba(216, 108, 78, 0.12);
   color: #d86c4e;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.side-menu-header button:hover,
+.control:hover {
+  background: rgba(216, 108, 78, 0.25);
+  transform: scale(1.12);
 }
 
 .side-menu-content {
@@ -55,8 +70,13 @@
   margin-top: 1rem;
 }
 
+.side-menu-content h2 {
+  margin-bottom: 1rem;
+  color: #343755;
+}
+
 .side-menu ul {
-  list-style-type: none;
+  list-style: none;
   padding: 0;
   margin: 0;
 }
@@ -67,4 +87,21 @@
   border-radius: 6px;
   margin-bottom: 0.75rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  font-size: 0.9rem;
+}
+
+/* Mobile / Tablet */
+@media (max-width: 768px) {
+  .side-menu {
+    position: relative;
+    width: 90%;
+    margin: 1rem auto 0; /* now sits below PopUp */
+    height: auto;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  .side-menu-content {
+    overflow: visible;
+    margin-top: 1rem;
+  }
 }
