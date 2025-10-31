@@ -90,7 +90,7 @@ export default function SignUpForm({
         </label>
         {error && <p className="error-message">{error}</p>}
         <div className="form-buttons">
-          <SubmitButton />
+          <SubmitButton label="Submit" type="submit"/>
           <BackButton onClick={onBack} />
         </div>
       </form>

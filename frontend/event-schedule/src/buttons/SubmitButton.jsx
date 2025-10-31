@@ -1,11 +1,13 @@
 import "./Button.css";
 
-export default function SubmitButton() {
+export default function SubmitButton({label="Submit", type="submit", onClick}) {
   return (
     <button
-      type="submit" // allows this to react to the onSubmit event
-      className="submit" >
-      Submit
+      type={type} // allows this to react to the onSubmit event
+      className="submit"
+      onClick={onClick}
+       >
+      {label}
     </button>
   );
 }

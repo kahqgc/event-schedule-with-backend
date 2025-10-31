@@ -4,6 +4,7 @@ import AddANote from "./addANoteComponents/AddANote";
 import SignUpButton from "../buttons/SignUpButton";
 import SignUpForm from "./SignUpForm";
 import ControlButton from "../buttons/ControlButton";
+import SubmitButton from "../buttons/SubmitButton";
 
 export default function PopUp({
   scheduledEvent,
@@ -33,7 +34,7 @@ export default function PopUp({
               <li>{scheduledEvent.time}</li>
             </ul>
             {/* <AddANote eventId={eventId} /> */}
-            <SignUpButton handleSignUp={() => setShowSignUp(true)} />
+            <SubmitButton label="Sign Up" type="button" onClick={() => setShowSignUp(true)} />
           </>
         ) : (
           <SignUpForm
@@ -45,7 +46,7 @@ export default function PopUp({
             onBack={() => setShowSignUp(false)}
             onClose={onClose}
             handleSignUp={handleSignUp}
-            onSuccess={onClose}
+            onSuccess={() => setShowSignUp(false)}
           />
         )}
       </div>
