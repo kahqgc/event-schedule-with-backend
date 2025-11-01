@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-//changes localDatTime format from sql into a readable 9:00AM
+//changes localDateTime format from sql into a readable 9:00AM
 function formatEventTime(dateTimeString) {
   const date = new Date(dateTimeString);
   return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
