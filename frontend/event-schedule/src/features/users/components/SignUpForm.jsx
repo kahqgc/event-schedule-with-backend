@@ -1,7 +1,7 @@
-import SubmitButton from "../buttons/SubmitButton";
-import BackButton from "../buttons/BackButton";
+import SubmitButton from "../../../buttons/SubmitButton";
+import BackButton from "../../../buttons/BackButton";
 import "./SignUpForm.css";
-import validateSignUpForm from "./utils/validateSignUpForm";
+import validateSignUpForm from "../utils/validateSignUpForm";
 
 export default function SignUpForm({
   onBack,

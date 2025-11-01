@@ -1,10 +1,10 @@
 // import { masterSchedule } from "../data/scheduleData";
 import { useState } from "react";
 import "./Schedule.css";
-import EventDetailsModal from "../components/EventDetailsModal";
-import EventScheduleTable from "../components/scheduleComponents/EventScheduleTable";
-import EventSideMenu from "../components/EventSideMenu";
-import useUsers from "../hooks/useUsers";
+import EventDetailsModal from "../modals/EventDetailsModal";
+import EventScheduleTable from "../components/EventScheduleTable";
+import EventSideMenu from "../../users/modals/EventSideMenu";
+import useUsers from "../../users/hooks/useUsers";
 import useScheduleData from "../hooks/useScheduleData";
 
 export default function Schedule() {

@@ -1,9 +1,9 @@
 import { HashRouter as Router, Routes, Route } from 'react-router'
 import Home from "./pages/Home";
 import About from './pages/About';
-import Schedule from './pages/Schedule'
-import Header from './components/layout/Header';
-import Footer from './components/layout/Footer';
+import Schedule from './features/schedule/pages/Schedule'
+import Header from './layout/Header/Header';
+import Footer from './layout/Footer/Footer';
 import './App.css';
 
 function App() {

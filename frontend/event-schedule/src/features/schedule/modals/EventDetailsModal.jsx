@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./EventDetailsModal.css";
-import AddANote from "./addANoteComponents/AddANote";
-import SignUpForm from "./SignUpForm";
-import ControlButton from "../buttons/ControlButton";
-import SubmitButton from "../buttons/SubmitButton";
+import AddANote from "../../notes/AddANote";
+import SignUpForm from "../../users/components/SignUpForm";
+import ControlButton from "../../../buttons/ControlButton";
+import SubmitButton from "../../../buttons/SubmitButton";
 
 export default function EventDetailsModal({
   activeEvent,

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "./EventSideMenu.css";
-import DeleteButton from "../buttons/DeleteButton";
-import EditButton from "../buttons/EditButton";
-import ControlButton from "../buttons/ControlButton";
+import DeleteButton from "../../../buttons/DeleteButton";
+import EditButton from "../../../buttons/EditButton";
+import ControlButton from "../../../buttons/ControlButton";
 import ConfirmModal from "./ConfirmModal";
 
 export default function EventSideMenu({
