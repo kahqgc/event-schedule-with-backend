@@ -1,7 +1,7 @@
 import Form from "./Form";
 import SavedNote from "./SavedNote";
 import { useState, useEffect } from "react";
-import "./AddANote.css";
+import "./styles/AddANote.css";
 
 export default function AddANote({ eventId }) {
   const [textArea, setTextArea] = useState("");

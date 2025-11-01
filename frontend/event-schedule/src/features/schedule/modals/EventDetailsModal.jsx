@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import "./EventDetailsModal.css";
+// import React, { useEffect } from "react";
+import "../styles/EventDetailsModal.css";
 import AddANote from "../../notes/AddANote";
 import SignUpForm from "../../users/components/SignUpForm";
 import ControlButton from "../../../buttons/ControlButton";
@@ -17,11 +17,11 @@ export default function EventDetailsModal({
   setError,
 }) {
 
-   useEffect(()=> {
-  setShowSignUpForm(false);
-// eslint-disable-next-line react-hooks/exhaustive-deps
- }, [activeEvent]);
- if (!activeEvent) return null;
+//    useEffect(()=> {
+//   setShowSignUpForm(false);
+// // eslint-disable-next-line react-hooks/exhaustive-deps
+//  }, [activeEvent]);
+//  if (!activeEvent) return null;
 
   // const eventId =
   //   scheduledEvent.title.toLowerCase(); /*Added to make each saved note unique calling the ID the title of the event*/

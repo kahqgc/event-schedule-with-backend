@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./EventSideMenu.css";
+import "../styles/EventSideMenu.css";
 import DeleteButton from "../../../buttons/DeleteButton";
 import EditButton from "../../../buttons/EditButton";
 import ControlButton from "../../../buttons/ControlButton";
@@ -9,27 +9,12 @@ export default function EventSideMenu({
   onClose,
   signedUpUsers = [],
   onEditUser,
-  onDeleteUser,
+  handleDeleteClick,
+  confirmDelete,
+  cancelDelete,
+  showConfirm,
 }) {
   const [minimized, setMinimized] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState(null);
-
-  const handleDeleteClick = (id) => {
-    setSelectedUserId(id);
-    setShowConfirm(true);
-  };
-
-  const confirmDelete = () => {
-    onDeleteUser(selectedUserId);
-    setShowConfirm(false);
-    setSelectedUserId(null);
-  };
-
-  const cancelDelete = () => {
-    setShowConfirm(false);
-    setSelectedUserId(null);
-  };
 
   return (
     <div className={`side-menu ${minimized ? "minimized" : ""}`}>

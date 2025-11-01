@@ -1,21 +1,41 @@
 // import { masterSchedule } from "../data/scheduleData";
-import { useState } from "react";
-import "./Schedule.css";
+import "../styles/Schedule.css";
 import EventDetailsModal from "../modals/EventDetailsModal";
 import EventScheduleTable from "../components/EventScheduleTable";
 import EventSideMenu from "../../users/modals/EventSideMenu";
 import useUsers from "../../users/hooks/useUsers";
 import useScheduleData from "../hooks/useScheduleData";
+import useScheduleHandlers from "../hooks/useScheduleHandlers";
+import useDeleteHandlers from "../hooks/useDeleteHandlers";
 
 export default function Schedule() {
-  const [activeEvent, setActiveEvent] =
-    useState(null); /*indicates no scheduled event selected */
-  const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
-  const [signUpFormData, setSignUpFormData] = useState(null);
-  const [showSignUpForm, setShowSignUpForm] = useState(false);
-  const [error, setError] = useState("");
+  const { 
+    signedUpUsers, 
+    createUser, 
+    updateUser, 
+    deleteUser } = useUsers();
 
-  const { signedUpUsers, createUser, updateUser, deleteUser } = useUsers();
+  const {
+    showConfirm, 
+    handleDeleteClick, 
+    confirmDelete, 
+    cancelDelete} = useDeleteHandlers(deleteUser)
+  
+  const {
+    activeEvent,
+    signUpFormData,
+    showSignUpForm,
+    isSideMenuOpen,
+    error,
+    setError,
+    handleSelectEvent,
+    submitSignUpForm,
+    editUser,
+    closeAll,
+    setShowSignUpForm,
+    setSignUpFormData,
+  } = useScheduleHandlers({ createUser, updateUser});
+  
   //hook to fetch and structure schedule data
   const scheduleData = useScheduleData();
 
@@ -28,51 +48,6 @@ export default function Schedule() {
     });
     return acc;
   }, []);
-
-  //open popUp for EDITING user
-  const editUser = (user) => {
-    setActiveEvent({ title: user.sessionTitle });
-    setSignUpFormData({ ...user });
-    setShowSignUpForm(true);
-    setIsSideMenuOpen(true);
-  };
-
-  const submitSignUpForm = async (data) => {
-    try {
-      if (data.id) {
-        await updateUser(data); //PUT handled by useUsers
-      } else {
-        await createUser(data); //POST handled by useUsers
-      }
-      setSignUpFormData({
-        name: "",
-        email: "",
-        phone: "",
-        tickets: 1,
-        sessionTitle: activeEvent.title,
-      });
-      setActiveEvent(null);
-      setShowSignUpForm(false);
-      setIsSideMenuOpen(true);
-    } catch (err) {
-      setError(
-        err.message || "Error submitting registration. Please try again."
-      );
-    }
-  };
-
-  const handleSelectEvent = (event) => {
-    setActiveEvent(event);
-    setSignUpFormData({
-      id: null,
-      name: "",
-      email: "",
-      phone: "",
-      tickets: 1,
-      sessionTitle: event.title,
-    });
-    setShowSignUpForm(true);
-  };
 
   return (
     <>
@@ -90,10 +65,7 @@ export default function Schedule() {
             activeEvent={
               activeEvent
             } /*pass selected event to event details modal*/
-            onClose={() => {
-              setActiveEvent(null);
-              setShowSignUpForm(false);
-            }}
+            onClose={closeAll}
             signUpFormData={signUpFormData}
             setSignUpFormData={setSignUpFormData}
             submitSignUpForm={submitSignUpForm}
@@ -105,9 +77,12 @@ export default function Schedule() {
         )}
         {isSideMenuOpen && (
           <EventSideMenu
-            onClose={() => setIsSideMenuOpen(false)}
+            onClose={closeAll}
             signedUpUsers={signedUpUsers}
-            onDeleteUser={deleteUser}
+            handleDeleteClick={handleDeleteClick}
+            confirmDelete={confirmDelete}
+            cancelDelete={cancelDelete}
+            showConfirm={showConfirm}
             onEditUser={editUser}
             setError={setError}
           />

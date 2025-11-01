@@ -1,6 +1,6 @@
 import SubmitButton from "../../../buttons/SubmitButton";
 import BackButton from "../../../buttons/BackButton";
-import "./SignUpForm.css";
+import "../styles/SignUpForm.css";
 import validateSignUpForm from "../utils/validateSignUpForm";
 
 export default function SignUpForm({

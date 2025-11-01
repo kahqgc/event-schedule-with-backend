@@ -1,4 +1,4 @@
-import './ConfirmModal.css';
+import '../styles/ConfirmModal.css';
 
 const ConfirmModal = ({ message, onConfirm, onCancel }) => {
   return (
