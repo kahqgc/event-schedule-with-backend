@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import "./EventDetailsModal.css";
 import AddANote from "../../notes/AddANote";
 import SignUpForm from "../../users/components/SignUpForm";
@@ -11,10 +11,17 @@ export default function EventDetailsModal({
   signUpFormData,
   setSignUpFormData,
   submitSignUpForm,
+  showSignUpForm,
+  setShowSignUpForm,
   error,
   setError,
 }) {
-  const [showSignUp, setShowSignUp] = useState(false);
+
+   useEffect(()=> {
+  setShowSignUpForm(false);
+// eslint-disable-next-line react-hooks/exhaustive-deps
+ }, [activeEvent]);
+ if (!activeEvent) return null;
 
   // const eventId =
   //   scheduledEvent.title.toLowerCase(); /*Added to make each saved note unique calling the ID the title of the event*/
@@ -25,7 +32,7 @@ export default function EventDetailsModal({
       <div className={"event-details-modal"}>
         <ControlButton onClick={onClose}>×</ControlButton>
         {/*switch between event info and sign up form*/}
-        {!showSignUp ? (
+        {!showSignUpForm ? (
           <>
             <h1>{activeEvent.title}</h1>
             <p>{activeEvent.description}</p>
@@ -39,7 +46,7 @@ export default function EventDetailsModal({
               type="button"
               onClick={() => {
                 setError("");
-                setShowSignUp(true)
+                setShowSignUpForm(true)
               }}
             />
           </>
@@ -50,10 +57,10 @@ export default function EventDetailsModal({
             setSignUpFormData={setSignUpFormData}
             error={error}
             setError={setError}
-            onBack={() => setShowSignUp(false)}
+            onBack={() => setShowSignUpForm(false)}
             onClose={onClose}
             submitSignUpForm={submitSignUpForm}
-            onSuccess={() => setShowSignUp(false)}
+            onSuccess={() => setShowSignUpForm(false)}
           
           />
         )}
