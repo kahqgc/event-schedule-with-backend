@@ -31,9 +31,12 @@ export default function EventSideMenu({
             <h2>Your Current Events</h2>
             {signedUpUsers.length === 0 && <p>No events selected</p>}
             <ul>
-              {signedUpUsers.map((user) => (
+              {console.log("signed up users: ", signedUpUsers)}
+              {signedUpUsers.map((user) => {
+                const event = user.eventInfo;
+                return (
                 <li key={user.id}>
-                  <strong>{user.sessionTitle}</strong> - {user.time} <br />
+                  <strong>{event.title}</strong> - {event.time} <br />
                   {user.name && (
                     <>
                       Name: {user.name}
@@ -49,7 +52,8 @@ export default function EventSideMenu({
                   <DeleteButton onClick={() => handleDeleteClick(user.id)} />
                   <EditButton onClick={() => onEditUser(user)} />
                 </li>
-              ))}
+              );
+           })}
             </ul>
           </div>
         </>

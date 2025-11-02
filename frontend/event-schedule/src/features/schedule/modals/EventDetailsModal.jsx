@@ -1,18 +1,20 @@
-// import React, { useEffect } from "react";
 import "../styles/EventDetailsModal.css";
 import AddANote from "../../notes/AddANote";
 import SignUpForm from "../../users/components/SignUpForm";
 import ControlButton from "../../../buttons/ControlButton";
 import SubmitButton from "../../../buttons/SubmitButton";
 
+//modal that displays details for a selected event
+// allows for toggling between event info view and sign-up form view
 export default function EventDetailsModal({
-  activeEvent,
-  onClose,
-  signUpFormData,
-  setSignUpFormData,
-  submitSignUpForm,
-  showSignUpForm,
+  activeEvent, //current selected event object
+  onClose, // callback to close modal
+  signUpFormData, //data for sign up form
+  setSignUpFormData, 
+  submitSignUpForm, //handler to submit form
+  showSignUpForm, // boolean to toggle form v. info view
   setShowSignUpForm,
+  prepareForm, //reset fields in form to default values
   error,
   setError,
 }) {
@@ -24,6 +26,7 @@ export default function EventDetailsModal({
     <>
       {/*only show popUp when sideMenu is not visible*/}
       <div className={"event-details-modal"}>
+        {/*close button*/}
         <ControlButton onClick={onClose}>×</ControlButton>
         {/*switch between event info and sign up form*/}
         {!showSignUpForm ? (
@@ -34,27 +37,31 @@ export default function EventDetailsModal({
               <li>{activeEvent.host}</li>
               <li>{activeEvent.time}</li>
             </ul>
+            {/*optional local storage notes component*/}
             {/* <AddANote eventId={eventId} /> */}
             <SubmitButton
               label="Sign Up"
               type="button"
               onClick={() => {
                 setError("");
-                setShowSignUpForm(true)
+                setShowSignUpForm(true); //opens sign up form
+                if (!signUpFormData?.id){
+                prepareForm(activeEvent);
+                } //populate form with selected event
               }}
             />
           </>
         ) : (
           <SignUpForm
-            activeEvent={activeEvent}
-            signUpFormData={signUpFormData}
-            setSignUpFormData={setSignUpFormData}
+            activeEvent={activeEvent} //event associated with form
+            signUpFormData={signUpFormData} //current form data
+            setSignUpFormData={setSignUpFormData} 
             error={error}
             setError={setError}
-            onBack={() => setShowSignUpForm(false)}
-            onClose={onClose}
-            submitSignUpForm={submitSignUpForm}
-            onSuccess={() => setShowSignUpForm(false)}
+            onBack={() => setShowSignUpForm(false)} //switch back to event info
+            onClose={onClose} //close modal
+            submitSignUpForm={submitSignUpForm} //submit handler
+            onSuccess={() => setShowSignUpForm(false)} //close form on success
           
           />
         )}
