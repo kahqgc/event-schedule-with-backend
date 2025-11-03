@@ -14,7 +14,7 @@ export default function EventDetailsModal({
   submitSignUpForm, //handler to submit form
   showSignUpForm, // boolean to toggle form v. info view
   setShowSignUpForm,
-  prepareForm, //reset fields in form to default values
+  prepareForm, //populate form for new sign up  (no-op during edits)
   error,
   setError,
 }) {
@@ -24,7 +24,6 @@ export default function EventDetailsModal({
 
   return (
     <>
-      {/*only show popUp when sideMenu is not visible*/}
       <div className={"event-details-modal"}>
         {/*close button*/}
         <ControlButton onClick={onClose}>×</ControlButton>
@@ -59,7 +58,6 @@ export default function EventDetailsModal({
             error={error}
             setError={setError}
             onBack={() => setShowSignUpForm(false)} //switch back to event info
-            onClose={onClose} //close modal
             submitSignUpForm={submitSignUpForm} //submit handler
             onSuccess={() => setShowSignUpForm(false)} //close form on success
           

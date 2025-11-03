@@ -1,7 +1,7 @@
 import EventScheduleRow from "./EventScheduleRow";
 
-//renders the event schedule table
-//scheduleData: array of time slots with session objects
+// RENDERS THE EVENT SCHEDULE TABLE //
+//scheduleData: array of time slots with session objects [{time, sessions: [{} {}, {}] }]
 // stages: an array of stage names (table columns)
 // onSelectEvent: callback when session is clicked
 
@@ -22,7 +22,7 @@ export default function EventScheduleTable({ scheduleData = [], stages = [], onS
               <tbody>
                 {/*render a time slot for each row*/}
                 {scheduleData.map((slot) => {
-                  /*map through each time slot object in masterSchedule array to render a row*/
+                  /*map through each time slot object in scheduleData array to render a row*/
                   return (
                     <EventScheduleRow
                       key={slot.time} //unique ID based on time which is how the rows will lay on the page

@@ -33,7 +33,6 @@ export default function SignUpForm({
   return (
     <div className="sign-up-form">
       <h2>Sign Up</h2>
-      {error && <p className="error-message">{error}</p>}
       <form id="sign-up-form" onSubmit={handleSubmit}>
         <label>
           Name:
@@ -93,6 +92,7 @@ export default function SignUpForm({
           <BackButton onClick={onBack} />
         </div>
       </form>
+      {error && <p className="error-message">{error}</p>}
     </div>
   );
 }

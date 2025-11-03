@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-// custom react hook that manages the lifecycle of event sign up process form schedule
+// custom react hook that manages the lifecycle of event sign up process for schedule
 // 1. selecting and viewing an event (handleSelecteEvent)
 // 2. opening and closing the signUpForm
 // 3. creating or editting a user sign up
@@ -37,7 +37,7 @@ export default function useScheduleHandlers({ createUser, updateUser }) {
   };
 
   // HANDLER 1: EVENT SELECTION - called when a user clicks an event in schedule table
-  // sets the selected event and resets the form for a new registration
+  // sets the active event and prepare the form for a new registration
   const handleSelectEvent = (event) => {
     setActiveEvent(event);
     prepareForm(event); //start fresh signup
@@ -85,6 +85,11 @@ export default function useScheduleHandlers({ createUser, updateUser }) {
   //HANDLER 4. CLOSES MODALS - closes all modals and forms, resets activeEvent
   const closeAll = resetUI;
 
+  const closeModalOnly = () =>{
+    setActiveEvent(null);
+    setShowSignUpForm(false);
+  }
+
   // values and handlers made available to schedule page and child components
   return {
     activeEvent,
@@ -97,6 +102,7 @@ export default function useScheduleHandlers({ createUser, updateUser }) {
     submitSignUpForm,
     editUser,
     closeAll,
+    closeModalOnly,
     setShowSignUpForm,
     setSignUpFormData,
     prepareForm,

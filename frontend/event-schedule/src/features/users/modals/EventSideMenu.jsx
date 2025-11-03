@@ -5,6 +5,7 @@ import EditButton from "../../../buttons/EditButton";
 import ControlButton from "../../../buttons/ControlButton";
 import ConfirmModal from "./ConfirmModal";
 
+//LISTS CURRENT SIGN UPS
 export default function EventSideMenu({
   onClose,
   signedUpUsers = [],
@@ -49,8 +50,8 @@ export default function EventSideMenu({
                     </>
                   )}
                   <br />
-                  <DeleteButton onClick={() => handleDeleteClick(user.id)} />
-                  <EditButton onClick={() => onEditUser(user)} />
+                  <DeleteButton onClick={() => handleDeleteClick(user.id)} /> {/*opens confirm modal*/}
+                  <EditButton onClick={() => onEditUser(user)} /> {/*preloads form*/}
                 </li>
               );
            })}

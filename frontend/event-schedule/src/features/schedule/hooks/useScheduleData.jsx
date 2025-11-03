@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+////// still needs commenting //////
+
+
 
 //changes localDateTime format from sql into a readable 9:00AM
 function formatEventTime(dateTimeString) {
@@ -6,7 +9,7 @@ function formatEventTime(dateTimeString) {
   return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 }
 
-//
+// grouping events by time ***EXPAND***
 function groupEventsByTime(events) {
   return events.reduce((acc, event) => {
     const formattedTime = formatEventTime(event.dateTime);
@@ -35,6 +38,8 @@ function groupEventsByTime(events) {
   }, {});
 }
 
+//custom react hook that fetches events from backend, groups by time, and retrns an array of timeslots
+//[{time: "9:00AM", sessions : [{}, {}, {}] }]
 export default function useScheduleData() {
   const [scheduleData, setScheduleData] = useState([]);
 

@@ -1,4 +1,5 @@
-//renders a single table cell button for the session at this stage and this time
+//renders a single table cell button for the session at this stage and this time and handles the click
+// click button and onSelectedEvent(session) opens details
 export default function EventScheduleCell({ onSelectEvent, getEvent, stage }) {
   const event =
     getEvent(

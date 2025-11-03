@@ -1,7 +1,11 @@
-//displays full event schedule, allows users to view event details, registers for sessions, and edit or delete info via side menu
+//FEATURES:
+//1. fetch schedule data and builds columns from it
+//2. wires stante/handlers from useScheduleFlow
+//3. renders EventScheduleTable, EventDetailsModal, EventSideMenu 
+
 // FLOW
-// 1. user clicks an event and opens EventDetailsModal
-// 2. user signs up and form is handled by scheduleHandlers
+// 1. user clicks an event (handleSelectEvent(event)) and opens EventDetailsModal
+// 2. user clicks sign up and form appears
 // 3. side menu shows all signed up users with edit and delete buttons
 
 // import { masterSchedule } from "../data/scheduleData";
@@ -41,6 +45,7 @@ export default function Schedule() {
     submitSignUpForm,
     editUser,
     closeAll,
+    closeModalOnly,
     setShowSignUpForm,
     setSignUpFormData,
     prepareForm
@@ -62,7 +67,6 @@ export default function Schedule() {
   return (
     <>
       <h2 className="schedule-heading">Event Times</h2>
-      {error && <p className="error-message">{error}</p>}
       <section className="schedule-container">
         {/*SCHEDULE TABLE*/}
         <EventScheduleTable
@@ -75,7 +79,7 @@ export default function Schedule() {
         {activeEvent /*render pop up only if event is selected*/ && (
           <EventDetailsModal
             activeEvent={activeEvent} /*pass selected event to event details modal*/
-            onClose={closeAll}
+            onClose={closeModalOnly}
             signUpFormData={signUpFormData}
             setSignUpFormData={setSignUpFormData}
             submitSignUpForm={submitSignUpForm}
