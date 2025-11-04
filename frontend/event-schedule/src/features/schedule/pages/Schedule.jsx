@@ -1,7 +1,7 @@
 //FEATURES:
 //1. fetch schedule data and builds columns from it
 //2. wires stante/handlers from useScheduleFlow
-//3. renders EventScheduleTable, EventDetailsModal, EventSideMenu 
+//3. renders EventScheduleTable, EventDetailsModal, EventSideMenu
 
 // FLOW
 // 1. user clicks an event (handleSelectEvent(event)) and opens EventDetailsModal
@@ -17,39 +17,37 @@ import useUsers from "../../users/hooks/useUsers";
 import useScheduleData from "../hooks/useScheduleData";
 import useScheduleFlow from "../hooks/useScheduleFlow";
 import useDeleteHandlers from "../../users/hooks/useDeleteHandlers";
+import useScheduleUI from "../hooks/useScheduleUI";
 
 export default function Schedule() {
   /*user feature hooks */
-  const { 
-    signedUpUsers, 
-    createUser, 
-    updateUser, 
-    deleteUser } = useUsers();
+  const { signedUpUsers, createUser, updateUser, deleteUser } = useUsers();
 
-  /*delete button handlers*/  
-  const {
-    showConfirm, 
-    handleDeleteClick, 
-    confirmDelete, 
-    cancelDelete} = useDeleteHandlers(deleteUser)
-  
+  // custom schedule hooks
+  const ui = useScheduleUI();
+  const flow = useScheduleFlow({ createUser, updateUser, ui });
+
+  /*delete button handlers*/
+  const { showConfirm, handleDeleteClick, confirmDelete, cancelDelete } =
+    useDeleteHandlers(deleteUser);
+
   /*schedule logic and modal handlers*/
-  const {
-    activeEvent,
-    signUpFormData,
-    showSignUpForm,
-    isSideMenuOpen,
-    error,
-    setError,
-    handleSelectEvent,
-    submitSignUpForm,
-    editUser,
-    closeAll,
-    closeModalOnly,
-    setShowSignUpForm,
-    setSignUpFormData,
-    prepareForm
-  } = useScheduleFlow({ createUser, updateUser});
+  // const {
+  //   activeEvent,
+  //   signUpFormData,
+  //   showSignUpForm,
+  //   isSideMenuOpen,
+  //   error,
+  //   setError,
+  //   handleSelectEvent,
+  //   submitSignUpForm,
+  //   editUser,
+  //   closeAll,
+  //   closeModalOnly,
+  //   setShowSignUpForm,
+  //   setSignUpFormData,
+  //   prepareForm
+  // } = useScheduleFlow({ createUser, updateUser});
 
   //fetch structured schedule data (by time and stage)
   const scheduleData = useScheduleData();
@@ -72,34 +70,34 @@ export default function Schedule() {
         <EventScheduleTable
           scheduleData={scheduleData}
           stages={stages} //resets signUpFormData when new event is selected
-          onSelectEvent={handleSelectEvent}
+          onSelectEvent={flow.handleSelectEvent}
         />
         {/*EVENT DETAILS / SIGN UP FORM*/}
-        {activeEvent /*render pop up only if event is selected*/ && (
+        {console.log("Schedule render: ", flow.signUpFormData)}
+        {ui.activeEvent /*render pop up only if event is selected*/ && (
           <EventDetailsModal
-            activeEvent={activeEvent} /*pass selected event to event details modal*/
-            onClose={closeModalOnly}
-            signUpFormData={signUpFormData}
-            setSignUpFormData={setSignUpFormData}
-            submitSignUpForm={submitSignUpForm}
-            error={error}
-            setError={setError}
-            showSignUpForm={showSignUpForm}
-            setShowSignUpForm={setShowSignUpForm}
-            prepareForm={prepareForm}
+            activeEvent={ui.activeEvent}
+            onClose={ui.closeModalOnly}
+            showSignUpForm={ui.showSignUpForm}
+            setShowSignUpForm={ui.setShowSignUpForm}
+            error={ui.error}
+            setError={ui.setError}
+            signUpFormData={flow.signUpFormData}
+            setSignUpFormData={flow.setSignUpFormData}
+            submitSignUpForm={flow.submitSignUpForm}
+            prepareForm={flow.prepareForm}
           />
         )}
         {/*SIGNED UP USERS SIDE MENU*/}
-        {isSideMenuOpen && (
+        {ui.isSideMenuOpen && (
           <EventSideMenu
-            onClose={closeAll}
+            onClose={ui.closeAll}
+            onEditUser={flow.editUser}
             signedUpUsers={signedUpUsers}
             handleDeleteClick={handleDeleteClick}
             confirmDelete={confirmDelete}
             cancelDelete={cancelDelete}
             showConfirm={showConfirm}
-            onEditUser={editUser}
-            // setError={setError}
           />
         )}
       </section>

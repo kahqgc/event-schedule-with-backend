@@ -2,7 +2,7 @@ import SubmitButton from "../../../buttons/SubmitButton";
 import BackButton from "../../../buttons/BackButton";
 import "../styles/SignUpForm.css";
 import validateSignUpForm from "../utils/validateSignUpForm";
-
+// import { useEffect } from "react";
 
 /* THE SIGN UP FORM
 - lets  users register for a selected event or edit an existing registration
@@ -11,19 +11,21 @@ import validateSignUpForm from "../utils/validateSignUpForm";
 */
 
 export default function SignUpForm({
-  onBack,// called when user hits back button
+  onBack, // called when user hits back button
   activeEvent, //current event user is signing up for
   signUpFormData, //current form state (name, email, phone, tickets)
   setSignUpFormData,
   error,
   setError,
   submitSignUpForm, //function from useScheduleFlow to create or update user
-  onSuccess //called when submission succeeds
+  onSuccess, //called when submission succeeds
 }) {
+
+
   // handles when user clicks submit on form
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent page reload
-    setError(""); // clear any previous 
+    setError(""); // clear any previous
 
     // 1. validate user input
     const validationError = validateSignUpForm(signUpFormData);
@@ -33,11 +35,14 @@ export default function SignUpForm({
     }
     try {
       //2. if validation passes, pause here until submitSignUpForm sends data to backend
-      await submitSignUpForm({ ...signUpFormData, eventTitle: activeEvent.title });
+      await submitSignUpForm({
+        ...signUpFormData,
+        eventTitle: activeEvent.title || "",
+      });
 
       //3. if submission works, close the form and show confirmation
-      onSuccess(); //only runs if onSuccess was passed in
-    } catch (err){
+      onSuccess && onSuccess(); //only runs if onSuccess was passed in
+    } catch (err) {
       setError(err.message || "Error saving registration, please try again.");
     }
   };
@@ -53,7 +58,9 @@ export default function SignUpForm({
             autoComplete="name"
             type="text"
             value={signUpFormData.name}
-            onChange={(e) => setSignUpFormData({ ...signUpFormData, name: e.target.value })}
+            onChange={(e) =>
+              setSignUpFormData({ ...signUpFormData, name: e.target.value })
+            }
             required
           />
         </label>
@@ -92,7 +99,10 @@ export default function SignUpForm({
             type="number"
             value={signUpFormData.tickets}
             onChange={(e) =>
-              setSignUpFormData({ ...signUpFormData, tickets: Number(e.target.value) })
+              setSignUpFormData({
+                ...signUpFormData,
+                tickets: Number(e.target.value),
+              })
             }
             min="1"
             max="10"
@@ -100,7 +110,7 @@ export default function SignUpForm({
           />
         </label>
         <div className="form-buttons">
-          <SubmitButton label="Submit" type="submit"/>
+          <SubmitButton label="Submit" type="submit" />
           <BackButton onClick={onBack} />
         </div>
       </form>

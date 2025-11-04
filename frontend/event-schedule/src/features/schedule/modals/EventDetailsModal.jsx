@@ -22,6 +22,7 @@ export default function EventDetailsModal({
   // const eventId =
   //   scheduledEvent.title.toLowerCase(); /*Added to make each saved note unique calling the ID the title of the event*/
 
+  console.log("Modal render: ", showSignUpForm, activeEvent, signUpFormData);
   return (
     <>
       <div className={"event-details-modal"}>
@@ -43,10 +44,8 @@ export default function EventDetailsModal({
               type="button"
               onClick={() => {
                 setError("");
-                setShowSignUpForm(true); //opens sign up form
-                if (!signUpFormData.id){
                 prepareForm(activeEvent);
-                } // if form does not belong to an existing signup yet (no id), prepare a brand new form using seleted events details, this happens when user clicks sign up for the first time 
+                setShowSignUpForm(true);
               }}
             />
           </>
