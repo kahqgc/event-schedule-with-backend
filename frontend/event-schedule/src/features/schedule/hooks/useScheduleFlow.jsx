@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+//custom hook that manages UI state
+
 // manages the schedule UI flow
 // 1. selecting and viewing an event (handleSelectEvent)
 // 2. opening and closing the signUpForm

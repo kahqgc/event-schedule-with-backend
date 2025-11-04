@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+// custom hook that manages state and fetch calls
 export default function useUsers() {
   const [signedUpUsers, setSignedUpUsers] = useState([]);
 

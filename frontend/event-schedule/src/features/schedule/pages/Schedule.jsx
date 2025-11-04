@@ -16,7 +16,7 @@ import EventSideMenu from "../../users/modals/EventSideMenu";
 import useUsers from "../../users/hooks/useUsers";
 import useScheduleData from "../hooks/useScheduleData";
 import useScheduleFlow from "../hooks/useScheduleFlow";
-import useDeleteHandlers from "../hooks/useDeleteHandlers";
+import useDeleteHandlers from "../../users/hooks/useDeleteHandlers";
 
 export default function Schedule() {
   /*user feature hooks */
@@ -99,7 +99,7 @@ export default function Schedule() {
             cancelDelete={cancelDelete}
             showConfirm={showConfirm}
             onEditUser={editUser}
-            setError={setError}
+            // setError={setError}
           />
         )}
       </section>

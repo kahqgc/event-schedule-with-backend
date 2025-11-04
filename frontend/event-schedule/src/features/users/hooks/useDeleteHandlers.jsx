@@ -1,5 +1,7 @@
 import {useState} from 'react';
 
+
+// handler to control deleting a user used in side menu buttons
 export default function useDeleteHandlers(onDeleteUser) {
   const [showConfirm, setShowConfirm] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);

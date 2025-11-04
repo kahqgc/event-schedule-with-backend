@@ -1,48 +1,14 @@
 import { useState, useEffect } from "react";
-////// still needs commenting //////
+import { groupEventsByTime, sortedSlotsByTime } from "../utils/scheduleUtils";
 
-//changes SQL localDateTime format into a readable 9:00AM
-function formatEventTime(dateTimeString) {
-  const date = new Date(dateTimeString);
-  return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-}
-
-// grouping events by time into slots
-function groupEventsByTime(events) {
-  return events.reduce((acc, event) => {
-    const formattedTime = formatEventTime(event.dateTime);
-
-    //create a session object
-    const eventObj = {
-      stage: event.stage,
-      title: event.title,
-      description: event.description,
-      host: event.instructor,
-      time: formattedTime,
-    };
-
-    //if the time doesn't exist yet, create that slot
-    if (!acc[formattedTime]) {
-      acc[formattedTime] = {
-        time: formattedTime,
-        sessions: [eventObj],
-      };
-    } else {
-      //if time exists, push new session to timeslot
-      acc[formattedTime].sessions.push(eventObj);
-    }
-
-    return acc;
-  }, {});
-}
-
-//fetches events from backend, groups by time, and retrns an array of timeslots
+//custom hook that fetches and updates state
+//fetches events from backend, groups by time, sorts time slots in chronological order, and returns an array of timeslots
 //[{time: "9:00AM", sessions : [{stage, title, descrip, host, time}] }]
 export default function useScheduleData() {
   const [scheduleData, setScheduleData] = useState([]);
 
   useEffect(() => {
-    const fetchEvents = async () => {
+    async function fetchEvents() {
       try {
         //ask backend for list of events
         const response = await fetch("http://localhost:8080/api/events");
@@ -57,10 +23,10 @@ export default function useScheduleData() {
         const grouped = groupEventsByTime(data);
 
         //turn the grouped object into an array and sort it by time. localeCompare() is a string comparison function that compares the time strings directly
-        const sortedSlots = Object.values(grouped).sort((a,b)=> a.time.localeCompare(b.time))
+        const sorted = sortedSlotsByTime(grouped);
 
         //converts the grouped object into an array to map over in scheduleTable.jsx
-        setScheduleData(sortedSlots);
+        setScheduleData(sorted);
 
       } catch (error) {
         console.error("Error fetching events:", error);
