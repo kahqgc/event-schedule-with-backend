@@ -14,11 +14,11 @@ export default function EventDetailsModal({
   submitSignUpForm, //handler to submit form
   showSignUpForm, // boolean to toggle form v. info view
   setShowSignUpForm,
-  prepareForm, //populate form for new sign up  (no-op during edits)
+  prepareForm, //populate form for new sign up
   error,
   setError,
 }) {
-
+  if (!activeEvent) return null;
   // const eventId =
   //   scheduledEvent.title.toLowerCase(); /*Added to make each saved note unique calling the ID the title of the event*/
 
@@ -27,7 +27,7 @@ export default function EventDetailsModal({
       <div className={"event-details-modal"}>
         {/*close button*/}
         <ControlButton onClick={onClose}>×</ControlButton>
-        {/*switch between event info and sign up form*/}
+        {/*switch between event details and sign up form*/}
         {!showSignUpForm ? (
           <>
             <h1>{activeEvent.title}</h1>
@@ -44,9 +44,9 @@ export default function EventDetailsModal({
               onClick={() => {
                 setError("");
                 setShowSignUpForm(true); //opens sign up form
-                if (!signUpFormData?.id){
+                if (!signUpFormData.id){
                 prepareForm(activeEvent);
-                } //populate form with selected event
+                } // if form does not belong to an existing signup yet (no id), prepare a brand new form using seleted events details, this happens when user clicks sign up for the first time 
               }}
             />
           </>

@@ -3,30 +3,42 @@ import BackButton from "../../../buttons/BackButton";
 import "../styles/SignUpForm.css";
 import validateSignUpForm from "../utils/validateSignUpForm";
 
+
+/* THE SIGN UP FORM
+- lets  users register for a selected event or edit an existing registration
+- collects name, email, phone, and ticket count
+- when submitted, it validates the input and calls submitSignUpForm from parent
+*/
+
 export default function SignUpForm({
-  onBack,
-  activeEvent,
-  signUpFormData,
+  onBack,// called when user hits back button
+  activeEvent, //current event user is signing up for
+  signUpFormData, //current form state (name, email, phone, tickets)
   setSignUpFormData,
   error,
   setError,
-  submitSignUpForm,
-  onSuccess
+  submitSignUpForm, //function from useScheduleFlow to create or update user
+  onSuccess //called when submission succeeds
 }) {
+  // handles when user clicks submit on form
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
+    e.preventDefault(); // prevent page reload
+    setError(""); // clear any previous 
 
+    // 1. validate user input
     const validationError = validateSignUpForm(signUpFormData);
     if (validationError) {
       setError(validationError);
-      return;
+      return; // stop if validation fails
     }
     try {
+      //2. if validation passes, pause here until submitSignUpForm sends data to backend
       await submitSignUpForm({ ...signUpFormData, eventTitle: activeEvent.title });
-      onSuccess?.(); //closes form on success
+
+      //3. if submission works, close the form and show confirmation
+      onSuccess(); //only runs if onSuccess was passed in
     } catch (err){
-      setError(err.message || "Error saving user, please try again.");
+      setError(err.message || "Error saving registration, please try again.");
     }
   };
 
@@ -92,6 +104,7 @@ export default function SignUpForm({
           <BackButton onClick={onBack} />
         </div>
       </form>
+      {/*if there is an error, show it below the form*/}
       {error && <p className="error-message">{error}</p>}
     </div>
   );

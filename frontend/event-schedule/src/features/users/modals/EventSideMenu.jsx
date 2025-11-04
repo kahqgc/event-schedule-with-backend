@@ -5,15 +5,16 @@ import EditButton from "../../../buttons/EditButton";
 import ControlButton from "../../../buttons/ControlButton";
 import ConfirmModal from "./ConfirmModal";
 
-//LISTS CURRENT SIGN UPS
+// display slide out side menu listing all current event sign ups
+// users can see what events theyve registered for and edit or delete item
 export default function EventSideMenu({
-  onClose,
-  signedUpUsers = [],
-  onEditUser,
-  handleDeleteClick,
+  onClose, // closes the menu
+  signedUpUsers = [], // list users who have signed up
+  onEditUser, // opens edit form
+  handleDeleteClick, // opens confirmation modal
   confirmDelete,
   cancelDelete,
-  showConfirm,
+  showConfirm, // whether to show confirm modal
 }) {
   const [minimized, setMinimized] = useState(false);
 
@@ -26,6 +27,7 @@ export default function EventSideMenu({
         <ControlButton onClick={onClose}>×</ControlButton>
       </div>
 
+      {/*only renders when content not minimized*/}
       {!minimized && (
         <>
           <div className="side-menu-content">
@@ -40,6 +42,7 @@ export default function EventSideMenu({
                   <strong>{event.title}</strong> - {event.time} <br />
                   {user.name && (
                     <>
+                    {/*show user details*/}
                       Name: {user.name}
                       <br />
                       Email: {user.email}
@@ -50,6 +53,7 @@ export default function EventSideMenu({
                     </>
                   )}
                   <br />
+                  {/*action buttons*/}
                   <DeleteButton onClick={() => handleDeleteClick(user.id)} /> {/*opens confirm modal*/}
                   <EditButton onClick={() => onEditUser(user)} /> {/*preloads form*/}
                 </li>
@@ -59,6 +63,7 @@ export default function EventSideMenu({
           </div>
         </>
       )}
+      {/*confirmation model shows when deleting*/}
       {showConfirm && (
         <ConfirmModal
           message="Are you sure you want to delete this registration?"

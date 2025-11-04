@@ -1,10 +1,10 @@
 import EventScheduleCell from "./EventScheduleCell";
 
-//renders a row for a single time slot with one cell for each stage
+//renders a row for a single time slot with one cell per stage
 export default function ScheduleRow({ slot, stages, onSelectEvent }) {
 
-  /*Helper function to find specific session that matches the given stage within the current time slot*/
-  function getEvent(stage) {
+  /*Helper function - for this timeslot, get this event for a stage*/
+  function getEventForStage(stage) {
     return slot.sessions.find((session) => session.stage === stage); /*find the session that matches the current stage name in this time slot similar to react weather data example*/
   }
 
@@ -15,8 +15,8 @@ export default function ScheduleRow({ slot, stages, onSelectEvent }) {
         <td key={stage}>
           <EventScheduleCell
             stage={stage} /*pass current stage as a prop*/
-            getEvent={getEvent} /*function to get the matching session for this stage*/
-            onSelectEvent={onSelectEvent} /*handler to selecte this session*/
+            getEventForStage={getEventForStage} /*function to get the matching event for this stage*/
+            onSelectEvent={onSelectEvent}
           />
         </td>
       ))}

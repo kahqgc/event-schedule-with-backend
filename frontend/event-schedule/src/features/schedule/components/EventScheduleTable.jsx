@@ -1,9 +1,8 @@
 import EventScheduleRow from "./EventScheduleRow";
 
 // RENDERS THE EVENT SCHEDULE TABLE //
-//scheduleData: array of time slots with session objects [{time, sessions: [{} {}, {}] }]
-// stages: an array of stage names (table columns)
-// onSelectEvent: callback when session is clicked
+//scheduleData: array of time slots with session objects [{time: string , sessions: [{stage, title, descrip, host, time}] }]
+// stages: string [] an array of stage names (table columns)
 
 export default function EventScheduleTable({ scheduleData = [], stages = [], onSelectEvent }) {
     return(

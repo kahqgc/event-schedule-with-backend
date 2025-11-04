@@ -4,16 +4,13 @@ export default function useDeleteHandlers(onDeleteUser) {
   const [showConfirm, setShowConfirm] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
 
-
-
-  
   //1. triggers when delete button is clicked
   const handleDeleteClick = (id) => {
     setSelectedUserId(id);
     setShowConfirm(true); //show confirmation modal
   };
 
-  //2. triggered when delete is clicked again in confirm modal (confirm delete)
+  //2. confirm delete in the confirmation modal
   const confirmDelete = () => {
     if (!selectedUserId) return;
     onDeleteUser(selectedUserId);
@@ -21,7 +18,7 @@ export default function useDeleteHandlers(onDeleteUser) {
     setSelectedUserId(null);
   };
 
-  //3. triggered when cancel button is clicked in confirm modal
+  //3. cancel delete
   const cancelDelete = () => {
     setShowConfirm(false);
     setSelectedUserId(null);

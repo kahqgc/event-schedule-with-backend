@@ -19,7 +19,7 @@ import useScheduleFlow from "../hooks/useScheduleFlow";
 import useDeleteHandlers from "../hooks/useDeleteHandlers";
 
 export default function Schedule() {
-  /*user data hooks from users feature */
+  /*user feature hooks */
   const { 
     signedUpUsers, 
     createUser, 
@@ -71,8 +71,7 @@ export default function Schedule() {
         {/*SCHEDULE TABLE*/}
         <EventScheduleTable
           scheduleData={scheduleData}
-          stages={stages}
-          //resets signUpFormData when new event is selected
+          stages={stages} //resets signUpFormData when new event is selected
           onSelectEvent={handleSelectEvent}
         />
         {/*EVENT DETAILS / SIGN UP FORM*/}

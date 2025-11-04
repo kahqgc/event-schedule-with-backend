@@ -1,5 +1,7 @@
 import '../styles/ConfirmModal.css';
 
+
+// confirmation modal used before deleting a registration
 const ConfirmModal = ({ message, onConfirm, onCancel }) => {
   return (
     <div className="modal-backdrop">

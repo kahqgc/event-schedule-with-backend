@@ -8,6 +8,8 @@ export default function validateSignUpForm({ name, email, phone, tickets }) {
     if (!email.includes("@") || !email.includes(".")) {
       return "Please enter a valid email.";
     }
+
+    // strip non numeric characters and check that phone has 10 digits
     const digits = phone.replace(/\D/g, "");
     if (digits.length !== 10) {
       return "Please enter a valid 10-digit phone number";
