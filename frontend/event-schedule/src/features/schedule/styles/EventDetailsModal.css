@@ -75,3 +75,22 @@ ul {
     margin: 1rem auto;
   }
 }
+
+.success-message {
+  color: #81b29a;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

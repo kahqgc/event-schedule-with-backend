@@ -39,10 +39,8 @@ export default function SignUpForm({
       };
       //2. if validation passes, pause here until submitSignUpForm sends data to backend
       await submitSignUpForm(formWithEvent);
-      alert("Registration saved successfully!");
-
-      //3. if submission works, close the form and show confirmation
-      onSuccess && onSuccess(); //only runs if onSuccess was passed in
+      //3. if submission succeeds, call onSuccess to close form
+      onSuccess && onSuccess(formWithEvent);
     } catch (err) {
       setError(err.message || "Error saving registration, please try again.");
     }

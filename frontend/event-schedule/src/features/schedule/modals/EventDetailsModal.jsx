@@ -3,6 +3,7 @@ import AddANote from "../../notes/AddANote";
 import SignUpForm from "../../signups/components/SignUpForm";
 import ControlButton from "../../../buttons/ControlButton";
 import SubmitButton from "../../../buttons/SubmitButton";
+import { useState } from "react";
 
 //modal that displays details for a selected event
 // allows for toggling between event info view and sign-up form view
@@ -18,6 +19,9 @@ export default function EventDetailsModal({
   error,
   setError,
 }) {
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [confirmationMessage, setConfirmationMessage] = useState("");
+  
   if (!activeEvent) return null;
   // const eventId =
   //   scheduledEvent.title.toLowerCase(); /*Added to make each saved note unique calling the ID the title of the event*/
@@ -56,10 +60,19 @@ export default function EventDetailsModal({
             setError={setError}
             onBack={() => setShowSignUpForm(false)} //switch back to event info
             submitSignUpForm={submitSignUpForm} //submit handler
-            onSuccess={() => setShowSignUpForm(false)} //close form on success
-          
+            onSuccess={() => {
+              const message = signUpFormData.id
+                ? "Registration updated successfully!"
+                : "Registration created successfully!";
+              setConfirmationMessage(message);
+              setShowConfirmation(true);
+              setTimeout(() => setShowConfirmation(false), 2000);
+              setShowSignUpForm(false);
+            }}
           />
+          
         )}
+        {showConfirmation && (<p className="success-message">{confirmationMessage}</p>)}
       </div>
     </>
   );
