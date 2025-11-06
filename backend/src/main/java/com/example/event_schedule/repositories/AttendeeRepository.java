@@ -1,9 +1,9 @@
 package com.example.event_schedule.repositories;
 
-import com.example.event_schedule.models.User;
+import com.example.event_schedule.models.Attendee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface AttendeeRepository extends JpaRepository<Attendee, Long> {
 }

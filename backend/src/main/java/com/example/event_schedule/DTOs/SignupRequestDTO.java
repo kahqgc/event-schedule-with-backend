@@ -1,22 +1,17 @@
 package com.example.event_schedule.DTOs;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 public class SignupRequestDTO {
-    @NotNull(message="User ID is required")
-    private Long userId;
 
     @NotNull(message="Event Info ID is required")
     private Long eventInfoId;
 
-    public SignupRequestDTO() {
-    }
-    public Long getUserId() {
-        return userId;
-    }
+    @Valid
+    private AttendeeRequestDTO attendee;
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public SignupRequestDTO() {
     }
 
     public Long getEventInfoId() {
@@ -25,5 +20,12 @@ public class SignupRequestDTO {
 
     public void setEventInfoId(Long eventInfoId) {
         this.eventInfoId = eventInfoId;
+    }
+
+    public AttendeeRequestDTO getAttendee(){
+        return attendee;
+    }
+    public void setAttendee(AttendeeRequestDTO attendee){
+        this.attendee = attendee;
     }
 }

@@ -1,12 +1,14 @@
 package com.example.event_schedule.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "attendees")
+public class Attendee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("attendeeId")
     private Long id;
     private String name;
     private String email;
@@ -15,73 +17,61 @@ public class User {
     private String phone;
     private int tickets;
 
-    @Column(name = "session_title")
-    private String sessionTitle;
+    @Column(name = "event_title")
+    private String eventTitle;
 
-    public User() {
+    public Attendee() {
     }
 
-    public User(String name, String email, String phone, int tickets, String sessionTitle) {
+    public Attendee(String name, String email, String phone, int tickets, String eventTitle) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.tickets = tickets;
-        this.sessionTitle = sessionTitle;
+        this.eventTitle = eventTitle;
     }
 
     public Long getId() {
         return id;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
-
     public String getPhone() {
         return phone;
     }
-
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
     public int getTickets() {
         return tickets;
     }
-
     public void setTickets(int tickets) {
         this.tickets = tickets;
     }
-
-    public String getSessionTitle() {
-        return sessionTitle;
+    public String getEventTitle() {
+        return eventTitle;
     }
-
-    public void setSessionTitle(String sessionTitle) {
-        this.sessionTitle = sessionTitle;
-    }
+    public void setEventTitle(String eventTitle) {this.eventTitle = eventTitle;}
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Attendee{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", tickets=" + tickets +
-                ", sessionTitle='" + sessionTitle + '\'' +
+                ", eventTitle='" + eventTitle + '\'' +
                 '}';
     }
 }

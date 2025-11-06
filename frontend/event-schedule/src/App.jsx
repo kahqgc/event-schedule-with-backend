@@ -15,13 +15,13 @@ function App() {
           <div id="app">
             {/* persistent header at the top of every page */}
             <Header />
-            <div className="content">
+            <main className="content">
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/pages/About" element={<About />} />
-                <Route path="/pages/Schedule" element={<Schedule />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/schedule" element={<Schedule />} />
               </Routes>
-            </div>
+            </main>
             {/* persistent footer at the bottom of every page */}
             <Footer />
           </div>

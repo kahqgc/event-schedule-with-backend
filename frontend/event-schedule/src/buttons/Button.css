@@ -1,3 +1,11 @@
+button {
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
 button.save, button.signup, button.submit, button.confirm, button.back {
   background-color: #81b29a;
   border: none;
@@ -41,12 +49,10 @@ button.save:hover, button.edit:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
 }
 
 .control:hover {
   background: rgba(216, 108, 78, 0.25);
-  transform: scale(1.12);
 }
 
 .cancel {

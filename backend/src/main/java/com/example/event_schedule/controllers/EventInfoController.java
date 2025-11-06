@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.validation.Valid;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.resource.NoResourceFoundException;
+import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController //web controller that sends data
@@ -31,13 +31,16 @@ public class EventInfoController {
     //POST (CREATE)
     @PostMapping(consumes="application/json", produces="application/json")
     public ResponseEntity<?> createEvent(@Valid @RequestBody EventInfoRequestDTO eventData) {
+        if (eventData == null) {
+        return ResponseEntity.badRequest().body("Event data is required");
+        }
         //@RequestBody takes the JSON from the request body (in postman) and converts it into a Java EventInfo object
         EventInfo event = new EventInfo();
         event.setStage(eventData.getStage());
         event.setTitle(eventData.getTitle());
         event.setDescription(eventData.getDescription());
         event.setDateTime(eventData.getDateTime());
-        event.setInstructor(eventData.getInstructor());
+        event.setHost(eventData.getHost());
 
         eventInfoRepository.save(event); //save new event to DB
         return ResponseEntity.status(HttpStatus.CREATED).body(event); //201 created
@@ -45,37 +48,29 @@ public class EventInfoController {
 
     //PUT (UPDATE)
     @PutMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateEvent(@PathVariable Long id, @Valid @RequestBody EventInfo eventData) throws NoResourceFoundException {
+    public ResponseEntity<EventInfo> updateEvent(@PathVariable Long id, @Valid @RequestBody EventInfo eventData) throws ResponseStatusException {
         //@RequestBody takes the JSON from the request body (in postman) and converts it into a Java object
-        EventInfo event = eventInfoRepository.findById(id).orElse(null);
-        if (event == null){
-            String path = "/api/events/" + id;
-            throw new NoResourceFoundException(HttpMethod.PUT, path); //throw 404 if not found
-        } else {
-            //update existing event with new data
-            event.setStage(eventData.getStage());
-            event.setTitle(eventData.getTitle());
-            event.setDescription(eventData.getDescription());
-            event.setDateTime(eventData.getDateTime());
-            event.setInstructor(eventData.getInstructor());
-
-            eventInfoRepository.save(event);//save updated event to DB
-            return ResponseEntity.ok(event); //200 ok
+        EventInfo event = eventInfoRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found")); //throw 404 if not found
+        if (eventData == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Event data is required"); //400 bad request
         }
-    }
+        //update existing event with new data
+        event.setStage(eventData.getStage());
+        event.setTitle(eventData.getTitle());
+        event.setDescription(eventData.getDescription());
+        event.setDateTime(eventData.getDateTime());
+        event.setHost(eventData.getHost());
 
+        eventInfoRepository.save(event);//save updated event to DB
+        return ResponseEntity.ok(event); //200 ok
+    }
     //DELETE (DELETE)
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteEvent(@PathVariable Long id) throws NoResourceFoundException {
-        EventInfo event = eventInfoRepository.findById(id).orElse(null);
-        if (event == null){
-            String path = "/api/events/" + id;
-            throw new NoResourceFoundException(HttpMethod.DELETE, path); //404 not found
-        } else {
-        eventInfoRepository.deleteById(id);//deletes record from DB
+    public ResponseEntity<Void> deleteEvent(@PathVariable Long id) throws ResponseStatusException {
+        EventInfo event = eventInfoRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
+        eventInfoRepository.delete(event);//deletes record from DB
         return ResponseEntity.noContent().build();//204 no content
         }
     }
-}
 
 //response entity: method that returns an HTTP response

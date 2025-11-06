@@ -1,5 +1,9 @@
 import {useState} from 'react';
 
+//manages confimation flow for deleting a sign up
+//- open confirmation modal when delete is clicked
+//- confirm deletion and call onDeleteUser callback
+//- cancel and closes modal
 
 // handler to control deleting a user used in side menu buttons
 export default function useDeleteHandlers(onDeleteUser) {

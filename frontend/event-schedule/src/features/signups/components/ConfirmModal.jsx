@@ -8,8 +8,8 @@ const ConfirmModal = ({ message, onConfirm, onCancel }) => {
       <div className="modal">
         <p>{message}</p>
         <div className="modal-buttons">
-          <button className="edit" onClick={onCancel}>Cancel</button>
-          <button className="cancel" onClick={onConfirm}>Delete</button>
+          <button className="cancel" onClick={onCancel}>Cancel</button>
+          <button className="delete" onClick={onConfirm}>Delete</button>
         </div>
       </div>
     </div>

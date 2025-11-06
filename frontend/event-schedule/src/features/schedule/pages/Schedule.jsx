@@ -12,51 +12,33 @@
 import "../styles/Schedule.css";
 import EventDetailsModal from "../modals/EventDetailsModal";
 import EventScheduleTable from "../components/EventScheduleTable";
-import EventSideMenu from "../../users/modals/EventSideMenu";
-import useUsers from "../../users/hooks/useUsers";
+import EventSideMenu from "../../signups/components/EventSideMenu";
+import useSignUps from "../../signups/hooks/useSignUps";
 import useScheduleData from "../hooks/useScheduleData";
 import useScheduleFlow from "../hooks/useScheduleFlow";
-import useDeleteHandlers from "../../users/hooks/useDeleteHandlers";
+import useDeleteHandlers from "../../signups/hooks/useDeleteHandlers";
 import useScheduleUI from "../hooks/useScheduleUI";
 
 export default function Schedule() {
   /*user feature hooks */
-  const { signedUpUsers, createUser, updateUser, deleteUser } = useUsers();
+  const { signUps, createSignUp, updateSignUp, deleteSignUp } = useSignUps();
 
   // custom schedule hooks
   const ui = useScheduleUI();
-  const flow = useScheduleFlow({ createUser, updateUser, ui });
+  const flow = useScheduleFlow({ createSignUp, updateSignUp, ui });
 
   /*delete button handlers*/
   const { showConfirm, handleDeleteClick, confirmDelete, cancelDelete } =
-    useDeleteHandlers(deleteUser);
-
-  /*schedule logic and modal handlers*/
-  // const {
-  //   activeEvent,
-  //   signUpFormData,
-  //   showSignUpForm,
-  //   isSideMenuOpen,
-  //   error,
-  //   setError,
-  //   handleSelectEvent,
-  //   submitSignUpForm,
-  //   editUser,
-  //   closeAll,
-  //   closeModalOnly,
-  //   setShowSignUpForm,
-  //   setSignUpFormData,
-  //   prepareForm
-  // } = useScheduleFlow({ createUser, updateUser});
+    useDeleteHandlers(deleteSignUp);
 
   //fetch structured schedule data (by time and stage)
   const scheduleData = useScheduleData();
 
   //dynamically build an array of stage names from scheduleData.jsx
   const stages = scheduleData.reduce((acc, slot) => {
-    slot.sessions.forEach((session) => {
-      if (!acc.includes(session.stage)) {
-        acc.push(session.stage);
+    slot.events.forEach((event) => {
+      if (!acc.includes(event.stage)) {
+        acc.push(event.stage);
       }
     });
     return acc;
@@ -73,7 +55,6 @@ export default function Schedule() {
           onSelectEvent={flow.handleSelectEvent}
         />
         {/*EVENT DETAILS / SIGN UP FORM*/}
-        {console.log("Schedule render: ", flow.signUpFormData)}
         {ui.activeEvent /*render pop up only if event is selected*/ && (
           <EventDetailsModal
             activeEvent={ui.activeEvent}
@@ -92,8 +73,8 @@ export default function Schedule() {
         {ui.isSideMenuOpen && (
           <EventSideMenu
             onClose={ui.closeAll}
-            onEditUser={flow.editUser}
-            signedUpUsers={signedUpUsers}
+            editSignUp={flow.editSignUp}
+            signUps={signUps}
             handleDeleteClick={handleDeleteClick}
             confirmDelete={confirmDelete}
             cancelDelete={cancelDelete}

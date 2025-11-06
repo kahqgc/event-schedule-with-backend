@@ -19,7 +19,7 @@ public class EventInfoRequestDTO {
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dateTime;
 
-    private String instructor;
+    private String host;
 
     public EventInfoRequestDTO() {}
 
@@ -55,11 +55,11 @@ public class EventInfoRequestDTO {
         this.dateTime = dateTime;
     }
 
-    public String getInstructor() {
-        return instructor;
+    public String getHost() {
+        return host;
     }
 
-    public void setInstructor(String instructor) {
-        this.instructor = instructor;
+    public void setHost(String host) {
+        this.host= host;
     }
 }

@@ -2,23 +2,31 @@ package com.example.event_schedule.DTOs;
 
 import jakarta.validation.constraints.*;
 
-public class UserRequestDTO {
+public class AttendeeRequestDTO {
+    private Long id;
+
     @NotBlank(message="Name is required")
+    @Size(max = 100, message = "Name too long")
     private String name;
 
+    @NotBlank(message="Email is required")
     @Email(message="Email should be valid")
     private String email;
 
     @NotBlank(message="Phone number is required")
+    @Size(max=15, message="Phone number too long")
     private String phone;
 
     @Min(value=1, message="At least one ticket must be requested")
+    @Max(value = 10, message =" Cannot request more than 10 tickets")
     private int tickets;
 
-    private String sessionTitle;
+    private String eventTitle;
 
-    public UserRequestDTO() {
+    public AttendeeRequestDTO() {
     }
+
+    public Long getId() {return id;}
     public String getName() {
         return name;
     }
@@ -43,11 +51,11 @@ public class UserRequestDTO {
     public void setTickets(int tickets) {
         this.tickets = tickets;
     }
-    public String getSessionTitle() {
-        return sessionTitle;
+    public String getEventTitle() {
+        return eventTitle;
     }
-    public void setSessionTitle(String sessionTitle) {
-        this.sessionTitle = sessionTitle;
+    public void setEventTitle(String eventTitle) {
+        this.eventTitle = eventTitle;
     }
 
 }

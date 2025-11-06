@@ -5,7 +5,7 @@ export default function ScheduleRow({ slot, stages, onSelectEvent }) {
 
   /*Helper function - for this timeslot, get this event for a stage*/
   function getEventForStage(stage) {
-    return slot.sessions.find((session) => session.stage === stage); /*find the session that matches the current stage name in this time slot similar to react weather data example*/
+    return slot.events.find((event) => event.stage === stage); /*find the event that matches the current stage name in this time slot similar to react weather data example*/
   }
 
   return (

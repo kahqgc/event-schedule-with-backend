@@ -1,6 +1,6 @@
 import "../styles/EventDetailsModal.css";
 import AddANote from "../../notes/AddANote";
-import SignUpForm from "../../users/components/SignUpForm";
+import SignUpForm from "../../signups/components/SignUpForm";
 import ControlButton from "../../../buttons/ControlButton";
 import SubmitButton from "../../../buttons/SubmitButton";
 
@@ -21,8 +21,6 @@ export default function EventDetailsModal({
   if (!activeEvent) return null;
   // const eventId =
   //   scheduledEvent.title.toLowerCase(); /*Added to make each saved note unique calling the ID the title of the event*/
-
-  console.log("Modal render: ", showSignUpForm, activeEvent, signUpFormData);
   return (
     <>
       <div className={"event-details-modal"}>

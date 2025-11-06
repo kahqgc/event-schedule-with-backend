@@ -6,13 +6,14 @@ export function formatEventTime(dateTimeString) {
 
 // grouping events by time into slots
 // backend data:   [{ dateTime, stage, title, description, instructor }]
-// transformed by front end: [{ time: "9:00 AM", sessions: [{ stage, title, description, host, time }] }]
+// transformed by front end: [{ time: "9:00 AM", events: [{ stage, title, description, host, time }] }]
 export function groupEventsByTime(events) {
   return events.reduce((acc, event) => {
     const formattedTime = formatEventTime(event.dateTime);
 
-    //create a session object
+    //create a event object
     const eventObj = {
+      id: event.id,
       stage: event.stage,
       title: event.title,
       description: event.description,
@@ -24,11 +25,11 @@ export function groupEventsByTime(events) {
     if (!acc[formattedTime]) {
       acc[formattedTime] = {
         time: formattedTime,
-        sessions: [eventObj],
+        events: [eventObj],
       };
     } else {
-      //if time exists, push new session to timeslot
-      acc[formattedTime].sessions.push(eventObj);
+      //if time exists, push new event to timeslot
+      acc[formattedTime].events.push(eventObj);
     }
 
     return acc;

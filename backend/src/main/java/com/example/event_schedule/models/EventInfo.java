@@ -16,21 +16,20 @@ public class EventInfo {
 
     @Lob
     private String description;
-    // should I be using LocalDateTime here?
+
     @Column(name="date_time")
     private LocalDateTime dateTime;
-//    private String dateTime;
-    
-    private String instructor;
+
+    private String host;
 
     public EventInfo() {}
 
-    public EventInfo(String stage, String title, String description, LocalDateTime dateTime, String instructor) {
+    public EventInfo(String stage, String title, String description, LocalDateTime dateTime, String host) {
         this.stage = stage;
         this.title = title;
         this.description = description;
         this.dateTime = dateTime;
-        this.instructor = instructor;
+        this.host = host;
     }
     public Long getId() {
         return id;
@@ -59,11 +58,11 @@ public class EventInfo {
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
-    public String getInstructor() {
-        return instructor;
+    public String getHost() {
+        return host;
     }
-    public void setInstructor(String instructor) {
-        this.instructor = instructor;
+    public void setHost(String host) {
+        this.host = host;
     }
 
     @Override
@@ -74,7 +73,7 @@ public class EventInfo {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", dateTime='" + dateTime + '\'' +
-                ", instructor='" + instructor + '\'' +
+                ", host='" + host + '\'' +
                 '}';
     }
 }

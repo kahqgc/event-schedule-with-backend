@@ -1,17 +1,15 @@
 import { useState } from "react";
 
-//custom hook that manages UI state
-
-// manages the schedule UI flow
+//custom hook that handles all event registration flow logic
 // 1. selecting and viewing an event (handleSelectEvent)
-// 2. opening and closing the signUpForm
-// 3. creating or editting a user sign up
-// 4. controlling side menu and modal visibility
-export default function useScheduleFlow({ createUser, updateUser, ui }) {
-  // UI STATE
+// 2. toggling between viewing details
+// 3. submitting or editing a sign up
+// 4. keeping side menu and modals in sync
+
+export default function useScheduleFlow({ createSignUp, updateSignUp, ui }) {
   const [signUpFormData, setSignUpFormData] = useState(null);
 
-  //HELPERS
+  //------------- HELPERS ---------------
   //create default template for form fields
   const getDefaultForm = (event, existing = {}) => {
     return {
@@ -20,41 +18,46 @@ export default function useScheduleFlow({ createUser, updateUser, ui }) {
       email: existing.email || "",
       phone: existing.phone || "",
       tickets: existing.tickets || 1,
-      sessionTitle: existing.sessionTitle || (event ? event.title : ""),
+      eventTitle: existing.eventTitle || (event ? event.title : ""),
     };
   };
 
-  // initialize new blank form for selected event
+  //prepares blank form data when a new event is selected
   const prepareForm = (event) => {
     const newForm = getDefaultForm(event);
     setSignUpFormData(newForm);
     return newForm;
   };
 
-  // HANDLER 1: EVENT SELECTION - called when a user clicks an event in schedule table
-  // sets the active event and prepare the form for a new registration
+  //-------------HANDLERS-----------------
+  // HANDLER 1: EVENT SELECTION - clicks an event and open details modal
   const handleSelectEvent = (event) => {
-    ui.openEventDetails(event); //opens modal and hides sign up form
+    ui.openEventDetails(event); //opens modal
     ui.setError("");
     prepareForm(event); //prepare blank form for this event
   };
 
-  //HANDLER 2: SUBMIT FORM - handle sign up form submission (calls createUser when new and updateUser when editing)
+  //HANDLER 2: SUBMIT FORM - submits form data to create or update signup
   const submitSignUpForm = async (formData) => {
     try {
+      //if form data exists then you're editting so PUT
       if (formData.id) {
-        // if the form contains an existing user ID then it's an update
-        await updateUser(formData, ui.activeEvent); //update existing
+        //updating this signup with this new user data that is tied to this event (PUT)
+        await updateSignUp(formData.id, formData, ui.activeEvent); ////(/{id}, body, event context)
       } else {
-        //otherwise, create a new record
-        await createUser(formData, ui.activeEvent || {}); //create new
+        //POST
+        const savedSignUp = await createSignUp(formData, ui.activeEvent); //(info from form, event)
+        setSignUpFormData((prev) => ({
+          ...prev,
+          id: savedSignUp.id || savedSignUp.signupId,
+        }));
       }
 
-      //on success, close modal and open side menu for log of signed up users for events
-      ui.setIsSideMenuOpen(true); //open user list in side menu to confirm success
+        //reset ui state
+      ui.setIsSideMenuOpen(true);
       ui.setError("");
       ui.setShowSignUpForm(false);
-      prepareForm(ui.activeEvent); //reset for next time
+      prepareForm(ui.activeEvent);
     } catch (err) {
       //catch network or validation errors
       ui.setError(
@@ -63,20 +66,25 @@ export default function useScheduleFlow({ createUser, updateUser, ui }) {
     }
   };
 
-  //HANDLER 3: EDIT EXISTING USER -  when edit button is hit, open sign up form populated with an existing user's data to edit
-  const editUser = (user) => {
-    const event = user.eventInfo; //epects backend to attach eventInfo
+  //HANDLER 3: EDIT EXISTING USER -  edit an existing signup from the side menu
+  const editSignUp = (signup) => {
+    const event = signup.eventInfo; //expects backend to attach eventInfo
+    const attendee = signup.attendee; //expects backend to attach user
+
     ui.openEventDetails(event); //sets stored eventInfo
+
     setSignUpFormData(
+      //build a form for this specific event using the attendee's saved info
       getDefaultForm(event, {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
-      tickets: user.tickets,
-      sessionTitle: event.title,
-    })); //preload existing user data
-    ui.openSignUpForm(true); //switch to signUpForm modal
+        id: signup.id,
+        name: attendee.name,
+        email: attendee.email,
+        phone: attendee.phone,
+        tickets: attendee.tickets,
+        eventTitle: event.title,
+      })
+    ); //preload existing attendee data
+    ui.setShowSignUpForm(true);
     ui.setIsSideMenuOpen(true); //keep side menu open
   };
 
@@ -88,7 +96,7 @@ export default function useScheduleFlow({ createUser, updateUser, ui }) {
     //actions
     handleSelectEvent,
     submitSignUpForm,
-    editUser,
+    editSignUp,
     prepareForm,
   };
 }

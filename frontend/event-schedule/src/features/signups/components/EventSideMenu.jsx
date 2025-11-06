@@ -4,13 +4,14 @@ import DeleteButton from "../../../buttons/DeleteButton";
 import EditButton from "../../../buttons/EditButton";
 import ControlButton from "../../../buttons/ControlButton";
 import ConfirmModal from "./ConfirmModal";
+import { formatEventTime } from "../../schedule/utils/scheduleUtils";
 
 // display slide out side menu listing all current event sign ups
 // users can see what events theyve registered for and edit or delete item
 export default function EventSideMenu({
   onClose, // closes the menu
-  signedUpUsers = [], // list users who have signed up
-  onEditUser, // opens edit form
+  signUps = [], // list users who have signed up
+  editSignUp, // opens edit form
   handleDeleteClick, // opens confirmation modal
   confirmDelete,
   cancelDelete,
@@ -32,33 +33,40 @@ export default function EventSideMenu({
         <>
           <div className="side-menu-content">
             <h2>Your Current Events</h2>
-            {signedUpUsers.length === 0 && <p>No events selected</p>}
+            {signUps.length === 0 && <p>No events selected</p>}
             <ul>
-              {console.log("signed up users: ", signedUpUsers)}
-              {signedUpUsers.map((user) => {
-                const event = user.eventInfo;
+              {signUps.map((signup) => {
+                const attendee = signup.attendee || {};
+                const eventInfo = signup.eventInfo || {};
+                const formattedTime = formatEventTime(eventInfo.dateTime);
+
                 return (
-                <li key={user.id}>
-                  <strong>{event.title}</strong> - {event.time} <br />
-                  {user.name && (
-                    <>
-                    {/*show user details*/}
-                      Name: {user.name}
-                      <br />
-                      Email: {user.email}
-                      <br />
-                      Phone: {user.phone}
-                      <br />
-                      Tickets: {user.tickets}
-                    </>
-                  )}
-                  <br />
-                  {/*action buttons*/}
-                  <DeleteButton onClick={() => handleDeleteClick(user.id)} /> {/*opens confirm modal*/}
-                  <EditButton onClick={() => onEditUser(user)} /> {/*preloads form*/}
-                </li>
-              );
-           })}
+                  <li key={signup.id}>
+                    <strong>{eventInfo.title}</strong>
+                    {formattedTime && <> — {formattedTime}</>} <br />
+                    {attendee.name && (
+                      <>
+                        {/*show attendee details*/}
+                        Name: {attendee.name}
+                        <br />
+                        Email: {attendee.email}
+                        <br />
+                        Phone: {attendee.phone}
+                        <br />
+                        Tickets: {attendee.tickets}
+                      </>
+                    )}
+                    <br />
+                    {/*action buttons*/}
+                    <DeleteButton
+                      onClick={() => handleDeleteClick(signup.id)}
+                    />{" "}
+                    {/*opens confirm modal*/}
+                    <EditButton onClick={() => editSignUp(signup)} />{" "}
+                    {/*preloads form*/}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </>
