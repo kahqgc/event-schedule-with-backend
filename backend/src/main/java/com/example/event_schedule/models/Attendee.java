@@ -3,6 +3,10 @@ package com.example.event_schedule.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
+/**
+ * Entity representing a festival attendee.
+ * Linked to EventInfo through the Signup join table.
+ */
 @Entity
 @Table(name = "attendees")
 public class Attendee {

@@ -2,6 +2,10 @@ package com.example.event_schedule.DTOs;
 
 import jakarta.validation.constraints.*;
 
+/**
+ * DTO used for attendee creation and update requests from the frontend during create (POST) and update (PUT).
+ */
+
 public class AttendeeRequestDTO {
     private Long id;
 
@@ -21,7 +25,8 @@ public class AttendeeRequestDTO {
     @Max(value = 10, message =" Cannot request more than 10 tickets")
     private int tickets;
 
-    private String eventTitle;
+    @NotBlank(message="Event title is required")
+    private String eventTitle; //event name the attendee is registering for
 
     public AttendeeRequestDTO() {
     }
@@ -54,9 +59,7 @@ public class AttendeeRequestDTO {
     public String getEventTitle() {
         return eventTitle;
     }
-    public void setEventTitle(String eventTitle) {
-        this.eventTitle = eventTitle;
-    }
+    public void setEventTitle(String eventTitle) {this.eventTitle = eventTitle;}
 
 }
 

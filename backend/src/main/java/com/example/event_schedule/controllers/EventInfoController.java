@@ -10,6 +10,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
+/**
+ * EventInfoController
+ * -------------------
+ * Handles all CRUD operations for event data.
+ * Endpoints:
+ *  - GET /api/events: Retrieve all events
+ *  - POST/api/events: Create a new event
+ *  - PUT /api/events/{id}: Update an existing event
+ *  - DELETE /api/events/{id}: Delete an event by ID
+ */
 @RestController //web controller that sends data
 @RequestMapping("/api/events")
 public class EventInfoController {
@@ -17,24 +27,25 @@ public class EventInfoController {
     @Autowired
     private EventInfoRepository eventInfoRepository; //injects an instance of EventInfoRepository so that this controller can access DB
 
-    /*CRUD operations for event data using RESTful endpoints*/
     //GET (READ)
+    //retrieves all events from DB
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<EventInfo>> getAllEvents() {
-        List<EventInfo> allEvents = eventInfoRepository.findAll(); //list of eventInfo objects defined by EventInfo model called from DB
+        List<EventInfo> allEvents = eventInfoRepository.findAll();
         // what allEvents looks like
         //        [EventInfo{id=1, stage='Main Stage', title='Opening Ceremony', description='Welcome to the event!', dateTime='9:00 AM', instructor='John Doe'},
         //        EventInfo{id=2, stage='Studio A', title='Dance Workshop', description='Learn choreography.', dateTime='10:00 AM', instructor='Jane Smith'}]
-        return ResponseEntity.ok(allEvents); //wraps up data + response code and controls what API sends to frontend/postman (JSON format) 200 ok
+        return ResponseEntity.ok(allEvents);
     }
 
     //POST (CREATE)
+    //creates a new event and saves it to DB
+    // returns 201 created with saved EventInfo object
     @PostMapping(consumes="application/json", produces="application/json")
-    public ResponseEntity<?> createEvent(@Valid @RequestBody EventInfoRequestDTO eventData) {
+    public ResponseEntity<EventInfo> createEvent(@Valid @RequestBody EventInfoRequestDTO eventData) {
         if (eventData == null) {
-        return ResponseEntity.badRequest().body("Event data is required");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Event data is required");
         }
-        //@RequestBody takes the JSON from the request body (in postman) and converts it into a Java EventInfo object
         EventInfo event = new EventInfo();
         event.setStage(eventData.getStage());
         event.setTitle(eventData.getTitle());
@@ -42,17 +53,20 @@ public class EventInfoController {
         event.setDateTime(eventData.getDateTime());
         event.setHost(eventData.getHost());
 
-        eventInfoRepository.save(event); //save new event to DB
-        return ResponseEntity.status(HttpStatus.CREATED).body(event); //201 created
+        EventInfo savedEvent = eventInfoRepository.save(event);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedEvent); //201 created
     }
 
     //PUT (UPDATE)
+    // updates an existing event by ID
+    // returns 200 ok with updated EventInfo object
+    // throws 404 if event is not found
     @PutMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<EventInfo> updateEvent(@PathVariable Long id, @Valid @RequestBody EventInfo eventData) throws ResponseStatusException {
-        //@RequestBody takes the JSON from the request body (in postman) and converts it into a Java object
+    public ResponseEntity<EventInfo> updateEvent(@PathVariable Long id, @Valid @RequestBody EventInfo eventData)  {
         EventInfo event = eventInfoRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found")); //throw 404 if not found
+
         if (eventData == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Event data is required"); //400 bad request
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Event data is required");
         }
         //update existing event with new data
         event.setStage(eventData.getStage());
@@ -61,12 +75,14 @@ public class EventInfoController {
         event.setDateTime(eventData.getDateTime());
         event.setHost(eventData.getHost());
 
-        eventInfoRepository.save(event);//save updated event to DB
-        return ResponseEntity.ok(event); //200 ok
+        EventInfo updatedEvent = eventInfoRepository.save(event);//save updated event to DB
+        return ResponseEntity.ok(updatedEvent); //200 ok
     }
     //DELETE (DELETE)
+    // deletes an event by ID
+    // returns 204 no content
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteEvent(@PathVariable Long id) throws ResponseStatusException {
+    public ResponseEntity<Void> deleteEvent(@PathVariable Long id)  {
         EventInfo event = eventInfoRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
         eventInfoRepository.delete(event);//deletes record from DB
         return ResponseEntity.noContent().build();//204 no content

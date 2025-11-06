@@ -18,6 +18,8 @@ export default function EventSideMenu({
   showConfirm, // whether to show confirm modal
 }) {
   const [minimized, setMinimized] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
+  const [messageText, setMessageText] = useState("");
 
   return (
     <div className={`side-menu ${minimized ? "minimized" : ""}`}>
@@ -34,6 +36,7 @@ export default function EventSideMenu({
           <div className="side-menu-content">
             <h2>Your Current Events</h2>
             {signUps.length === 0 && <p>No events selected</p>}
+            {showMessage && <p className="success-message">{messageText}</p>}
             <ul>
               {signUps.map((signup) => {
                 const attendee = signup.attendee || {};
@@ -75,7 +78,12 @@ export default function EventSideMenu({
       {showConfirm && (
         <ConfirmModal
           message="Are you sure you want to delete this registration?"
-          onConfirm={confirmDelete}
+          onConfirm={() => {
+            confirmDelete();
+            setMessageText("Registration deleted successfully!");
+            setShowMessage(true);
+            setTimeout(() => setShowMessage(false), 2000);
+          }}
           onCancel={cancelDelete}
         />
       )}
