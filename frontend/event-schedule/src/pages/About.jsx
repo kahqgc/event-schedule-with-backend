@@ -3,7 +3,6 @@ import flower from "../assets/Flowers.svg"
 
 export default function About() {
     return (
-        <div>
             <div className="about-container">
                 <h1>About EarthPulse</h1>
                 <p className="about-intro">
@@ -26,6 +25,5 @@ export default function About() {
                     <li>Camping under the trees to reconnect with nature</li>
                 </ul>
             </div>
-        </div>
     );
 }

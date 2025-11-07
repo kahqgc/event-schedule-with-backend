@@ -77,7 +77,7 @@ export const masterSchedule = [
         description: "Tap into your primal beat with a hands-on drumming session.",
         host: "Monica Davis",
         date: "2025-07-19",
-        time: "11:15 AM–12:00 PM",
+        time: "11:00 AM–12:00 PM",
       },
       {
         stage: "Eclipse Stage",
@@ -85,7 +85,7 @@ export const masterSchedule = [
         description: "Experience vibrational healing using tuning forks calibrated to therapeutic frequencies.",
         host: "Daniel Kim",
         date: "2025-07-19",
-        time: "11:30 AM–12:30 PM",
+        time: "11:00 AM–12:30 PM",
       },
       // The Flow Garden empty
       {

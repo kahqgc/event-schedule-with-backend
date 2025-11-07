@@ -35,7 +35,7 @@ public class SignupController {
     EventInfoRepository eventInfoRepository;
 
     //-------------GET (READ)----------
-    //retrives all signups from DB
+    //retrieves all signups from DB
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Signup>> getAllSignups(){
         List<Signup> allSignups = signupRepository.findAll();

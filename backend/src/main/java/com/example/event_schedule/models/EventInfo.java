@@ -1,7 +1,10 @@
 package com.example.event_schedule.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -21,6 +24,10 @@ public class EventInfo {
     private LocalDateTime dateTime;
 
     private String host;
+
+    @OneToMany(mappedBy = "eventInfo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties({"eventInfo"})
+    private List<Signup> signups = new ArrayList<>();
 
     public EventInfo() {}
 

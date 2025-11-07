@@ -1,7 +1,11 @@
 package com.example.event_schedule.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Entity representing a festival attendee.
@@ -10,6 +14,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "attendees")
 public class Attendee {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("attendeeId")
@@ -23,6 +28,10 @@ public class Attendee {
 
     @Column(name = "event_title")
     private String eventTitle;
+
+    @OneToMany(mappedBy = "attendee", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties({"attendee"})
+    private List<Signup> signups = new ArrayList<>();
 
     public Attendee() {
     }

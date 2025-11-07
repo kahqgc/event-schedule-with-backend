@@ -8,6 +8,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.print.attribute.standard.Media;
 import java.util.List;
 
 /**
@@ -31,7 +33,7 @@ public class EventInfoController {
     //retrieves all events from DB
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<EventInfo>> getAllEvents() {
-        List<EventInfo> allEvents = eventInfoRepository.findAll();
+        List<EventInfo> allEvents = eventInfoRepository.findAllByOrderByDateTimeAsc();
         // what allEvents looks like
         //        [EventInfo{id=1, stage='Main Stage', title='Opening Ceremony', description='Welcome to the event!', dateTime='9:00 AM', instructor='John Doe'},
         //        EventInfo{id=2, stage='Studio A', title='Dance Workshop', description='Learn choreography.', dateTime='10:00 AM', instructor='Jane Smith'}]
@@ -41,7 +43,7 @@ public class EventInfoController {
     //POST (CREATE)
     //creates a new event and saves it to DB
     // returns 201 created with saved EventInfo object
-    @PostMapping(consumes="application/json", produces="application/json")
+    @PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<EventInfo> createEvent(@Valid @RequestBody EventInfoRequestDTO eventData) {
         if (eventData == null) {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Event data is required");

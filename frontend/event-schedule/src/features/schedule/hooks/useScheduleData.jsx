@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { groupEventsByTime, sortedSlotsByTime } from "../utils/scheduleUtils";
+import { groupEventsByTime } from "../utils/scheduleUtils";
 
 //custom hook that fetches and updates state
 //fetches events from backend, groups by time, sorts time slots in chronological order, and returns an array of timeslots
@@ -36,9 +36,8 @@ export default function useScheduleData() {
         //group events that start at the same time together
         const grouped = groupEventsByTime(formattedEvents);
 
-        //turn the grouped object into an array and sort it by time. localeCompare() is a string comparison function that compares the time strings directly
-        const sorted = sortedSlotsByTime(grouped);
-        setScheduleData(sorted);
+        //turn the grouped object into an array and sort it by time
+        setScheduleData(Object.values(grouped));
       } catch (err) {
         console.error("Error fetching events:", err);
         setScheduleData([]);

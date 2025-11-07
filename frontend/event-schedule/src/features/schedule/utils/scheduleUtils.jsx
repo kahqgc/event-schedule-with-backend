@@ -17,7 +17,7 @@ export function groupEventsByTime(events) {
       stage: event.stage,
       title: event.title,
       description: event.description,
-      host: event.instructor,
+      host: event.host,
       time: formattedTime,
     };
 
@@ -34,13 +34,4 @@ export function groupEventsByTime(events) {
 
     return acc;
   }, {});
-}
-
-// turn grouped objects into a sorted array (by time)
-export function sortedSlotsByTime(groupedEvents) {
-  // Object.values() turns {9AM:{},10AM:{}} → [{}, {}]
-  // localeCompare compares time strings in a normal counting way:  "09:00 AM" < "10:00 AM"
-  return Object.values(groupedEvents).sort((a, b) =>
-    a.time.localeCompare(b.time)
-  );
 }
