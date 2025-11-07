@@ -40,8 +40,7 @@ cd event-schedule-with-backend
 cd frontend  
 npm install  
 npm run dev  
-
-visit http://localhost:5173 in brownser to run the app  
+visit http://localhost:5173 in browser to run the app  
 
 ## Wireframes
 > The wireframes outline the user flow and visual layout of the EarthPulse application.
@@ -49,4 +48,11 @@ visit http://localhost:5173 in brownser to run the app
 
 ## Entity Relationship Diagram (ERD)
 > Displays the relationships between the three database entities — `Attendee`, `EventInfo`, and `Signup`.
-[ER Diagram](https://drive.google.com/file/d/1c3IEm84GJI6HvgYWclq3VYINBP852HC-/view)  
+[ER Diagram](https://drive.google.com/file/d/1c3IEm84GJI6HvgYWclq3VYINBP852HC-/view)
+
+## Planned Improvements
+- Implement admin tools for creating and managing new events from the UI.  
+- Add authentication to support personalized sign-up tracking.  
+- Send confirmation or reminder emails after registration.  
+- Expand schedule view to include multiple festival days.
+- Improve mobile UI
