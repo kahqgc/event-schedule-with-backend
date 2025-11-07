@@ -19,8 +19,8 @@ The project was designed to simulate a real-world event management system, empha
 
 ### 1. Clone the Repository
 
-git clone https://github.com/kahqgc/event-schedule-with-backend.git  
-cd event-schedule-with-backend  
+1. git clone https://github.com/kahqgc/event-schedule-with-backend.git  
+2. cd event-schedule-with-backend  
 
 
 ### 2. Set Up the Backend
@@ -37,10 +37,10 @@ cd event-schedule-with-backend
    It should start on **http://localhost:8080**.
 
 ### 3. Set Up Frontend
-cd frontend  
-npm install  
-npm run dev  
-visit http://localhost:5173 in browser to run the app  
+1. cd frontend  
+2. npm install  
+3. npm run dev  
+4. visit http://localhost:5173 in browser to run the app  
 
 ## Wireframes
 > The wireframes outline the user flow and visual layout of the EarthPulse application.
