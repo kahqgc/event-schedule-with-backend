@@ -37,8 +37,8 @@ cd event-schedule-with-backend
    It should start on **http://localhost:8080**.
 
 ### 3. Set Up Frontend
-cd frontend
-npm install
-npm run dev
+cd frontend  
+npm install  
+npm run dev  
 
-visit http://localhost:5173 in brownser to run the app
+visit http://localhost:5173 in brownser to run the app  
