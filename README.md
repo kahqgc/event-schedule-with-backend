@@ -47,7 +47,7 @@ visit http://localhost:5173 in browser to run the app
 [View Wireframes on Figma](https://www.figma.com/design/Ax8ycKBy55FhkNxg0pEgB4/Unit-2-Project?node-id=0-1&p=f)
 
 ## Entity Relationship Diagram (ERD)
-> Displays the relationships between the three database entities — `Attendee`, `EventInfo`, and `Signup`.
+> Displays the relationships between the three database entities — `Attendee`, `EventInfo`, and `Signup` (with future inplementation of Instructors).
 [ER Diagram](https://drive.google.com/file/d/1c3IEm84GJI6HvgYWclq3VYINBP852HC-/view)
 
 ## Planned Improvements
