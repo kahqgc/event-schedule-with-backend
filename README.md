@@ -22,6 +22,7 @@ The project was designed to simulate a real-world event management system, empha
 git clone https://github.com/kahqgc/event-schedule-with-backend.git
 cd event-schedule-with-backend
 
+```markdown
 ### 2. Set Up the Backend
 
 1. Open the `/backend` folder in **IntelliJ IDEA**.  
