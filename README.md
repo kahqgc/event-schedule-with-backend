@@ -37,7 +37,7 @@ The project was designed to simulate a real-world event management system, empha
    It should start on **http://localhost:8080**.
 
 ### 3. Set Up Frontend
-1. cd frontend  
+1. cd frontend/event-schedule  
 2. npm install  
 3. npm run dev  
 4. visit http://localhost:5173 in browser to run the app  
