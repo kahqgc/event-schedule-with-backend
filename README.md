@@ -33,3 +33,11 @@ cd event-schedule-with-backend
    spring.datasource.username=root
    spring.datasource.password=yourpassword
    spring.jpa.hibernate.ddl-auto=update
+4. Run the Spring Boot app (`EventScheduleApplication.java`).  
+   It should start on **http://localhost:8080**.
+
+### 3. Set Up Frontend
+cd frontend
+npm install
+npm run dev
+visit http://localhost:5173 in brownser to run the app
