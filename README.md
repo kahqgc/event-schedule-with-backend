@@ -19,8 +19,8 @@ The project was designed to simulate a real-world event management system, empha
 
 ### 1. Clone the Repository
 
-git clone https://github.com/kahqgc/event-schedule-with-backend.git
-cd event-schedule-with-backend
+git clone https://github.com/kahqgc/event-schedule-with-backend.git  
+cd event-schedule-with-backend  
 
 
 ### 2. Set Up the Backend
@@ -40,4 +40,5 @@ cd event-schedule-with-backend
 cd frontend
 npm install
 npm run dev
+
 visit http://localhost:5173 in brownser to run the app
