@@ -18,5 +18,5 @@ The project was designed to simulate a real-world event management system, empha
 ## Installation Steps
 
 ### 1. Clone the Repository
-git clone https://github.com/<your-username>/event-schedule-with-backend.git
+git clone https://github.com/kahqgc/event-schedule-with-backend.git
 cd event-schedule-with-backend
