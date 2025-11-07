@@ -42,3 +42,7 @@ npm install
 npm run dev  
 
 visit http://localhost:5173 in brownser to run the app  
+
+## Wireframes
+> The wireframes outline the user flow and visual layout of the EarthPulse application.
+![Wireframe Placeholder](https://www.figma.com/design/Ax8ycKBy55FhkNxg0pEgB4/Unit-2-Project?node-id=0-1&p=f)  
