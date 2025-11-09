@@ -38,15 +38,15 @@ export default function useScheduleFlow({ createSignUp, updateSignUp, ui }) {
   };
 
   //HANDLER 2: SUBMIT FORM - submits form data to create or update signup
-  const submitSignUpForm = async (formData) => {
+  const submitSignUpForm = async (attendeeData) => {
     try {
       //if form data exists then you're editting so PUT
-      if (formData.id) {
+      if (attendeeData.id) {
         //updating this signup with this new user data that is tied to this event (PUT)
-        await updateSignUp(formData.id, formData, ui.activeEvent); ////(/{id}, body, event context)
+        await updateSignUp(attendeeData.id, attendeeData, ui.activeEvent); ////(/{id}, attendee's info, event selected)
       } else {
         //POST
-        const savedSignUp = await createSignUp(formData, ui.activeEvent); //(info from form, event)
+        const savedSignUp = await createSignUp(attendeeData, ui.activeEvent); //(info from form, event)
         setSignUpFormData((prev) => ({
           ...prev,
           id: savedSignUp.id || savedSignUp.signupId,
