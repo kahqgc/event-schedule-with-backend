@@ -11,18 +11,20 @@
 
 .event-details-modal {
   position: fixed;
-  top: 5%;
-  left: 30%;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
   background-color: white;
   border: 2px solid #e07a5f;
   border-radius: 10px;
   padding: 3rem;
   width: 30%;
   max-height: 80vh; 
-  overflow-y: auto;
+  overflow-y:auto;
   color: #343755;
   animation: fadeIn 0.7s ease-out;
   z-index: 1000; /*ensure above table*/
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
 }
 
 .event-details-modal .control {
@@ -71,10 +73,15 @@ ul {
 
 @media (max-width: 768px) {
   .event-details-modal {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: 90%;
+    width: 80%;
     margin: 1rem auto;
+    padding: 2rem;
+  }
+}
+
+  @media (max-width: 480px) {
+  .event-details-modal {
+    width: 80%;
+    padding: 1.5rem;
   }
 }

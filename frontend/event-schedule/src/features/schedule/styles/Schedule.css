@@ -1,3 +1,9 @@
+.schedule-container {
+  position: relative;
+  overflow: visible;
+  padding-bottom: 4rem;
+}
+
 .schedule-heading {
   text-align: center;
   font-family: "Cormorant Garamond", serif;
@@ -7,12 +13,14 @@
 }
 
 .schedule-table {
-  max-width: 1000px;
-  margin: 1rem auto;
-  margin-bottom: 2rem;
+  display: block;              /* allows horizontal scroll */
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
   background-color: rgba(255, 255, 255, 0.85);
-  display: block; /*prevents the body from growing past the viewport */
-  overflow-x: auto; /*allows for scrolling when the screen gets smaller*/
+  border-collapse: collapse;
+  margin: 1rem auto 2rem auto;
+  box-sizing: border-box;
 }
 
 button {

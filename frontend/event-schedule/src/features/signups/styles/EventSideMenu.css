@@ -26,6 +26,7 @@
   justify-content: space-between;
   animation: fadeIn 0.7s ease-out;
   transition: all 0.3s ease;
+  margin-left: 1rem;
 }
 
 .side-menu.minimized {
@@ -94,14 +95,13 @@
 /* Mobile / Tablet */
 @media (max-width: 768px) {
   .side-menu {
-    position: relative;
-    top: 0;
-    right: 0;
-    left: 0;
+    position: sticky;
+    top: 2rem;
     width: 90%;
-    margin: 1rem auto 0; /* now sits below PopUp */
-    height: auto;
+    margin: 1rem auto; /* now sits below PopUp */
+    max-height: 50vh; 
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    overflow-y: auto;
   }
 
   .side-menu-content {
