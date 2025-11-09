@@ -20,7 +20,6 @@ public class SignupRequestDTO {
     public Long getEventInfoId() {
         return eventInfoId;
     }
-
     public void setEventInfoId(Long eventInfoId) {
         this.eventInfoId = eventInfoId;
     }

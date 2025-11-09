@@ -1,5 +1,6 @@
 package com.example.event_schedule.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -11,22 +12,22 @@ public class Signup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("signupId")
     private Long id;
 
     //many signups to one attendee
     @ManyToOne
     @JoinColumn(name = "attendee_id", nullable=false)
     @OnDelete(action = OnDeleteAction.CASCADE) //if one thing is deleted, the other connected things are automatically deleted too
-    @JsonIgnoreProperties({"signups"})
+    @JsonIgnoreProperties({"signups"}) //avoids infinite recursion during serialization
     private Attendee attendee;
 
     //many signups to one event
     @ManyToOne
     @JoinColumn(name="event_id", nullable=false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnoreProperties({"signups"})
+    @JsonIgnoreProperties({"signups"}) //avoids infinite recursion during serialization
     private EventInfo eventInfo;
-    //one event to many signups
 
     public Signup() {}
 

@@ -30,7 +30,7 @@ public class Attendee {
     private String eventTitle;
 
     @OneToMany(mappedBy = "attendee", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties({"attendee"})
+    @JsonIgnoreProperties({"attendee"}) // prevents infinite recursion during serialization
     private List<Signup> signups = new ArrayList<>();
 
     public Attendee() {

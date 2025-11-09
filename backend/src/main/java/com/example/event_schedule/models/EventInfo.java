@@ -1,6 +1,7 @@
 package com.example.event_schedule.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 public class EventInfo {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @JsonProperty("eventInfoId")
     private Long id;
 
     private String stage;
@@ -26,7 +28,7 @@ public class EventInfo {
     private String host;
 
     @OneToMany(mappedBy = "eventInfo", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties({"eventInfo"})
+    @JsonIgnoreProperties({"eventInfo"}) // avoids infinite recursion during serialization
     private List<Signup> signups = new ArrayList<>();
 
     public EventInfo() {}
