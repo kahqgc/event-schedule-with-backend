@@ -6,7 +6,7 @@ import { useState } from "react";
 // 3. submitting or editing a sign up
 // 4. keeping side menu and modals in sync
 
-export default function useScheduleFlow({ createSignUp, updateSignUp, ui }) {
+export default function useScheduleHandlers({ createSignUp, updateSignUp, ui }) {
   const [signUpFormData, setSignUpFormData] = useState(null);
 
   //------------- HELPERS ---------------

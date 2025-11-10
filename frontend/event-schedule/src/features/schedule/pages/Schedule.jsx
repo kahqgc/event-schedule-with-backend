@@ -15,17 +15,17 @@ import EventScheduleTable from "../components/EventScheduleTable";
 import EventSideMenu from "../../signups/components/EventSideMenu";
 import useSignUps from "../../signups/hooks/useSignUps";
 import useScheduleData from "../hooks/useScheduleData";
-import useScheduleFlow from "../hooks/useScheduleFlow";
+import useScheduleHandlers from "../hooks/useScheduleHandlers";
 import useDeleteHandlers from "../../signups/hooks/useDeleteHandlers";
 import useScheduleUI from "../hooks/useScheduleUI";
 
 export default function Schedule() {
-  /*user feature hooks */
+  /*signups feature hooks */
   const { signUps, createSignUp, updateSignUp, deleteSignUp } = useSignUps();
 
-  // custom schedule hooks
+  // custom ui hooks
   const ui = useScheduleUI();
-  const flow = useScheduleFlow({ createSignUp, updateSignUp, ui });
+  const handlers = useScheduleHandlers({ createSignUp, updateSignUp, ui });
 
   /*delete button handlers*/
   const { showConfirm, handleDeleteClick, confirmDelete, cancelDelete } =
@@ -52,7 +52,7 @@ export default function Schedule() {
         <EventScheduleTable
           scheduleData={scheduleData}
           stages={stages} //resets signUpFormData when new event is selected
-          onSelectEvent={flow.handleSelectEvent}
+          onSelectEvent={handlers.handleSelectEvent}
         />
         {/*EVENT DETAILS / SIGN UP FORM*/}
         {ui.activeEvent /*render pop up only if event is selected*/ && (
@@ -63,17 +63,17 @@ export default function Schedule() {
             setShowSignUpForm={ui.setShowSignUpForm}
             error={ui.error}
             setError={ui.setError}
-            signUpFormData={flow.signUpFormData}
-            setSignUpFormData={flow.setSignUpFormData}
-            submitSignUpForm={flow.submitSignUpForm}
-            prepareForm={flow.prepareForm}
+            signUpFormData={handlers.signUpFormData}
+            setSignUpFormData={handlers.setSignUpFormData}
+            submitSignUpForm={handlers.submitSignUpForm}
+            prepareForm={handlers.prepareForm}
           />
         )}
         {/*SIGNED UP USERS SIDE MENU*/}
         {ui.isSideMenuOpen && (
           <EventSideMenu
             onClose={ui.closeAll}
-            editSignUp={flow.editSignUp}
+            editSignUp={handlers.editSignUp}
             signUps={signUps}
             handleDeleteClick={handleDeleteClick}
             confirmDelete={confirmDelete}

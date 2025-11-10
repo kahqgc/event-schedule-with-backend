@@ -5,7 +5,7 @@ import { useState } from "react";
 // create new sign up (POST), update existing sign up (PUT), delete sign up (DELETE)
 // manages state and fetch calls
 //stores a list of signups in state
-export default function useUsers() {
+export default function useSignUps() {
   const [signUps, setSignUps] = useState([]);
 
   // ----------- CREATE (POST) ---------//
@@ -15,7 +15,7 @@ export default function useUsers() {
     try {
       //package both pieces of data (user and event) into one object
       //matches backend SignupRequestDTO
-      const signUpData = {
+      const payload = {
         eventInfoId: eventInfo.id,
         attendee: attendeeData,
       }; //attach event details to user
@@ -24,19 +24,19 @@ export default function useUsers() {
       const response = await fetch("http://localhost:8080/api/signups", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(signUpData),
+        body: JSON.stringify(payload),
       });
       // if backend responds with an error, step here and throw error to catch
       if (!response.ok) throw new Error("Failed to sign up");
 
       //convert backend JSON response into a JS object
-      const savedSignUp = await response.json();
+      const newSignUp = await response.json();
 
       //add new signups to signUps array so that side menu updates right away
-      setSignUps((prev) => [...prev, savedSignUp]);
+      setSignUps((prev) => [...prev, newSignUp]);
 
       //return newly created user to parent
-      return savedSignUp;
+      return newSignUp;
     } catch (err) {
       throw new Error(err.message || "Error signing up");
     }
@@ -48,8 +48,8 @@ export default function useUsers() {
   // updates state so change appears immediately in side menu
   const updateSignUp = async (signUpId, attendeeData, eventInfo) => {
     try {
-      // combine the updated attendee form data with event info. ensures backend knows which event this registration belongs to
-      const updatedData = {
+      // combine the updated attendee form data with event info id. ensures backend knows which event this registration belongs to
+      const payload = {
         eventInfoId: eventInfo.id,
         attendee: attendeeData,
       };
@@ -61,7 +61,7 @@ export default function useUsers() {
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(updatedData),
+          body: JSON.stringify(payload),
         }
       );
       //if response isn't successful, stop and throw an error

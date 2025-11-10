@@ -49,27 +49,24 @@ public class AttendeeController {
     // if event exists with provided eventTitle, also create signup record to link them
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Attendee> createAttendee(@Valid @RequestBody AttendeeRequestDTO attendeeDTO) {
-        if (attendeeDTO == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "attendee data is required");//400 bad
-        }
 
         //Convert DTO to Attendee entity
-        Attendee attendee = new Attendee();
-        attendee.setName(attendeeDTO.getName());
-        attendee.setEmail(attendeeDTO.getEmail());
-        attendee.setPhone(attendeeDTO.getPhone());
-        attendee.setTickets(attendeeDTO.getTickets());
-        attendee.setEventTitle(attendeeDTO.getEventTitle());
+        Attendee newAttendee = new Attendee();
+        newAttendee.setName(attendeeDTO.getName());
+        newAttendee.setEmail(attendeeDTO.getEmail());
+        newAttendee.setPhone(attendeeDTO.getPhone());
+        newAttendee.setTickets(attendeeDTO.getTickets());
+        newAttendee.setEventTitle(attendeeDTO.getEventTitle());
         // Save attendee to database
-        Attendee savedAttendee = attendeeRepository.save(attendee);
+        Attendee savedAttendee = attendeeRepository.save(newAttendee);
 
         //if the event exists, also create a signup record linking them
         EventInfo eventInfo = eventInfoRepository.findByTitle(savedAttendee.getEventTitle());
         if (eventInfo != null) {
-            Signup signup = new Signup(savedAttendee, eventInfo);
-            signupRepository.save(signup);// saves record to join table
+            Signup newSignup = new Signup(savedAttendee, eventInfo);
+            signupRepository.save(newSignup);// saves record to join table
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(attendee);//201 created
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedAttendee);//201 created
     }
     //---------------- PUT (UPDATE)-----------------
     // updates an existing attendee's details

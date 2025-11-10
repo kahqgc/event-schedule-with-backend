@@ -40,19 +40,13 @@ public class SignupController {
     // ---------- POST (CREATE) ----------
     // creates a new event and saves it in the database
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Signup> createSignup(@Valid @RequestBody SignupRequestDTO signupData) {
+    //convert JSON into a java object (signupData)
+    public ResponseEntity<Signup> createSignup(@Valid @RequestBody SignupRequestDTO signupDTO) {
+        // find matching event to link - requires ID to find event in DB
+        EventInfo eventInfo = eventInfoRepository.findById(signupDTO.getEventInfoId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid eventInfoId"));
 
-        if (signupData == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Signup data is required");
-        }
-        // find matching event to link
-        EventInfo eventInfo = eventInfoRepository.findById(signupData.getEventInfoId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid eventInfoId"));
-
-        // extract attendee details from nested DTO
-        AttendeeRequestDTO attendeeDTO = signupData.getAttendee();
-        if (attendeeDTO == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "attendee data is required");
-        }
+        // extract attendee's data from nested attendee DTO
+        AttendeeRequestDTO attendeeDTO = signupDTO.getAttendee();
 
         //create attendee record
         Attendee attendee = new Attendee();
@@ -61,11 +55,11 @@ public class SignupController {
         attendee.setPhone(attendeeDTO.getPhone());
         attendee.setTickets(attendeeDTO.getTickets());
         attendee.setEventTitle(attendeeDTO.getEventTitle());
-        Attendee savedAttendee = attendeeRepository.save(attendee);
+        attendee = attendeeRepository.save(attendee);
 
         // create signup record linking attendee and event
-        Signup signup = new Signup(savedAttendee, eventInfo);
-        Signup savedSignup = signupRepository.save(signup);
+        Signup newSignup = new Signup(attendee, eventInfo);
+        Signup savedSignup = signupRepository.save(newSignup);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(savedSignup); // 201 Created
     }
@@ -76,25 +70,22 @@ public class SignupController {
     // Note: eventInfo cannot be changed through signup updates.
     // To move an attendee to a different event, a new signup must be created.
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Signup> updateSignup(@PathVariable Long id, @Valid @RequestBody SignupRequestDTO signupData)  {
+    public ResponseEntity<Signup> updateSignup(@PathVariable Long id, @Valid @RequestBody SignupRequestDTO signupDTO)  {
 
-        Signup signup = signupRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Signup not found"));
+        Signup existingSignup = signupRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Signup not found"));
 
         // update attendee details "get the person currently signed up for this event"
-        Attendee attendee = signup.getAttendee(); //fetch existing attendee object
-        AttendeeRequestDTO attendeeDTO = signupData.getAttendee(); // extracts new information the user submitted
-        if (attendeeDTO == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Attendee data is required");
-        }
+        Attendee existingAttendee = existingSignup.getAttendee(); //fetch existing attendee object
+        AttendeeRequestDTO attendeeDTO = signupDTO.getAttendee(); // extracts new information the user submitted
 
-        attendee.setName(attendeeDTO.getName());
-        attendee.setEmail(attendeeDTO.getEmail());
-        attendee.setPhone(attendeeDTO.getPhone());
-        attendee.setTickets(attendeeDTO.getTickets());
-        attendee.setEventTitle(attendeeDTO.getEventTitle());
-        attendeeRepository.save(attendee);
+        existingAttendee.setName(attendeeDTO.getName());
+        existingAttendee.setEmail(attendeeDTO.getEmail());
+        existingAttendee.setPhone(attendeeDTO.getPhone());
+        existingAttendee.setTickets(attendeeDTO.getTickets());
+        existingAttendee.setEventTitle(attendeeDTO.getEventTitle());
+        attendeeRepository.save(existingAttendee);
 
-        Signup updatedSignup = signupRepository.save(signup);
+        Signup updatedSignup = signupRepository.save(existingSignup);
         return ResponseEntity.ok(updatedSignup); // 200 OK
     }
     // ---------- DELETE (DELETE) ----------
