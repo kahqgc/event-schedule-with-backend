@@ -47,18 +47,20 @@
 }
 
 .event-details-modal h1 {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   margin-bottom: 1rem;
 }
 
 .event-details-modal p,
 .event-details-modal span {
+  font-size: 1.3rem;
   margin-bottom: 1rem;
   display: flex;
   justify-content: center;
 }
 
 ul {
+  font-size: 1.2rem;
   list-style-type: none;
   padding: 0;
 }
