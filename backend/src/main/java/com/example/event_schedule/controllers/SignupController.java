@@ -86,10 +86,7 @@ public class SignupController {
         existingAttendee.setTickets(attendeeDTO.getTickets());
         attendeeRepository.save(existingAttendee);
 
-        //save updated signup to persist any relationship updates
-        Signup updatedSignup = signupRepository.save(existingSignup);
-
-        return ResponseEntity.ok(updatedSignup); // 200 OK
+        return ResponseEntity.ok(existingSignup); // 200 OK
     }
     // ---------- DELETE (DELETE) ----------
     // deletes a signup by ID

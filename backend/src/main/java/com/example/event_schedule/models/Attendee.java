@@ -31,7 +31,7 @@ public class Attendee {
 
     @OneToMany(mappedBy = "attendee", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties({"attendee"}) // prevents infinite recursion during serialization
-    private List<Signup> signups = new ArrayList<>();
+    private List<Signup> signups = new ArrayList<>();// stores all signups linked to this specific attendee (used internally by JPA)
 
     public Attendee() {
     }
@@ -71,9 +71,7 @@ public class Attendee {
     public void setTickets(int tickets) {
         this.tickets = tickets;
     }
-    public String getEventTitle() {
-        return eventTitle;
-    }
+    public String getEventTitle() {return eventTitle;}
     public void setEventTitle(String eventTitle) {this.eventTitle = eventTitle;}
 
     @Override

@@ -27,9 +27,10 @@ public class EventInfo {
 
     private String host;
 
+
     @OneToMany(mappedBy = "eventInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties({"eventInfo"}) // avoids infinite recursion during serialization
-    private List<Signup> signups = new ArrayList<>();
+    private List<Signup> signups = new ArrayList<>(); // stores all signups connected to this specific event (ued by JPA internally)
 
     public EventInfo() {}
 
@@ -61,9 +62,7 @@ public class EventInfo {
     public void setDescription(String description) {
         this.description = description;
     }
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
+    public LocalDateTime getDateTime() {return dateTime;}
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }

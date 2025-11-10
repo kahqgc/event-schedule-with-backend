@@ -23,6 +23,7 @@ public class Signup {
     private Attendee attendee;
 
     //many signups to one event
+    // this is the owning side of the relationship and contains the foreign key event_id
     @ManyToOne
     @JoinColumn(name="event_id", nullable=false)
     @OnDelete(action = OnDeleteAction.CASCADE)

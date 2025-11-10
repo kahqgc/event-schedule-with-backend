@@ -23,7 +23,7 @@ public class AttendeeRequestDTO {
     @Max(value = 10, message =" Cannot request more than 10 tickets")
     private int tickets;
 
-    //optional - used only for display convenience in sql or postman
+    //used only for display convenience in sql or postman
     private String eventTitle;
 
     public AttendeeRequestDTO() {

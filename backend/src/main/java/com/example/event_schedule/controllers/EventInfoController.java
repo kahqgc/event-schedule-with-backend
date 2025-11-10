@@ -9,7 +9,6 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.print.attribute.standard.Media;
 import java.util.List;
 
 /**
@@ -17,12 +16,12 @@ import java.util.List;
  * These events form the schedule that attendees can view and register for
  */
 
-@RestController //web controller that sends data
+@RestController //REST API controller
 @RequestMapping("/api/events")
 public class EventInfoController {
 
     @Autowired
-    private EventInfoRepository eventInfoRepository;
+    private EventInfoRepository eventInfoRepository; //injects JPA repository for DB access
 
     //GET (READ)
     //retrieves all events from DB
@@ -37,6 +36,7 @@ public class EventInfoController {
     @PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<EventInfo> createEvent(@Valid @RequestBody EventInfoRequestDTO eventInfoDTO) {
 
+        // maps DTO fields to a new EventInfo entity
         EventInfo event = new EventInfo();
         event.setStage(eventInfoDTO.getStage());
         event.setTitle(eventInfoDTO.getTitle());
@@ -44,6 +44,7 @@ public class EventInfoController {
         event.setDateTime(eventInfoDTO.getDateTime());
         event.setHost(eventInfoDTO.getHost());
 
+        //save to DB and returns persisted event with generated ID
         EventInfo savedEvent = eventInfoRepository.save(event);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedEvent); //201 created
     }
@@ -62,8 +63,8 @@ public class EventInfoController {
         existingEvent.setDateTime(eventInfoDTO.getDateTime());
         existingEvent.setHost(eventInfoDTO.getHost());
 
-        EventInfo updatedEvent = eventInfoRepository.save(existingEvent);//save updated event to DB
-        return ResponseEntity.ok(updatedEvent); //200 ok
+        eventInfoRepository.save(existingEvent);//save updated event to DB
+        return ResponseEntity.ok(existingEvent); //200 ok
     }
     //DELETE (DELETE)
     // deletes an event by ID
@@ -74,5 +75,3 @@ public class EventInfoController {
         return ResponseEntity.noContent().build();//204 no content
         }
     }
-
-//response entity: method that returns an HTTP response

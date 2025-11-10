@@ -26,39 +26,30 @@ public class EventInfoRequestDTO {
     public String getStage() {
         return stage;
     }
-
     public void setStage(String stage) {
         this.stage = stage;
     }
-
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
-
     public String getDescription() {
         return description;
     }
-
     public void setDescription(String description) {
         this.description = description;
     }
-
     public LocalDateTime getDateTime() {
         return dateTime;
     }
-
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
-
     public String getHost() {
         return host;
     }
-
     public void setHost(String host) {
         this.host= host;
     }

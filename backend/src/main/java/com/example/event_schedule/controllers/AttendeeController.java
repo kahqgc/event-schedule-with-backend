@@ -12,8 +12,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 /**
  * Manages CRUD operations for attendees (users registering for events).
- * If an attendee specifies an eventTitle that exists, a Signup record is automatically created to link them.
- * This controller is mainly called by SignupController and the frontend sign-up form.
+ * typically called by signUp controller when a user signs up for an event.
+ * each Attendee record can later be linked to an EventInfo through a Signup entity.
  */
 
 @RestController //web controller that sends data
@@ -43,7 +43,6 @@ public class AttendeeController {
 
     // -------------POST (CREATE)--------------
     // create new attendee record in DB
-    // if event exists with provided eventTitle, also create signup record to link them
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Attendee> createAttendee(@Valid @RequestBody AttendeeRequestDTO attendeeDTO) {
 
@@ -80,7 +79,7 @@ public class AttendeeController {
 
     // DELETE  (DELETE) - remove an attendee by id
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAttendee(@PathVariable Long id) throws ResponseStatusException {
+    public ResponseEntity<Void> deleteAttendee(@PathVariable Long id) {
         Attendee attendee = attendeeRepository.findById(id)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "not found"));//404 not found
         attendeeRepository.delete(attendee);
