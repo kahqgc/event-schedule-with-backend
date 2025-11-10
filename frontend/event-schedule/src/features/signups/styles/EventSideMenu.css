@@ -13,7 +13,7 @@
   position: fixed;
   top: 20px;
   right: 20px;
-  width: 320px;
+  width: 450px;
   height: calc(100% - 60px);
   background: rgba(255, 255, 255, 0.95);
   border-radius: 12px;
@@ -41,30 +41,6 @@
   gap: 0.4rem;
 }
 
-/* Unified button styling for X, +, – */
-.side-menu-header button,
-.control {
-  width: 30px;
-  height: 30px;
-  border: none;
-  border-radius: 50%;
-  background: rgba(216, 108, 78, 0.12);
-  color: #d86c4e;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.side-menu-header button:hover,
-.control:hover {
-  background: rgba(216, 108, 78, 0.25);
-  transform: scale(1.12);
-}
-
 .side-menu-content {
   flex: 1;
   overflow-y: auto;
@@ -74,7 +50,7 @@
 .side-menu-content h2 {
   margin-bottom: 1rem;
   color: #343755;
-  font-size: 1.8rem;
+  font-size: 2.3rem;
 }
 
 .side-menu ul {
@@ -90,7 +66,7 @@
   border-radius: 6px;
   margin-bottom: 0.75rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  font-size: 1.3rem;
+  font-size: 1.8rem;
 }
 
 /* Mobile / Tablet */

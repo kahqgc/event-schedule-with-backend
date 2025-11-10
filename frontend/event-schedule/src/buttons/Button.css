@@ -6,18 +6,18 @@ button:hover {
   transform: scale(1.05);
 }
 
-button.save, button.signup, button.submit, button.confirm, button.back {
+.save, .submit, .back {
   background-color: #81b29a;
   border: none;
   color: white;
   padding: 1rem;
-  font-size: 1.2rem;
+  font-size: 1.8rem;
   border-radius: 6px;
   cursor: pointer;
   margin-top: 1rem;
 }
 
-button.save:hover, button.edit:hover {
+.save:hover, .edit:hover {
   background-color: black;
 }
 
@@ -29,7 +29,7 @@ button.save:hover, button.edit:hover {
   padding: 0.3rem 0.6rem;
   margin: 0rem 0.2rem;
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 1.3rem;
 }
 
 .delete:hover, .edit:hover {
@@ -37,13 +37,13 @@ button.save:hover, button.edit:hover {
 }
 
 .control {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border: none;
   border-radius: 50%;
   background: rgba(216, 108, 78, 0.12);
   color: #d86c4e;
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   font-weight: 600;
   cursor: pointer;
   display: flex;

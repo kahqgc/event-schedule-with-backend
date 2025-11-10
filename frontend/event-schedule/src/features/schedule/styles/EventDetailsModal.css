@@ -31,36 +31,25 @@
   position: absolute;
   top: 12px;
   right: 12px;
-  width: 30px;
-  height: 30px;
-  border: none;
-  border-radius: 50%;
-  background: rgba(216, 108, 78, 0.12);
-  color: #d86c4e;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
+  width: 40px;
+  height: 40px;
 }
 
 .event-details-modal h1 {
-  font-size: 1.8rem;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
 }
 
 .event-details-modal p,
 .event-details-modal span {
-  font-size: 1.3rem;
+  font-size: 1.8rem;
   margin-bottom: 1rem;
   display: flex;
   justify-content: center;
 }
 
 ul {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   list-style-type: none;
   padding: 0;
 }

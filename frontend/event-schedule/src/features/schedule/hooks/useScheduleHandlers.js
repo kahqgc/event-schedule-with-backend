@@ -28,17 +28,22 @@ export default function useScheduleHandlers({
 
   //prepares blank form data when a new event is selected
   const prepareForm = (event) => {
-    const newForm = getDefaultForm(event);
-    setSignUpFormData(newForm);
-    return newForm;
-  };
+    if (!signUpFormData || signUpFormData.eventTitle !== event.title) {
+      const newForm = getDefaultForm(event);
+      setSignUpFormData(newForm);
+      return newForm;
+    }
+    return signUpFormData;
+  }
 
   //-------------HANDLERS-----------------
   // HANDLER 1: EVENT SELECTION - clicks an event and open details modal
   const handleSelectEvent = (event) => {
     ui.openEventDetails(event); //opens modal
     ui.setError("");
-    prepareForm(event); //prepare blank form for this event
+    if (!ui.activeEvent || ui.activeEvent.id !== event.id) {
+      prepareForm(event);
+    } //prepare blank form for this event
   };
 
   //HANDLER 2: SUBMIT FORM - submits form data to create or update signup
@@ -74,7 +79,6 @@ export default function useScheduleHandlers({
   const editSignUp = (signup) => {
     const event = signup.eventInfo; //expects backend to attach eventInfo
     const attendee = signup.attendee; //expects backend to attach user
-
 
     ui.openEventDetails(event); //sets stored eventInfo
     ui.activeEvent = event; //ensure activeEvent is set
