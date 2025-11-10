@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * Provides CRUD endpoints for managing all event session data (stage, time, host, etc.).
- * This serves as the foundation for attendee signups and schedule displays.
+ * These events form the schedule that attendees can view and register for
  */
 
 @RestController //web controller that sends data
@@ -36,9 +36,6 @@ public class EventInfoController {
     //creates a new event and saves it to DB
     @PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<EventInfo> createEvent(@Valid @RequestBody EventInfoRequestDTO eventInfoDTO) {
-        if (eventInfoDTO == null) {
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Event data is required");
-        }
 
         EventInfo event = new EventInfo();
         event.setStage(eventInfoDTO.getStage());
@@ -54,20 +51,18 @@ public class EventInfoController {
     //PUT (UPDATE)
     // updates an existing event by ID
     @PutMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<EventInfo> updateEvent(@PathVariable Long id, @Valid @RequestBody EventInfo eventData)  {
-        EventInfo event = eventInfoRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found")); //throw 404 if not found
+    public ResponseEntity<EventInfo> updateEvent(@PathVariable Long id, @Valid @RequestBody EventInfoRequestDTO eventInfoDTO)  {
+        // find the event in the database
+        EventInfo existingEvent = eventInfoRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found")); //throw 404 if not found
 
-        if (eventData == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Event data is required");
-        }
         //update existing event with new data
-        event.setStage(eventData.getStage());
-        event.setTitle(eventData.getTitle());
-        event.setDescription(eventData.getDescription());
-        event.setDateTime(eventData.getDateTime());
-        event.setHost(eventData.getHost());
+        existingEvent.setStage(eventInfoDTO.getStage());
+        existingEvent.setTitle(eventInfoDTO.getTitle());
+        existingEvent.setDescription(eventInfoDTO.getDescription());
+        existingEvent.setDateTime(eventInfoDTO.getDateTime());
+        existingEvent.setHost(eventInfoDTO.getHost());
 
-        EventInfo updatedEvent = eventInfoRepository.save(event);//save updated event to DB
+        EventInfo updatedEvent = eventInfoRepository.save(existingEvent);//save updated event to DB
         return ResponseEntity.ok(updatedEvent); //200 ok
     }
     //DELETE (DELETE)

@@ -30,7 +30,7 @@ public class SignupController {
     EventInfoRepository eventInfoRepository;
 
     //-------------GET (READ)----------
-    //retrieves all signups from DB
+    // returns list of all signup records
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Signup>> getAllSignups(){
         List<Signup> allSignups = signupRepository.findAll();
@@ -38,12 +38,14 @@ public class SignupController {
     }
 
     // ---------- POST (CREATE) ----------
-    // creates a new event and saves it in the database
+    // creates a new signup that links an attendee to an event
+    //requires valid eventInfoId and attendee info from frontend
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    //convert JSON into a java object (signupData)
+    //convert JSON into a java object (signupDTO)
     public ResponseEntity<Signup> createSignup(@Valid @RequestBody SignupRequestDTO signupDTO) {
-        // find matching event to link - requires ID to find event in DB
-        EventInfo eventInfo = eventInfoRepository.findById(signupDTO.getEventInfoId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid eventInfoId"));
+        // finds event by ID from DB
+        EventInfo eventInfo = eventInfoRepository.findById(signupDTO.getEventInfoId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid eventInfoId"));
 
         // extract attendee's data from nested attendee DTO
         AttendeeRequestDTO attendeeDTO = signupDTO.getAttendee();
@@ -65,32 +67,33 @@ public class SignupController {
     }
 
     // ---------- PUT (UPDATE) ----------
-    // update an existing signup by ID
-    //can modify attendee details and event link
+    // update an attendee's signup details by signup ID
     // Note: eventInfo cannot be changed through signup updates.
-    // To move an attendee to a different event, a new signup must be created.
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Signup> updateSignup(@PathVariable Long id, @Valid @RequestBody SignupRequestDTO signupDTO)  {
+        //find the signup by ID to update
+        Signup existingSignup = signupRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Signup not found"));
 
-        Signup existingSignup = signupRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Signup not found"));
-
-        // update attendee details "get the person currently signed up for this event"
+        // get attendee tied to that signup
         Attendee existingAttendee = existingSignup.getAttendee(); //fetch existing attendee object
         AttendeeRequestDTO attendeeDTO = signupDTO.getAttendee(); // extracts new information the user submitted
 
+        //updating their personal info
         existingAttendee.setName(attendeeDTO.getName());
         existingAttendee.setEmail(attendeeDTO.getEmail());
         existingAttendee.setPhone(attendeeDTO.getPhone());
         existingAttendee.setTickets(attendeeDTO.getTickets());
         attendeeRepository.save(existingAttendee);
 
+        //save updated signup to persist any relationship updates
         Signup updatedSignup = signupRepository.save(existingSignup);
 
         return ResponseEntity.ok(updatedSignup); // 200 OK
     }
     // ---------- DELETE (DELETE) ----------
     // deletes a signup by ID
-    // returns 204 No Content
+    //also deletes  the linked attendee record
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSignup(@PathVariable Long id) {
         Signup signup = signupRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Signup not found"));

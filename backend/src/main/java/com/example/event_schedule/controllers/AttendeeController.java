@@ -23,10 +23,6 @@ public class AttendeeController {
 
     @Autowired
     private AttendeeRepository attendeeRepository;
-    @Autowired
-    private EventInfoRepository eventInfoRepository;
-    @Autowired
-    private SignupRepository signupRepository;
 
     //--------------GET (READ)------------
     // retrieves all attendees from DB
@@ -40,7 +36,8 @@ public class AttendeeController {
     // retrieves a single attendee by ID from DB
     @GetMapping(value="/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Attendee> getAttendeeById(@PathVariable Long id) {
-        Attendee attendee = attendeeRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "attendee not found"));//404 not found
+        Attendee attendee = attendeeRepository.findById(id)
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Attendee not found"));//404 not found
         return ResponseEntity.ok(attendee);//200 ok
     }
 
@@ -56,6 +53,7 @@ public class AttendeeController {
         newAttendee.setEmail(attendeeDTO.getEmail());
         newAttendee.setPhone(attendeeDTO.getPhone());
         newAttendee.setTickets(attendeeDTO.getTickets());
+        newAttendee.setEventTitle(attendeeDTO.getEventTitle());
         // Save attendee to database
         Attendee savedAttendee = attendeeRepository.save(newAttendee);
 
@@ -74,6 +72,7 @@ public class AttendeeController {
             existingAttendee.setEmail(attendeeDTO.getEmail());
             existingAttendee.setPhone(attendeeDTO.getPhone());
             existingAttendee.setTickets(attendeeDTO.getTickets());
+            existingAttendee.setEventTitle(attendeeDTO.getEventTitle());
 
             Attendee updatedAttendee = attendeeRepository.save(existingAttendee);// save updated attendee to DB
             return ResponseEntity.ok(updatedAttendee);//200 ok
@@ -82,7 +81,8 @@ public class AttendeeController {
     // DELETE  (DELETE) - remove an attendee by id
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAttendee(@PathVariable Long id) throws ResponseStatusException {
-        Attendee attendee = attendeeRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "not found"));//404 not found
+        Attendee attendee = attendeeRepository.findById(id)
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "not found"));//404 not found
         attendeeRepository.delete(attendee);
         return ResponseEntity.noContent().build();//204 no content
     }
