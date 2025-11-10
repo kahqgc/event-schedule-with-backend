@@ -12,7 +12,7 @@ public class Signup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty("signupId")
+    @JsonProperty("id")
     private Long id;
 
     //many signups to one attendee

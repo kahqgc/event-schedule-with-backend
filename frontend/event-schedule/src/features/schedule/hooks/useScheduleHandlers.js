@@ -6,7 +6,11 @@ import { useState } from "react";
 // 3. submitting or editing a sign up
 // 4. keeping side menu and modals in sync
 
-export default function useScheduleHandlers({ createSignUp, updateSignUp, ui }) {
+export default function useScheduleHandlers({
+  createSignUp,
+  updateSignUp,
+  ui,
+}) {
   const [signUpFormData, setSignUpFormData] = useState(null);
 
   //------------- HELPERS ---------------
@@ -53,11 +57,11 @@ export default function useScheduleHandlers({ createSignUp, updateSignUp, ui }) 
         }));
       }
 
-        //reset ui state
+      //reset ui state
       ui.setIsSideMenuOpen(true);
       ui.setError("");
       ui.setShowSignUpForm(false);
-      prepareForm(ui.activeEvent);
+      setSignUpFormData(null);
     } catch (err) {
       //catch network or validation errors
       ui.setError(
@@ -71,12 +75,14 @@ export default function useScheduleHandlers({ createSignUp, updateSignUp, ui }) 
     const event = signup.eventInfo; //expects backend to attach eventInfo
     const attendee = signup.attendee; //expects backend to attach user
 
+
     ui.openEventDetails(event); //sets stored eventInfo
+    ui.activeEvent = event; //ensure activeEvent is set
 
     setSignUpFormData(
       //build a form for this specific event using the attendee's saved info
       getDefaultForm(event, {
-        id: signup.id,
+        id: signup.id || signup.signupId,
         name: attendee.name,
         email: attendee.email,
         phone: attendee.phone,

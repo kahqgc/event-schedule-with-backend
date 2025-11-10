@@ -56,16 +56,9 @@ public class AttendeeController {
         newAttendee.setEmail(attendeeDTO.getEmail());
         newAttendee.setPhone(attendeeDTO.getPhone());
         newAttendee.setTickets(attendeeDTO.getTickets());
-        newAttendee.setEventTitle(attendeeDTO.getEventTitle());
         // Save attendee to database
         Attendee savedAttendee = attendeeRepository.save(newAttendee);
 
-        //if the event exists, also create a signup record linking them
-        EventInfo eventInfo = eventInfoRepository.findByTitle(savedAttendee.getEventTitle());
-        if (eventInfo != null) {
-            Signup newSignup = new Signup(savedAttendee, eventInfo);
-            signupRepository.save(newSignup);// saves record to join table
-        }
         return ResponseEntity.status(HttpStatus.CREATED).body(savedAttendee);//201 created
     }
     //---------------- PUT (UPDATE)-----------------
@@ -73,17 +66,17 @@ public class AttendeeController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Attendee> updateAttendee(@PathVariable Long id, @Valid @RequestBody AttendeeRequestDTO attendeeDTO)  {
         //find existing attendee by ID
-        Attendee attendee = attendeeRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "attendee not found"));//throw 404 if not found
+        Attendee existingAttendee = attendeeRepository.findById(id)
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Attendee not found"));//throw 404 if not found
 
             //apply updates from DTO
-            attendee.setName(attendeeDTO.getName());
-            attendee.setEmail(attendeeDTO.getEmail());
-            attendee.setPhone(attendeeDTO.getPhone());
-            attendee.setTickets(attendeeDTO.getTickets());
-            attendee.setEventTitle(attendeeDTO.getEventTitle());
+            existingAttendee.setName(attendeeDTO.getName());
+            existingAttendee.setEmail(attendeeDTO.getEmail());
+            existingAttendee.setPhone(attendeeDTO.getPhone());
+            existingAttendee.setTickets(attendeeDTO.getTickets());
 
-            Attendee updatedAttendee = attendeeRepository.save(attendee);// save updated attendee to DB
-            return ResponseEntity.ok(attendee);//200 ok
+            Attendee updatedAttendee = attendeeRepository.save(existingAttendee);// save updated attendee to DB
+            return ResponseEntity.ok(updatedAttendee);//200 ok
         }
 
     // DELETE  (DELETE) - remove an attendee by id

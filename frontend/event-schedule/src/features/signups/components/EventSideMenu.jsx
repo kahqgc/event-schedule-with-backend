@@ -44,7 +44,7 @@ export default function EventSideMenu({
                 const formattedTime = formatEventTime(eventInfo.dateTime);
 
                 return (
-                  <li key={signup.id}>
+                  <li key={signup.id || signup.signupId}>
                     <strong>{eventInfo.title}</strong>
                     {formattedTime && <> — {formattedTime}</>} <br />
                     {attendee.name && (
@@ -65,7 +65,7 @@ export default function EventSideMenu({
                       onClick={() => handleDeleteClick(signup.id)}
                     />{" "}
                     {/*opens confirm modal*/}
-                    <EditButton onClick={() => editSignUp(signup)} />{" "}
+                    <EditButton onClick={() => editSignUp(signup)} />
                     {/*preloads form*/}
                   </li>
                 );

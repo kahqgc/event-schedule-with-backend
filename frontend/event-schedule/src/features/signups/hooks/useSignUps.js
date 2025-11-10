@@ -53,7 +53,6 @@ export default function useSignUps() {
         eventInfoId: eventInfo.id,
         attendee: attendeeData,
       };
-
       //sends PUT request to update specific user by id
       // backend uses this id to find and replace existing record
       const response = await fetch(
@@ -72,7 +71,7 @@ export default function useSignUps() {
 
       //update local list of signed up users by replacing old version
       setSignUps((prev) =>
-        prev.map((signup) =>
+        prev.map((signup) => 
           signup.id === updatedSignUp.id ? updatedSignUp : signup
         )
       ); //if user.id matches updatedUser.id, replace it, if not keep the original

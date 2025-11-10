@@ -25,8 +25,7 @@ public class AttendeeRequestDTO {
     @Max(value = 10, message =" Cannot request more than 10 tickets")
     private int tickets;
 
-    @NotBlank(message="Event title is required")
-    private String eventTitle; //event name the attendee is registering for
+    private String eventTitle;
 
     public AttendeeRequestDTO() {
     }

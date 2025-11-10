@@ -82,10 +82,10 @@ public class SignupController {
         existingAttendee.setEmail(attendeeDTO.getEmail());
         existingAttendee.setPhone(attendeeDTO.getPhone());
         existingAttendee.setTickets(attendeeDTO.getTickets());
-        existingAttendee.setEventTitle(attendeeDTO.getEventTitle());
         attendeeRepository.save(existingAttendee);
 
         Signup updatedSignup = signupRepository.save(existingSignup);
+
         return ResponseEntity.ok(updatedSignup); // 200 OK
     }
     // ---------- DELETE (DELETE) ----------

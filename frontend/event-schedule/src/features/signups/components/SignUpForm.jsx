@@ -58,7 +58,7 @@ export default function SignUpForm({
             type="text"
             value={signUpFormData.name}
             onChange={(e) =>
-              setSignUpFormData({ ...signUpFormData, name: e.target.value })
+              setSignUpFormData((prev) => ({ ...prev, name: e.target.value }))
             }
             required
           />
@@ -71,7 +71,7 @@ export default function SignUpForm({
             type="email"
             value={signUpFormData.email}
             onChange={(e) =>
-              setSignUpFormData({ ...signUpFormData, email: e.target.value })
+              setSignUpFormData((prev) => ({ ...prev, email: e.target.value }))
             }
             required
           />
@@ -84,7 +84,7 @@ export default function SignUpForm({
             type="tel"
             value={signUpFormData.phone}
             onChange={(e) =>
-              setSignUpFormData({ ...signUpFormData, phone: e.target.value })
+              setSignUpFormData((prev) => ({ ...prev, phone: e.target.value }))
             }
             placeholder="e.g. 000-000-0000"
             required
@@ -98,10 +98,7 @@ export default function SignUpForm({
             type="number"
             value={signUpFormData.tickets}
             onChange={(e) =>
-              setSignUpFormData({
-                ...signUpFormData,
-                tickets: Number(e.target.value),
-              })
+              setSignUpFormData((prev) => ({...prev, tickets: Number(e.target.value) }))
             }
             min="1"
             max="10"

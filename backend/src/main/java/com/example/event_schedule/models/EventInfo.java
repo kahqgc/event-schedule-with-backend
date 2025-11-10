@@ -13,7 +13,7 @@ import java.util.List;
 public class EventInfo {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @JsonProperty("eventInfoId")
+    @JsonProperty("id")
     private Long id;
 
     private String stage;

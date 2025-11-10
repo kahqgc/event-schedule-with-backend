@@ -17,7 +17,7 @@ public class Attendee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty("attendeeId")
+    @JsonProperty("id")
     private Long id;
     private String name;
     private String email;
