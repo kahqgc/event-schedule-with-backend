@@ -25,7 +25,6 @@
 /* Links */
 #footer-social a {
   font-size: 1.2rem;
-  color: inherit;
   text-decoration: none;
   transition: color 0.2s ease;
 }
