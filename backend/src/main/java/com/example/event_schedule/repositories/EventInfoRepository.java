@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-// custom query method to find EventInfo by title
 // custom query to list by time ascending
 @Repository
 public interface EventInfoRepository extends JpaRepository<EventInfo, Long> {
