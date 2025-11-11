@@ -9,8 +9,8 @@
 }
 
 .festival-tagline {
-  padding: 1rem;
-  font-size: 1.5rem;
+  padding: 2rem;
+  font-size: 2rem;
   color: #343755;
   text-align: center;
   margin-top: -0.5em;
@@ -20,7 +20,7 @@
 }
 
 img{
-display: block; /*changes it from inline to block*/
+display: block; /*keeps it centered*/
 max-width: 90%; /*responsiveness to changes in viewport size */
 margin: 2rem auto;
 border-radius: 10px;

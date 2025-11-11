@@ -9,9 +9,9 @@
   justify-content: center; /* Center content horizontally */
   align-items: center; /*Align items vertically */
   flex-wrap: wrap;  /*Wrap on smaller screens */
-  padding: 1rem;
+  padding: 2rem;
   background-color: #f4f1de;
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   border-top: 2px solid #e07a5f;
   color: #3d405b;
 }
@@ -19,6 +19,15 @@
 #footer-container p {
   font-weight: 600;
   letter-spacing: 0.5px;
+  margin: 0;
+}
+
+/* Links */
+#footer-social a {
+  font-size: 1.2rem;
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 #footer-social a:hover {

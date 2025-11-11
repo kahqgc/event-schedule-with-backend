@@ -1,11 +1,13 @@
+/*layout containers*/
 .header-container, .nav-links{
   display: flex;
   justify-content: center; /*centers horizontally*/
-  align-items: center; /*centeral vertically*/
+  align-items: center; /*center vertically*/
   gap: 2rem;
-  flex-wrap: wrap; /*wrap onto next line if not enough space for responsiveness*/
+  flex-wrap: wrap; /*responsive wrapping*/
 }
 
+/*header bar*/
 .header-container {
   padding: 4rem;
   background-color: #f4f1de;
@@ -14,6 +16,7 @@
   font-weight: 600;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
+/*site title*/
 .site-title {
   position: absolute; /*removes item from flexbox */
   left: 3rem; /*positions on the left*/
@@ -25,6 +28,7 @@
   font-family: "Limelight", sans-serif;
 }
 
+/*nav links*/
 nav a {
   text-decoration: none;
   color: #3d405b;

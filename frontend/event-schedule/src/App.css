@@ -1,3 +1,4 @@
+/*base reset*/
 html,
 body{
   margin: 0;
@@ -5,7 +6,7 @@ body{
   font-family: "Quicksand", sans-serif;
 }
 
-/* set transparent cover over the background image with linear gradient */
+/* background with soft overlay */
 body {
   background-color: beige;
   background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
@@ -27,7 +28,7 @@ body {
   min-height: 100vh;
 }
 
-/*makes #app fill #root and .content to fill remaining space between header and footer*/
+/*fill remaining vertical space between header and footer*/
 #app, .content {
   flex: 1;
 } 

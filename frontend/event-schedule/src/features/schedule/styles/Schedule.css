@@ -1,11 +1,11 @@
 .schedule-container {
   position: relative;
   max-width: 90vw;
-  overflow-x: hidden; /* makes sure no child pushes width */
   display: flex;
   flex-direction: column;
   align-items: center; /* centers the schedule horizontally */
   margin: 0 auto;
+  overflow-x: hidden; /* prevents horizontal scroll*/
 }
 
 .schedule-heading {
@@ -19,12 +19,10 @@
 .schedule-table {
   display: table;
   width: 100%;
-  max-width: 75vw; /* reduces overall table footprint */
+  max-width: 75vw; 
   background-color: rgba(255, 255, 255, 0.85);
   border-collapse: collapse;
-  margin: 1rem auto 2rem auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* optional: softens edges visually */
-  border-radius: 8px; /* optional: modern rounded corners */
+  margin: 1rem auto 2rem;
 }
 
 button {

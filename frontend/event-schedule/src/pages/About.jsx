@@ -8,8 +8,8 @@ export default function About() {
                 <p className="about-intro">
                     At <strong>EarthPulse</strong>, our mission is simple: To create a sacred space where
                     movement, music, and mindfulness meet.
-                </p>
-                <p>
+              <br />
+              <br />
                     Set in nature and rooted in intention, EarthPulse is more than just a festival. 
                     Through yoga, live music, holistic workshops, spiritual ceremonies, and meaningful
                     community, we invite you to slow down and remember what it feels like to truly belong.

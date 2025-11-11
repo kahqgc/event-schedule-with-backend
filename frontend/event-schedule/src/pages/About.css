@@ -7,6 +7,7 @@
   border-radius: 10px;
 }
 
+/* headings */
 .about-container h1 {
   font-size: 3rem;
   color: #e07a5f;
@@ -17,15 +18,23 @@
   color: #81b29a;
   margin-top: 2rem;
   text-align: right;
+  font-size: 2.5rem;
 }
 
+/* list content */
+.about-intro {
+  font-size: 1.6rem;
+}
 .about-container ul {
-  list-style-type:none;
+  list-style:none;
+  padding: 0;
+  margin: 0;
 }
 
 .about-container li{
     padding-bottom: 0.5rem;
     text-align: right;
+    font-size: 1.4rem;
 }
 
 .flower{

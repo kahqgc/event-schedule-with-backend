@@ -1,30 +1,32 @@
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: scale(0.6);
   }
   to {
     opacity: 1;
-    transform: scale(1);
   }
 }
 
 .event-details-modal {
   position: fixed;
-  top: 10%;
   left: 50%;
-  transform: translateX(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+
+  width: 30%;
+  height: auto;
+  max-height: 80vh;
+  overflow-y:auto; /*scroll if needed */
+
   background-color: white;
   border: 2px solid #e07a5f;
   border-radius: 10px;
-  padding: 3rem;
-  width: 30%;
-  max-height: 80vh; 
-  overflow-y:auto;
+  padding: 3rem; 
   color: #343755;
-  animation: fadeIn 0.7s ease-out;
-  z-index: 1000; /*ensure above table*/
+  z-index: 1000;
   box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  animation: fadeIn 0.7s ease-out;
 }
 
 .event-details-modal .control {
@@ -48,7 +50,7 @@
   justify-content: center;
 }
 
-ul {
+.event-details-modal ul {
   font-size: 1.5rem;
   list-style-type: none;
   padding: 0;
@@ -65,7 +67,6 @@ ul {
 @media (max-width: 768px) {
   .event-details-modal {
     width: 80%;
-    margin: 1rem auto;
     padding: 2rem;
   }
 }
