@@ -40,14 +40,14 @@ The project was designed to simulate a real-world event management system, empha
 1. cd frontend/event-schedule  
 2. npm install  
 3. npm run dev  
-4. visit http://localhost:5173 in browser to run the app  
+4. Visit http://localhost:5173 in browser to run the app  
 
 ## Wireframes
 > The wireframes outline the user flow and visual layout of the EarthPulse application.
 [View Wireframes on Figma](https://www.figma.com/design/Ax8ycKBy55FhkNxg0pEgB4/Unit-2-Project?node-id=0-1&p=f)
 
 ## Entity Relationship Diagram (ERD)
-> Displays the relationships between the three database entities — `Attendee`, `EventInfo`, and `Signup` (with future inplementation of Instructors).
+> Displays the relationships between the three database entities — `Attendee`, `EventInfo`, and `Signup` (with future implementation of Instructors).
 [ER Diagram](https://drive.google.com/file/d/1c3IEm84GJI6HvgYWclq3VYINBP852HC-/view)
 
 ## Planned Improvements
