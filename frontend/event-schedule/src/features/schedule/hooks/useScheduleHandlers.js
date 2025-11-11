@@ -2,7 +2,7 @@ import { useState } from "react";
 
 //custom hook that handles all event registration flow logic
 // 1. selecting and viewing an event (handleSelectEvent)
-// 2. toggling between viewing details
+// 2. toggling between viewing details and form
 // 3. submitting or editing a sign up
 // 4. keeping side menu and modals in sync
 
@@ -26,7 +26,8 @@ export default function useScheduleHandlers({
     };
   };
 
-  //prepares blank form data when a new event is selected
+  //prepares blank or prefilled form data when a new event is selected
+  // if switching to a new event, resets fields; otherwise keeps existing data
   const prepareForm = (event) => {
     if (!signUpFormData || signUpFormData.eventTitle !== event.title) {
       const newForm = getDefaultForm(event);
@@ -41,9 +42,10 @@ export default function useScheduleHandlers({
   const handleSelectEvent = (event) => {
     ui.openEventDetails(event); //opens modal
     ui.setError("");
+    //only reset form if switching to a different event
     if (!ui.activeEvent || ui.activeEvent.id !== event.id) {
       prepareForm(event);
-    } //prepare blank form for this event
+    } 
   };
 
   //HANDLER 2: SUBMIT FORM - submits form data to create or update signup
@@ -58,10 +60,9 @@ export default function useScheduleHandlers({
         const savedSignUp = await createSignUp(attendeeData, ui.activeEvent); //(info from form, event)
         setSignUpFormData((prev) => ({
           ...prev,
-          id: savedSignUp.id || savedSignUp.signupId,
+          id: savedSignUp.id,
         }));
       }
-
       //reset ui state
       ui.setIsSideMenuOpen(true);
       ui.setError("");
@@ -77,16 +78,15 @@ export default function useScheduleHandlers({
 
   //HANDLER 3: EDIT EXISTING USER -  edit an existing signup from the side menu
   const editSignUp = (signup) => {
-    const event = signup.eventInfo; //expects backend to attach eventInfo
-    const attendee = signup.attendee; //expects backend to attach user
+    const event = signup.eventInfo; //event the attendee signed up for
+    const attendee = signup.attendee; //attendee info from backend
 
     ui.openEventDetails(event); //sets stored eventInfo
-    ui.activeEvent = event; //ensure activeEvent is set
 
     setSignUpFormData(
       //build a form for this specific event using the attendee's saved info
       getDefaultForm(event, {
-        id: signup.id || signup.signupId,
+        id: signup.id,
         name: attendee.name,
         email: attendee.email,
         phone: attendee.phone,

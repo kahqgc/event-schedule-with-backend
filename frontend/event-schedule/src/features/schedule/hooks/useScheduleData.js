@@ -37,7 +37,7 @@ export default function useScheduleData() {
         const grouped = groupEventsByTime(formattedEvents);
 
         //turn the grouped object into an array and sort it by time
-        setScheduleData(Object.values(grouped));
+        setScheduleData(grouped);
       } catch (err) {
         console.error("Error fetching events:", err);
         setScheduleData([]);

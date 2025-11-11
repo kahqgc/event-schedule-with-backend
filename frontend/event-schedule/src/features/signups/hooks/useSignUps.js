@@ -10,15 +10,15 @@ export default function useSignUps() {
 
   // ----------- CREATE (POST) ---------//
   // called when a new user signs up for an event
-  // sends user data (plus event details) to the backend
+  // sends attendee data (plus event details) to the backend and updates state
   const createSignUp = async (attendeeData, eventInfo) => {
     try {
-      //package both pieces of data (user and event) into one object
+      //package both pieces of data (attendee and event) into one object
       //matches backend SignupRequestDTO
       const payload = {
         eventInfoId: eventInfo.id,
         attendee: attendeeData,
-      }; //attach event details to user
+      };
 
       // send combined data to backend to create new signup in database
       const response = await fetch("http://localhost:8080/api/signups", {
@@ -42,10 +42,9 @@ export default function useSignUps() {
     }
   };
 
-  ///// -------------- UPDATE (PUT) --------------- ///
-  // called when an existing attendee edits their registration
-  // sends updated form data to backend
-  // updates state so change appears immediately in side menu
+  /// -------------- UPDATE (PUT) --------------- ///
+  // when an existing attendee edits their registration
+  // sends updated form data to backend and updates state
   const updateSignUp = async (signUpId, attendeeData, eventInfo) => {
     try {
       // combine the updated attendee form data with event info id. ensures backend knows which event this registration belongs to

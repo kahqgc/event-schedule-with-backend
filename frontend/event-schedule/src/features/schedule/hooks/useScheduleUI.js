@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import { formatEventTime } from "../utils/scheduleUtils";
 
 //manages all UI state for schedule
 //- which event is currently open
@@ -15,7 +16,14 @@ export default function useScheduleUI() {
     //------------- ACTIONS ----------------
     // open event details modal for a specific event
   const openEventDetails = (event) => {
-    setActiveEvent(event);
+  const formattedEvent = {
+      ...event,
+      time: event.time || formatEventTime(event.dateTime),
+  }
+    setActiveEvent((prev) => {
+      if (prev && prev.id === formattedEvent.id) return prev; //no change
+      return formattedEvent;
+    });
     setShowSignUpForm(false);
   };
 
