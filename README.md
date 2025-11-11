@@ -3,7 +3,7 @@
 ## Project Description
 **EarthPulse** is a full-stack event scheduling application inspired by yoga and wellness festivals.  
 Users can browse sessions through an interactive schedule, view event details, and register for the events they want to attend.  
-The app provides a smooth, interactive experience for viewing, adding, editing, and deleting sign-ups connecting a **React front end** with a **Spring Boot + MySQL back end**.  
+The app provides a smooth, interactive experience for viewing, adding, editing, and deleting sign-ups connecting a **React front end** with a **Spring Boot** and **MySQL back end**.  
 The project was designed to simulate a real-world event management system, emphasizing CRUD functionality, data validation, and clean UI design.
 
 ---
