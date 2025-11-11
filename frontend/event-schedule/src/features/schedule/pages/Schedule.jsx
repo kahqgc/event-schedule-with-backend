@@ -1,14 +1,13 @@
 //FEATURES:
 //1. fetch schedule data and builds columns from it
-//2. wires stante/handlers from useScheduleFlow
+//2. wires state/handlers from useScheduleHandlers and useScheduleUI
 //3. renders EventScheduleTable, EventDetailsModal, EventSideMenu
 
 // FLOW
 // 1. user clicks an event (handleSelectEvent(event)) and opens EventDetailsModal
 // 2. user clicks sign up and form appears
-// 3. side menu shows all signed up users with edit and delete buttons
+// 3. side menu shows all sign ups with edit and delete buttons
 
-// import { masterSchedule } from "../data/scheduleData";
 import "../styles/Schedule.css";
 import EventDetailsModal from "../modals/EventDetailsModal";
 import EventScheduleTable from "../components/EventScheduleTable";
@@ -23,9 +22,9 @@ export default function Schedule() {
   /*signups feature hooks */
   const { signUps, createSignUp, updateSignUp, deleteSignUp } = useSignUps();
 
-  // custom ui hooks
+  // custom ui hooks - defining ui and passing into schedule handlers
   const ui = useScheduleUI();
-  const handlers = useScheduleHandlers({ createSignUp, updateSignUp, ui });
+  const handlers = useScheduleHandlers({ createSignUp, updateSignUp, ui }); 
 
   /*delete button handlers*/
   const { showConfirm, handleDeleteClick, confirmDelete, cancelDelete } =
@@ -35,8 +34,8 @@ export default function Schedule() {
   const scheduleData = useScheduleData();
 
   //dynamically build an array of stage names from scheduleData.jsx
-  const stages = scheduleData.reduce((acc, slot) => {
-    slot.events.forEach((event) => {
+  const stages = scheduleData.reduce((acc, timeSlot) => {
+    timeSlot.events.forEach((event) => {
       if (!acc.includes(event.stage)) {
         acc.push(event.stage);
       }
@@ -74,7 +73,8 @@ export default function Schedule() {
           <EventSideMenu
             onClose={ui.closeAll}
             editSignUp={handlers.editSignUp}
-            signUps={signUps}
+            signUps={signUps} // from useSignUps
+            // delete handlers
             handleDeleteClick={handleDeleteClick}
             confirmDelete={confirmDelete}
             cancelDelete={cancelDelete}

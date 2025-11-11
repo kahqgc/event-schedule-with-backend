@@ -11,20 +11,20 @@ export default function EventDetailsModal({
   activeEvent, //current selected event object
   onClose, // callback to close modal
   signUpFormData, //data for sign up form
-  setSignUpFormData, 
+  setSignUpFormData,
   submitSignUpForm, //handler to submit form
   showSignUpForm, // boolean to toggle form v. info view
   setShowSignUpForm,
-  prepareForm, //populate form for new sign up
+  prepareForm, //populate form for new or edit sign up
   error,
   setError,
 }) {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState("");
-  
+
   if (!activeEvent) return null;
   // const eventId =
-  //   scheduledEvent.title.toLowerCase(); /*Added to make each saved note unique calling the ID the title of the event*/
+  //   activeEvent.title.toLowerCase(); /*Added to make each saved note unique calling the ID the title of the event*/
   return (
     <>
       <div className={"event-details-modal"}>
@@ -46,8 +46,10 @@ export default function EventDetailsModal({
               type="button"
               onClick={() => {
                 setError("");
-                prepareForm(activeEvent);
-                setShowSignUpForm(true);
+                if (activeEvent) {
+                  prepareForm(activeEvent);
+                  setShowSignUpForm(true);
+                }
               }}
             />
           </>
@@ -55,7 +57,7 @@ export default function EventDetailsModal({
           <SignUpForm
             activeEvent={activeEvent} //event associated with form
             signUpFormData={signUpFormData} //current form data
-            setSignUpFormData={setSignUpFormData} 
+            setSignUpFormData={setSignUpFormData}
             error={error}
             setError={setError}
             onBack={() => setShowSignUpForm(false)} //switch back to event info
@@ -70,9 +72,10 @@ export default function EventDetailsModal({
               setShowSignUpForm(false);
             }}
           />
-          
         )}
-        {showConfirmation && (<p className="success-message">{confirmationMessage}</p>)}
+        {showConfirmation && (
+          <p className="success-message">{confirmationMessage}</p>
+        )}
       </div>
     </>
   );

@@ -22,8 +22,8 @@ export default function SignUpForm({
 
 
   // handles when user clicks submit on form
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // prevent page reload
+  const handleSubmit = async (err) => {
+    err.preventDefault(); // prevent page reload
     setError(""); // clear any previous
 
     // 1. validate user input
@@ -33,14 +33,14 @@ export default function SignUpForm({
       return; // stop if validation fails
     }
     try {
-      const formWithEvent = {
+      const signUpFormWithEvent = {
         ...signUpFormData,
         eventTitle: activeEvent.title,
       };
-      //2. if validation passes, pause here until submitSignUpForm sends data to backend
-      await submitSignUpForm(formWithEvent);
+      //2. if validation passes, pause here until submitSignUpForm (logic) sends data to backend
+      await submitSignUpForm(signUpFormWithEvent);
       //3. if submission succeeds, call onSuccess to close form
-      onSuccess && onSuccess(formWithEvent);
+      onSuccess && onSuccess(signUpFormWithEvent);
     } catch (err) {
       setError(err.message || "Error saving registration, please try again.");
     }

@@ -1,5 +1,10 @@
 import { useState } from "react";
 
+//bridge between:
+// Schedule UI(Event Schedule table and Event Details modal)
+// sign-up components (SignUpForm and SideMenu)
+// sign-up data layer (useSignups)
+
 //custom hook that handles all event registration flow logic
 // 1. selecting and viewing an event (handleSelectEvent)
 // 2. toggling between viewing details and form
@@ -48,7 +53,7 @@ export default function useScheduleHandlers({
     } 
   };
 
-  //HANDLER 2: SUBMIT FORM - submits form data to create or update signup
+  //HANDLER 2: SUBMIT FORM - handler function that decides whether to create or update a signup and then manages ui state
   const submitSignUpForm = async (attendeeData) => {
     try {
       //if form data exists then you're editting so PUT
@@ -60,14 +65,14 @@ export default function useScheduleHandlers({
         const savedSignUp = await createSignUp(attendeeData, ui.activeEvent); //(info from form, event)
         setSignUpFormData((prev) => ({
           ...prev,
-          id: savedSignUp.id,
+          id: savedSignUp.id, // adding newly made id from backend to existing form data state
         }));
       }
       //reset ui state
-      ui.setIsSideMenuOpen(true);
-      ui.setError("");
-      ui.setShowSignUpForm(false);
-      setSignUpFormData(null);
+      ui.setIsSideMenuOpen(true); //open side menu
+      ui.setError(""); //clear errors
+      ui.setShowSignUpForm(false); //close form
+      setSignUpFormData(null); //resets form data
     } catch (err) {
       //catch network or validation errors
       ui.setError(
@@ -91,7 +96,6 @@ export default function useScheduleHandlers({
         email: attendee.email,
         phone: attendee.phone,
         tickets: attendee.tickets,
-        eventTitle: event.title,
       })
     ); //preload existing attendee data
     ui.setShowSignUpForm(true);

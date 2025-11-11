@@ -1,3 +1,6 @@
+// dummy data that was used for initial frontend development before backend was ready
+// now replaced by data fetched from backend API
+
 export const masterSchedule = [
   {
     time: "9:00 AM",

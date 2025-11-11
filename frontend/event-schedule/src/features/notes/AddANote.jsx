@@ -1,3 +1,5 @@
+//currently not in use but saved for potential future feature expansion
+
 import Form from "./Form";
 import SavedNote from "./SavedNote";
 import { useState, useEffect } from "react";

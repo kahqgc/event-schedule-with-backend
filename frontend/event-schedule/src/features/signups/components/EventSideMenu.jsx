@@ -10,7 +10,7 @@ import { formatEventTime } from "../../schedule/utils/scheduleUtils";
 // users can see what events theyve registered for and edit or delete item
 export default function EventSideMenu({
   onClose, // closes the menu
-  signUps = [], // list users who have signed up
+  signUps, // list users who have signed up
   editSignUp, // opens edit form
   handleDeleteClick, // opens confirmation modal
   confirmDelete,
@@ -39,14 +39,13 @@ export default function EventSideMenu({
             {showMessage && <p className="success-message">{messageText}</p>}
             <ul>
               {signUps.map((signup) => {
-                const attendee = signup.attendee || {};
-                const eventInfo = signup.eventInfo || {};
-                const formattedTime = formatEventTime(eventInfo.dateTime);
-
+                const attendee = signup.attendee;
+                const eventTitle = signup.eventInfo.title;
+                const eventTime = signup.eventInfo.dateTime;
                 return (
-                  <li key={signup.id || signup.signupId}>
-                    <strong>{eventInfo.title}</strong>
-                    {formattedTime && <> — {formattedTime}</>} <br />
+                  <li key={signup.id}>
+                    <strong>{eventTitle}</strong>
+                    {eventTime && <> — {formatEventTime(eventTime)}</>} <br />
                     {attendee.name && (
                       <>
                         {/*show attendee details*/}
@@ -77,7 +76,6 @@ export default function EventSideMenu({
       {/*confirmation model shows when deleting*/}
       {showConfirm && (
         <ConfirmModal
-          message="Are you sure you want to delete this registration?"
           onConfirm={() => {
             confirmDelete();
             setMessageText("Registration deleted successfully!");

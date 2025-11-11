@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import { formatEventTime } from "../utils/scheduleUtils";
+// import { formatEventTime } from "../utils/scheduleUtils";
 
 //manages all UI state for schedule
 //- which event is currently open
@@ -18,7 +18,7 @@ export default function useScheduleUI() {
   const openEventDetails = (event) => {
   const formattedEvent = {
       ...event,
-      time: event.time || formatEventTime(event.dateTime),
+      time: event.time,
   }
     setActiveEvent((prev) => {
       if (prev && prev.id === formattedEvent.id) return prev; //no change
