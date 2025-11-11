@@ -68,6 +68,15 @@
   font-size: 1.8rem;
 }
 
+.side-menu .success-message {
+  font-size: 1.6rem; /* ⬆ make this bigger (adjust as you like) */
+  font-weight: 700;
+  color: #81b29a;
+  text-align: center;
+  margin-top: 1rem;
+  animation: fadeIn 0.3s ease-in;
+}
+
 /* Mobile / Tablet */
 @media (max-width: 768px) {
   .side-menu {

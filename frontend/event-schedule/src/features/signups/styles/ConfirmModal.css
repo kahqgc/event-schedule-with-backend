@@ -5,7 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 2000;
 }
 
 .modal {
@@ -15,6 +15,10 @@
   width: 320px;
   text-align: center;
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  z-index: 2001;
+}
+.modal p {
+  font-size: 1.4rem;
 }
 
 .modal-buttons {

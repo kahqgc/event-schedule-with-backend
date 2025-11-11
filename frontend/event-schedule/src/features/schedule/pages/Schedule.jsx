@@ -53,6 +53,21 @@ export default function Schedule() {
           stages={stages} //resets signUpFormData when new event is selected
           onSelectEvent={handlers.handleSelectEvent}
         />
+        {/*EVENT DETAILS / SIGN UP FORM*/}
+        {ui.activeEvent /*render pop up only if event is selected*/ && (
+          <EventDetailsModal
+            activeEvent={ui.activeEvent}
+            onClose={ui.closeModalOnly}
+            showSignUpForm={ui.showSignUpForm}
+            setShowSignUpForm={ui.setShowSignUpForm}
+            error={ui.error}
+            setError={ui.setError}
+            signUpFormData={handlers.signUpFormData}
+            setSignUpFormData={handlers.setSignUpFormData}
+            submitSignUpForm={handlers.submitSignUpForm}
+            prepareForm={handlers.prepareForm}
+          />
+        )}
         {/*SIGNED UP USERS SIDE MENU*/}
         {ui.isSideMenuOpen && (
           <EventSideMenu
@@ -67,21 +82,6 @@ export default function Schedule() {
           />
         )}
       </section>
-      {/*EVENT DETAILS / SIGN UP FORM*/}
-      {ui.activeEvent /*render pop up only if event is selected*/ && (
-        <EventDetailsModal
-          activeEvent={ui.activeEvent}
-          onClose={ui.closeModalOnly}
-          showSignUpForm={ui.showSignUpForm}
-          setShowSignUpForm={ui.setShowSignUpForm}
-          error={ui.error}
-          setError={ui.setError}
-          signUpFormData={handlers.signUpFormData}
-          setSignUpFormData={handlers.setSignUpFormData}
-          submitSignUpForm={handlers.submitSignUpForm}
-          prepareForm={handlers.prepareForm}
-        />
-      )}
     </>
   );
 }
