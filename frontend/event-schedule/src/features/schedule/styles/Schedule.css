@@ -5,7 +5,8 @@
   flex-direction: column;
   align-items: center; /* centers the schedule horizontally */
   margin: 0 auto;
-  overflow-x: hidden; /* prevents horizontal scroll*/
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .schedule-heading {
@@ -18,7 +19,7 @@
 
 .schedule-table {
   display: table;
-  width: 100%;
+  width: 90%;
   max-width: 75vw; 
   background-color: rgba(255, 255, 255, 0.85);
   border-collapse: collapse;
@@ -38,7 +39,7 @@ button {
 .schedule-table th,
 .schedule-table td {
   border: 1px solid #ddd;
-  padding: 2.5rem;
+  padding: 2rem;
   text-align: center;
   font-size: 1.8rem;
   line-height: 1.4;
@@ -47,7 +48,7 @@ button {
 .schedule-table tbody th {
   font-size: 1.8rem;
   font-weight: 700;
-  padding: 0 5rem;
+  padding: 0 2rem;
   color: #343755;
   border-right: 2px solid #e07a5f;
 }
