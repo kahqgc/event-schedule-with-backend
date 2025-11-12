@@ -39,3 +39,27 @@ nav a {
 nav a:hover {
   color: #81b29a;
 }
+
+/* tablet */
+@media (max-width: 768px) {
+  nav a {
+    font-size: 1.4rem;
+  }
+}
+
+/* mobile */
+@media (max-width: 480px) {
+  nav a {
+    font-size: 1.1rem;
+    letter-spacing: 0.3px;
+  }
+
+  .site-title {
+    font-size: 2.5rem;
+    left: 1.5rem;
+  }
+
+  .header-container {
+    padding: 2rem;
+  }
+}

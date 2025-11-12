@@ -98,7 +98,7 @@ export default function SignUpForm({
             type="number"
             value={signUpFormData.tickets}
             onChange={(e) =>
-              setSignUpFormData((prev) => ({...prev, tickets: Number(e.target.value) }))
+              setSignUpFormData((prev) => ({...prev, tickets: e.target.value === "" ? "" : Number(e.target.value) }))
             }
             min="1"
             max="10"

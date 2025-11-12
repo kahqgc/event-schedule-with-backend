@@ -21,7 +21,8 @@
 
 img{
 display: block; /*keeps it centered*/
-max-width: 90%; /*responsiveness to changes in viewport size */
+width: 90%;
+max-width: 900px; /*responsiveness to changes in viewport size */
 margin: 2rem auto;
 border-radius: 10px;
 }
