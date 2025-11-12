@@ -54,7 +54,7 @@ export default function useScheduleHandlers({
   };
 
   //HANDLER 2: SUBMIT FORM - handler function that decides whether to create or update a signup and then manages ui state
-  const submitSignUpForm = async (attendeeData) => {
+  const saveSignUp = async (attendeeData) => {
     try {
       //if form data exists then you're editting so PUT
       if (attendeeData.id) {
@@ -91,7 +91,7 @@ export default function useScheduleHandlers({
     setSignUpFormData(
       //build a form for this specific event using the attendee's saved info
       getDefaultForm(event, {
-        id: signup.id,
+        id: signup.id, //registration record id - PUT request /signups/{signupId}
         name: attendee.name,
         email: attendee.email,
         phone: attendee.phone,
@@ -109,7 +109,7 @@ export default function useScheduleHandlers({
     setSignUpFormData,
     //actions
     handleSelectEvent,
-    submitSignUpForm,
+    saveSignUp,
     editSignUp,
     prepareForm,
   };

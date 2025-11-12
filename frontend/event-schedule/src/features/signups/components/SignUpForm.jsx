@@ -6,7 +6,7 @@ import validateSignUpForm from "../utils/validateSignUpForm";
 /* THE SIGN UP FORM
 - lets  users register for a selected event or edit an existing registration
 - collects name, email, phone, and ticket count
-- when submitted, it validates the input and calls submitSignUpForm from parent
+- when submitted, it validates the input and calls saveSignUp from parent
 */
 
 export default function SignUpForm({
@@ -16,7 +16,7 @@ export default function SignUpForm({
   setSignUpFormData,
   error,
   setError,
-  submitSignUpForm, //function from useScheduleFlow to create or update user
+  saveSignUp, //function from useScheduleFlow to create or update user
   onSuccess, //called when submission succeeds
 }) {
 
@@ -37,8 +37,8 @@ export default function SignUpForm({
         ...signUpFormData,
         eventTitle: activeEvent.title,
       };
-      //2. if validation passes, pause here until submitSignUpForm (logic) sends data to backend
-      await submitSignUpForm(signUpFormWithEvent);
+      //2. if validation passes, pause here until saveSignUp (logic) sends data to backend
+      await saveSignUp(signUpFormWithEvent);
       //3. if submission succeeds, call onSuccess to close form
       onSuccess && onSuccess(signUpFormWithEvent);
     } catch (err) {

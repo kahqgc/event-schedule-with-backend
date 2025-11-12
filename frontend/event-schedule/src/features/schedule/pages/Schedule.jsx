@@ -64,7 +64,7 @@ export default function Schedule() {
             setError={ui.setError}
             signUpFormData={handlers.signUpFormData}
             setSignUpFormData={handlers.setSignUpFormData}
-            submitSignUpForm={handlers.submitSignUpForm}
+            saveSignUp={handlers.saveSignUp}
             prepareForm={handlers.prepareForm}
           />
         )}

@@ -62,7 +62,7 @@ export default function EventSideMenu({
                     {/*action buttons*/}
                     <DeleteButton
                       onClick={() => handleDeleteClick(signup.id)}
-                    />{" "}
+                    />
                     {/*opens confirm modal*/}
                     <EditButton onClick={() => editSignUp(signup)} />
                     {/*preloads form*/}

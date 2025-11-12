@@ -12,7 +12,7 @@ export default function EventDetailsModal({
   onClose, // callback to close modal
   signUpFormData, //data for sign up form
   setSignUpFormData,
-  submitSignUpForm, //handler to submit form
+  saveSignUp, //handler to submit form
   showSignUpForm, // boolean to toggle form v. info view
   setShowSignUpForm,
   prepareForm, //populate form for new or edit sign up
@@ -61,7 +61,7 @@ export default function EventDetailsModal({
             error={error}
             setError={setError}
             onBack={() => setShowSignUpForm(false)} //switch back to event info
-            submitSignUpForm={submitSignUpForm} //submit handler
+            saveSignUp={saveSignUp} //put/post fetch handler
             onSuccess={() => {
               const message = signUpFormData.id
                 ? "Registration updated successfully!"
